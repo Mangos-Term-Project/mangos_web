@@ -1,121 +1,72 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
 
+const AUTH_STORAGE_KEY = 'mangos-demo-logged-in'
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => window.localStorage.getItem(AUTH_STORAGE_KEY) === 'true',
+  )
+
+  function handleDemoSignIn() {
+    window.localStorage.setItem(AUTH_STORAGE_KEY, 'true')
+    setIsLoggedIn(true)
+  }
+
+  function handleSignOut() {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY)
+    setIsLoggedIn(false)
+  }
+
+  if (isLoggedIn) {
+    return (
+      <>
+        <button className="session-signout" onClick={handleSignOut} type="button">
+          Sign out
+        </button>
+      </>
+    )
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <main className="landing-page">
+      <div aria-hidden="true" className="mango-orbit">
+        <span className="floating-mango mango-one" >🥭</span>
+        <span className="floating-mango mango-two" >🥭</span>
+        <span className="floating-mango mango-three" >🥭</span>
+        <span className="floating-mango mango-four" >🥭</span>
+        <span className="floating-mango mango-five" >🥭</span>
+        <span className="floating-mango mango-six" >🥭</span>
+      </div>
+
+      <header className="landing-header">
+        <a aria-label="Mangos English Learning home" className="brand-mark" href="#home">
+          <span aria-hidden="true" className="brand-fruit">🥭</span>
+        </a>
+        <nav aria-label="Account" className="account-actions">
+          <button className="login-button" onClick={handleDemoSignIn} type="button">
+            Log in
+          </button>
+          <button className="create-account-button" onClick={handleDemoSignIn} type="button">
+            Create account
+          </button>
+        </nav>
+      </header>
+
+      <section aria-labelledby="landing-title" className="landing-hero" id="home">
+        <p className="landing-kicker">A little practice. A lot of progress.</p>
+        <h1 id="landing-title">Mang<span className='landing-title-fruit'>🥭</span>s
+          <br />
+          <span className='landing-subtitle'>English Learning</span>
+        </h1>
+        <p className="landing-description">
+          Grow your confidence, one picture at a time.
+        </p>
+        <button className="start-learning-button" onClick={handleDemoSignIn} type="button">
+          Start learning <span aria-hidden="true">→</span>
         </button>
       </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    </main>
   )
 }
 
