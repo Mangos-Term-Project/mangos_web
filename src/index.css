@@ -11,6 +11,7 @@
 	--mango-100: #fff0cf;
 	--mango-200: #ffdc96;
 	--mango-400: #ffb52e;
+	--mango-400-light: #ffb62e54;
 	--mango-500: #f59e0b;
 	--mango-600: #db7900;
 	--leaf-500: #557a46;
@@ -88,31 +89,6 @@ a:hover {
 	padding: 24px;
 }
 
-.auth-card {
-	width: min(100%, 440px);
-	display: grid;
-	gap: 16px;
-	padding: clamp(28px, 7vw, 48px);
-	border: 1px solid rgb(121 99 76 / 16%);
-	border-radius: 24px;
-	background: rgb(255 255 255 / 82%);
-	box-shadow: 0 20px 60px rgb(61 43 25 / 10%);
-}
-
-.auth-card h1,
-.auth-card p {
-	margin: 0;
-}
-
-.auth-card h1 {
-	font-size: clamp(2rem, 8vw, 2.75rem);
-}
-
-.auth-card > p:not(.auth-eyebrow) {
-	color: var(--cocoa-600);
-	line-height: 1.6;
-}
-
 .auth-eyebrow {
 	color: var(--leaf-500);
 	font-size: 0.8rem;
@@ -121,30 +97,21 @@ a:hover {
 	text-transform: uppercase;
 }
 
-.auth-button,
 .session-signout {
 	border: 0;
-	border-radius: 999px;
-	background: var(--mango-500);
-	color: var(--cocoa-900);
-	cursor: pointer;
-	font-weight: 700;
-	padding: 12px 20px;
-}
-
-.auth-button:hover,
-.session-signout:hover {
-	background: var(--mango-400);
-}
-
-.auth-card small {
-	color: var(--cocoa-600);
-	line-height: 1.5;
-}
-
-.session-signout {
 	position: fixed;
 	top: 16px;
 	right: 16px;
 	z-index: 1;
+	border-radius: 999px;
+	background: None;
+	cursor: pointer;
+	font-weight: 700;
+	padding: 12px 20px;
+	transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.session-signout:hover {
+	background: var(--mango-400-light);
+	transform: translateY(-2px);
 }

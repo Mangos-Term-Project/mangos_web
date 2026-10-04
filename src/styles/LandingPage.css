@@ -1,0 +1,169 @@
+.landing-page {
+	min-height: 100svh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	background:
+		radial-gradient(ellipse at 50% 62%, rgb(255 220 150 / 34%), transparent 33rem),
+		linear-gradient(180deg, #fffaf0 0%, #fff4d8 100%);
+}
+
+.landing-hero {
+	position: relative;
+	z-index: 1;
+	width: min(100% - 40px, 900px);
+	min-height: 0;
+	flex: 1;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 44px 0 100px;
+	text-align: center;
+}
+
+.landing-hero h1 {
+	margin: 0;
+	font-size: clamp(4rem, 12vw, 9rem);
+	font-weight: 850;
+	letter-spacing: -0.085em;
+	line-height: 0.88;
+}
+
+.landing-kicker {
+	margin: 0 0 18px;
+	color: var(--leaf-500);
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.landing-kicker {
+	margin-bottom: 12px;
+}
+
+.landing-title-fruit {
+    font-size: 5rem;
+    padding: 0 0.15em 0 0.1em;
+}
+
+.landing-subtitle {
+	display: inline-block;
+	margin-top: 0.2em;
+	color: var(--mango-600);
+	font-size: 0.42em;
+	font-weight: 750;
+	letter-spacing: -0.045em;
+}
+
+.landing-description {
+	max-width: 440px;
+	margin: 28px 0 24px;
+	color: var(--cocoa-600);
+	font-size: clamp(1rem, 2.5vw, 1.2rem);
+	line-height: 1.65;
+}
+
+.start-learning-button {
+	padding: 0 22px;
+	background: var(--cocoa-900);
+	box-shadow: 0 8px 20px rgb(61 43 25 / 15%);
+	color: white;
+    min-height: 54px;
+	padding-inline: 28px;
+    min-height: 46px;
+	border: 0;
+	border-radius: 999px;
+	cursor: pointer;
+	font-weight: 700;
+	transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.start-learning-button:hover {
+	background: #594027;
+	box-shadow: 0 12px 24px rgb(61 43 25 / 20%);
+    transform: translateY(-2px);
+}
+
+.start-learning-button span {
+	margin-left: 8px;
+	font-size: 1.2em;
+}
+
+/* Mango Animations */
+
+.mango-orbit {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.floating-mango {
+	position: absolute;
+    font-size: 5rem;
+	opacity: 0.72;
+	animation: mango-drift 8s ease-in-out infinite;
+}
+
+.floating-mango::before {
+	position: absolute;
+	top: -7%;
+	right: 3%;
+	width: 38%;
+	height: 20%;
+	transform: rotate(-24deg);
+}
+
+.mango-one {
+	top: 24%;
+	left: 9%;
+	animation-delay: -1s;
+}
+
+.mango-two {
+	top: 63%;
+	left: 18%;
+	width: clamp(25px, 3.5vw, 45px);
+	animation-delay: -4s;
+}
+
+.mango-three {
+	top: 34%;
+	right: 12%;
+	width: clamp(28px, 4vw, 52px);
+	animation-delay: -6s;
+}
+
+.mango-four {
+	right: 8%;
+	bottom: 12%;
+	animation-delay: -2.5s;
+}
+
+.mango-five {
+	top: 13%;
+	left: 48%;
+	width: clamp(22px, 3vw, 40px);
+	animation-delay: -5s;
+}
+
+.mango-six {
+	bottom: 10%;
+	left: 33%;
+	width: clamp(24px, 3.5vw, 46px);
+	animation-delay: -3s;
+}
+
+@keyframes mango-drift {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) rotate(-12deg);
+	}
+	50% {
+		transform: translate3d(12px, -24px, 0) rotate(10deg);
+	}
+}
