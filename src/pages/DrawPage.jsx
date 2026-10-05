@@ -94,9 +94,9 @@ function DrawPage() {
 						/>
 					</label>
 
-                    <div className="reference-gallery">
-                        {/* TODO: Implement API call to fetch reference images */}
-                    </div>
+					<div className="reference-gallery">
+						{/* TODO: Implement API call to fetch reference images */}
+					</div>
 				</aside>
 			</section>
 		</main>

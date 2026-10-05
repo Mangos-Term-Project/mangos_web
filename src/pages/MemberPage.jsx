@@ -1,10 +1,7 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/MemberPage.css'
 
 function MemberPage() {
-  const [selectedActivity, setSelectedActivity] = useState('')
-
     return (
       <div className="member-page">
 
@@ -24,25 +21,15 @@ function MemberPage() {
               </span>
             </Link>
 
-            <button
-              aria-pressed={selectedActivity === 'quiz'}
-              className={`activity-card quiz-card${selectedActivity === 'quiz' ? ' is-selected' : ''}`}
-              onClick={() => setSelectedActivity('quiz')}
-              type="button"
-            >
+            <Link className="activity-card quiz-card" to="/quiz">
               <span aria-hidden="true" className="activity-illustration">✓</span>
               <span className="activity-card-copy">
                 <span className="activity-eyebrow">Put your knowledge to work</span>
                 <span className="activity-title">Quiz<br />yourself</span>
                 <span className="activity-link">Choose a set <span aria-hidden="true">→</span></span>
               </span>
-            </button>
+            </Link>
           </section>
-          {selectedActivity && (
-            <p aria-live="polite" className="activity-feedback">
-              {selectedActivity === 'flashcards' ? 'Flash Cards' : 'Quiz yourself'} selected — coming soon!
-            </p>
-          )}
         </main>
       </div>
     )

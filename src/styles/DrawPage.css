@@ -7,7 +7,7 @@
 }
 
 .draw-workspace {
-	width: min(100%, 1280px);
+	width: min(100%, 1300px);
 	min-height: min(760px, calc(100svh - 80px));
 	display: grid;
 	grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.85fr);
