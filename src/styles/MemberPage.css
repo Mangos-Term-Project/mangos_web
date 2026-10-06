@@ -1,0 +1,150 @@
+.member-page {
+	min-height: 100svh;
+    padding-top: 6rem;
+	background:
+		radial-gradient(ellipse at 50% 0%, rgb(255 220 150 / 28%), transparent 38rem),
+		linear-gradient(180deg, #fffaf0 0%, #fff6e3 100%);
+}
+
+.member-main {
+	width: min(100% - 40px, 1080px);
+	margin: 0 auto;
+	padding: clamp(56px, 10vh, 110px) 0 80px;
+}
+
+.member-welcome {
+	margin-bottom: 42px;
+	text-align: center;
+}
+
+.member-welcome h1 {
+	margin: 0;
+	font-size: clamp(2.5rem, 6vw, 4.5rem);
+	letter-spacing: -0.065em;
+	line-height: 1;
+}
+
+.activity-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: clamp(16px, 3vw, 28px);
+}
+
+.activity-card {
+	position: relative;
+	min-height: 310px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 20px;
+	overflow: hidden;
+	padding: clamp(24px, 4vw, 42px);
+	border: 2px solid transparent;
+	border-radius: 28px;
+	color: var(--cocoa-900);
+	cursor: pointer;
+	text-decoration: none;
+	text-align: left;
+	box-shadow: 0 16px 40px rgb(61 43 25 / 8%);
+	transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.activity-card:hover,
+.activity-card.is-selected {
+	transform: translateY(-6px);
+	box-shadow: 0 24px 48px rgb(61 43 25 / 14%);
+}
+
+.activity-card:focus-visible {
+	outline-offset: 5px;
+}
+
+.activity-card-copy {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	gap: 13px;
+}
+
+.flashcard-card {
+	background: linear-gradient(140deg, #ffdf9f 0%, #ffc75b 100%);
+}
+
+.flashcard-card.is-selected {
+	border-color: #d78614;
+}
+
+.activity-illustration {
+	position: absolute;
+	top: 28px;
+	right: 34px;
+	width: clamp(100px, 15vw, 170px);
+	height: clamp(100px, 15vw, 170px);
+	display: grid;
+	place-items: center;
+	border: 1px solid rgb(255 255 255 / 55%);
+	border-radius: 38px;
+	background: rgb(255 255 255 / 36%);
+	color: rgb(61 43 25 / 45%);
+	font-size: clamp(4rem, 8vw, 7rem);
+	font-weight: 500;
+	transform: rotate(9deg);
+}
+
+.activity-eyebrow {
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.11em;
+	text-transform: uppercase;
+}
+
+.activity-title {
+	font-size: clamp(2.1rem, 4.5vw, 3.7rem);
+	font-weight: 850;
+	letter-spacing: -0.065em;
+	line-height: 0.98;
+}
+
+.activity-link {
+	margin-top: 8px;
+	font-size: 0.95rem;
+	font-weight: 750;
+}
+
+.activity-link span {
+	margin-left: 6px;
+	font-size: 1.2em;
+}
+
+.quiz-card {
+	background: linear-gradient(140deg, #dcebd2 0%, #b8d2a6 100%);
+}
+
+.quiz-card.is-selected {
+	border-color: var(--leaf-500);
+}
+
+.activity-feedback {
+	margin: 22px 0 0;
+	color: var(--cocoa-600);
+	text-align: center;
+}
+
+@media (max-width: 560px) {
+    .member-main {
+		width: min(100% - 32px, 480px);
+		padding-top: 54px;
+	}
+
+    .member-welcome {
+		margin-bottom: 30px;
+	}
+
+	.activity-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.activity-card {
+		min-height: 260px;
+	}
+}

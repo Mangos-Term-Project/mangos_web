@@ -1,0 +1,141 @@
+.header {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 3;
+	min-height: 82px;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	gap: 20px;
+	padding: 12px clamp(20px, 6vw, 84px);
+}
+
+.header .brand-mark {
+	justify-self: start;
+}
+
+.brand-mark {
+	font-size: 1.2rem;
+	font-weight: 800;
+	text-decoration: none;
+}
+
+.brand-fruit {
+	font-size: 1.6rem;
+}
+
+.main-nav {
+	justify-self: center;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px;
+	border: 1px solid rgb(121 99 76 / 12%);
+	border-radius: 999px;
+	background: white;
+	box-shadow: 0 5px 16px rgb(61 43 25 / 5%);
+}
+
+.nav-icon-button {
+	min-width: 96px;
+	min-height: 48px;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--cocoa-600);
+	cursor: pointer;
+	font-size: 0.68rem;
+	font-weight: 700;
+	text-decoration: none;
+	transition: background-color 150ms ease, color 150ms ease;
+}
+
+.nav-icon {
+	width: 21px;
+	height: 21px;
+}
+
+/* Implement this if we want to show a visual indicator for the current page */
+.nav-icon-button:hover,
+.nav-icon-button.is-current {
+	background: var(--mango-100);
+	color: var(--cocoa-900);
+}
+
+.account-actions {
+	display: flex;
+	align-items: center;
+    justify-self: end;
+	gap: 10px;
+}
+
+.account-actions button {
+	min-height: 46px;
+	border: 0;
+	border-radius: 999px;
+	cursor: pointer;
+	font-weight: 700;
+	transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.account-actions button:hover {
+	transform: translateY(-2px);
+}
+
+.login-button, .create-account-button, .signout-button {
+	padding: 0 18px;
+	background: transparent;
+}
+
+.login-button:hover, .create-account-button:hover, .signout-button:hover{
+	background: var(--mango-400-light);
+}
+
+@media (max-width: 560px) {
+	.header {
+		min-height: 70px;
+		grid-template-columns: auto 1fr auto;
+		gap: 8px;
+		padding: 10px 12px;
+	}
+
+	.header .brand-mark {
+		gap: 0;
+	}
+
+    .main-nav {
+		gap: 2px;
+		padding: 3px;
+	}
+
+	.nav-icon-button {
+		min-width: 48px;
+		min-height: 44px;
+	}
+
+	.brand-mark {
+		gap: 5px;
+		font-size: 1rem;
+	}
+
+	.brand-fruit {
+		font-size: 1.3rem;
+	}
+
+	.account-actions {
+		gap: 2px;
+	}
+
+	.account-actions button {
+		min-height: 42px;
+		padding-inline: 12px;
+		font-size: 0.86rem;
+	}
+}
