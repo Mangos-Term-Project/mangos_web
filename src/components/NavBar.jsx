@@ -1,5 +1,5 @@
 import { FaHome, FaStore } from "react-icons/fa";
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import '../styles/NavBar.css'
 
 function NavBar({ onSignOut, onSignIn, isLoggedIn }) {
@@ -12,14 +12,14 @@ function NavBar({ onSignOut, onSignIn, isLoggedIn }) {
 
       {isLoggedIn ?
         <nav aria-label="Main navigation" className="main-nav">
-          <Link aria-label="Home" className="nav-icon-button">
+          <NavLink aria-label="Home" className='nav-icon-button'>
             <FaHome className="nav-icon" />
             <span>House</span>
-          </Link>
-          <Link aria-label="Home" className="nav-icon-button">
+          </NavLink>
+          <NavLink aria-label="Store" className='nav-icon-button' to="/store">
             <FaStore className="nav-icon" />
             <span>Store</span>
-          </Link>
+          </NavLink>
         </nav>
       :
         <nav></nav>
