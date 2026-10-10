@@ -63,8 +63,7 @@
 }
 
 /* Implement this if we want to show a visual indicator for the current page */
-.nav-icon-button:hover,
-.nav-icon-button.is-current {
+.nav-icon-button:hover {
 	background: var(--mango-100);
 	color: var(--cocoa-900);
 }
