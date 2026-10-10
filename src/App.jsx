@@ -74,7 +74,7 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<LandingPage onStartLearning={handleDemoSignIn} />} />
+        <Route path="/" element={<LandingPage onStartLearning={() => navigate('/login')} />} />
         <Route path="/login" element={<LoginPage onSubmit={handleDemoSignIn} />} />
         <Route path="/create-account" element={<CreateAccountPage onSubmit={handleCreateAccount} />} />
         <Route path="/home" element={requireLogin(<MemberPage />)} />
