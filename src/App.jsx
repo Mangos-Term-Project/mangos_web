@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import CreateAccountPage from './pages/CreateAccountPage.jsx'
 import MemberPage from './pages/MemberPage.jsx'
 import DrawPage from './pages/DrawPage.jsx'
 import QuizPage from './pages/QuizPage.jsx'
@@ -35,12 +37,15 @@ function App() {
     <main className="app">
       <NavBar
         onSignOut={handleSignOut}
-        onSignIn={handleDemoSignIn}
+        onLogin={() => navigate('/login')}
+        onCreateAccount={() => navigate('/create-account')}
         isLoggedIn={isLoggedIn}
       />
 
       <Routes>
         <Route path="/" element={<LandingPage onStartLearning={handleDemoSignIn} />} />
+        <Route path="/login" element={<LoginPage onSubmit={handleDemoSignIn} />} />
+        <Route path="/create-account" element={<CreateAccountPage onSubmit={handleDemoSignIn} />} />
         <Route path="/home" element={requireLogin(<MemberPage />)} />
         <Route path="/draw" element={requireLogin(<DrawPage />)} />
         <Route path="/quiz" element={requireLogin(<QuizPage />)} />

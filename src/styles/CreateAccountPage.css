@@ -1,0 +1,118 @@
+.create-account-page {
+	min-height: 100svh;
+	display: grid;
+	place-items: center;
+	padding: 104px 20px 40px;
+	background:
+		radial-gradient(ellipse at 18% 76%, rgb(255 220 150 / 32%), transparent 26rem),
+		radial-gradient(ellipse at 84% 22%, rgb(85 122 70 / 10%), transparent 24rem);
+}
+
+.create-account-panel {
+	width: min(100%, 460px);
+	padding: clamp(26px, 6vw, 42px);
+	border: 1px solid rgb(121 99 76 / 14%);
+	border-radius: 8px;
+	background: rgb(255 255 255 / 90%);
+	box-shadow: 0 22px 60px rgb(61 43 25 / 9%);
+	animation: create-account-arrive 420ms ease-out both;
+}
+
+.create-account-eyebrow {
+	margin: 0 0 10px;
+	color: var(--leaf-500);
+	font-size: 0.78rem;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+
+.create-account-panel h1 {
+	margin: 0;
+	font-size: clamp(1.8rem, 8vw, 2.35rem);
+	line-height: 1.1;
+}
+
+.create-account-description {
+	margin: 10px 0 22px;
+	color: var(--cocoa-600);
+	line-height: 1.5;
+}
+
+.create-account-form {
+	display: grid;
+	gap: 8px;
+}
+
+.create-account-form label {
+	margin-top: 5px;
+	font-size: 0.88rem;
+	font-weight: 750;
+}
+
+.create-account-form input {
+	width: 100%;
+	min-height: 46px;
+	padding: 0 13px;
+	border: 1px solid rgb(121 99 76 / 28%);
+	border-radius: 5px;
+	background: #fffdf8;
+	color: var(--cocoa-900);
+}
+
+.create-account-form input:focus {
+	border-color: var(--leaf-500);
+	outline: 2px solid rgb(85 122 70 / 22%);
+	outline-offset: 1px;
+}
+
+.password-error {
+	margin: 0;
+	color: #a33425;
+	font-size: 0.85rem;
+}
+
+.create-account-submit {
+	min-height: 48px;
+	margin-top: 10px;
+	border: 0;
+	border-radius: 5px;
+	background: var(--cocoa-900);
+	color: white;
+	cursor: pointer;
+	font-weight: 750;
+	transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.create-account-submit:hover {
+	transform: translateY(-2px);
+	background: #594027;
+}
+
+.create-account-demo-note,
+.create-account-login {
+	margin: 15px 0 0;
+	color: var(--cocoa-600);
+	font-size: 0.82rem;
+	text-align: center;
+}
+
+.create-account-login {
+	margin-top: 10px;
+}
+
+@keyframes create-account-arrive {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.create-account-panel {
+		animation: none;
+	}
+}
