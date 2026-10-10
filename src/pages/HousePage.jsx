@@ -6,8 +6,8 @@ function HousePage({ accountName, items }) {
 		<main className="house-page">
 			<section aria-labelledby="house-title" className="house-content">
 				<header className="house-heading">
-					<p className="house-eyebrow">Your house</p>
-					<h1 id="house-title">{accountName}</h1>
+					{/*<p className="house-eyebrow">Your house</p>*/}
+					<h1 id="house-title">{accountName}'s House</h1>
 					<p className="house-item-count">{items.length} {items.length === 1 ? 'item' : 'items'}</p>
 				</header>
 
