@@ -2,7 +2,7 @@ import { FaHome, FaStore } from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom'
 import '../styles/NavBar.css'
 
-function NavBar({ onSignOut, onSignIn, isLoggedIn }) {
+function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn }) {
 
   return (
     <header className="header">
@@ -12,7 +12,7 @@ function NavBar({ onSignOut, onSignIn, isLoggedIn }) {
 
       {isLoggedIn ?
         <nav aria-label="Main navigation" className="main-nav">
-          <NavLink aria-label="Home" className='nav-icon-button'>
+          <NavLink aria-label="House" className='nav-icon-button' to="/house">
             <FaHome className="nav-icon" />
             <span>House</span>
           </NavLink>
@@ -31,10 +31,10 @@ function NavBar({ onSignOut, onSignIn, isLoggedIn }) {
           </button>
         :
           <>        
-            <button className="login-button" onClick={onSignIn} type="button">
+            <button className="login-button" onClick={onLogin} type="button">
               Log in
             </button>
-            <button className="create-account-button" onClick={onSignIn} type="button">
+            <button className="create-account-button" onClick={onCreateAccount} type="button">
               Create account
             </button>
           </>
