@@ -89,6 +89,24 @@
 	white-space: nowrap;
 }
 
+.store-purchase-button {
+	width: 100%;
+	min-height: 40px;
+	margin-top: 10px;
+	border: 0;
+	border-radius: 5px;
+	background: var(--cocoa-900);
+	color: white;
+	cursor: pointer;
+	font-size: 0.86rem;
+	font-weight: 750;
+}
+
+.store-purchase-button:disabled {
+	background: var(--leaf-500);
+	cursor: default;
+}
+
 .store-coin {
 	color: var(--mango-500);
 	font-size: 1.05rem;

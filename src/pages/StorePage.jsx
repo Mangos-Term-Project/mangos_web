@@ -12,7 +12,7 @@ const storeItems = [
 	{ id: 9, name: 'Item 9', price: 175 },
 ]
 
-function StorePage() {
+function StorePage({ onPurchase, purchasedItems }) {
 	return (
 		<main className="store-page">
 			<section aria-labelledby="store-title" className="store-window">
@@ -21,7 +21,9 @@ function StorePage() {
 				</header>
 
 				<div aria-label="Store items" className="store-grid">
-					{storeItems.map((item) => (
+					{storeItems.map((item) => {
+						const isPurchased = purchasedItems.some((purchasedItem) => purchasedItem.id === item.id)
+						return (
 						<article aria-label={`${item.name}, ${item.price} coins`} className="store-item" key={item.id}>
 							<div aria-label={`${item.name} image placeholder`} className="store-item-image" role="img">
 								<span className="store-image-placeholder-text">Image coming soon</span>
@@ -34,8 +36,17 @@ function StorePage() {
 									<span>coins</span>
 								</p>
 							</div>
+							<button
+								className="store-purchase-button"
+								disabled={isPurchased}
+								onClick={() => onPurchase(item)}
+								type="button"
+							>
+								{isPurchased ? 'In your house' : 'Buy'}
+							</button>
 						</article>
-					))}
+						)
+					})}
 				</div>
 			</section>
 		</main>

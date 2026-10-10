@@ -12,7 +12,7 @@ function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn }) {
 
       {isLoggedIn ?
         <nav aria-label="Main navigation" className="main-nav">
-          <NavLink aria-label="Home" className='nav-icon-button'>
+          <NavLink aria-label="House" className='nav-icon-button' to="/house">
             <FaHome className="nav-icon" />
             <span>House</span>
           </NavLink>

@@ -16,7 +16,11 @@ function CreateAccountPage({ onSubmit }) {
 		}
 
 		setPasswordError('')
-		onSubmit()
+		const formData = new FormData(event.currentTarget)
+		onSubmit({
+			name: formData.get('name'),
+			username: formData.get('username'),
+		})
 	}
 
 	function clearPasswordError() {
