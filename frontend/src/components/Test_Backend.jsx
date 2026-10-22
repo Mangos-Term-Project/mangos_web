@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
 function TestBackend() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch(`${API_BASE_URL}/api/users`)
       .then((res) => {
         console.log('Response from /api/users:', res);
         return res.json();
