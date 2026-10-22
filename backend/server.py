@@ -1,0 +1,63 @@
+import logging
+import os
+from pathlib import Path
+from typing import Any
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import uvicorn
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+load_dotenv(Path(__file__).with_name(".env"))
+
+HOST = os.getenv("HOST", "")
+PORT = int(os.getenv("PORT", "5001"))
+DATABASE_URL = os.getenv("DATABASE_URL", "")
+RELOAD = os.getenv("RELOAD", "true").lower() == "true"
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("mangos-api")
+
+app = FastAPI(title="Mangos API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info("%s %s", request.method, request.url.path)
+    return await call_next(request)
+
+
+@app.get("/api/users")
+def get_users() -> list[dict[str, Any]]:
+    database_url = DATABASE_URL
+    if not database_url:
+        logger.error("DATABASE_URL is not configured")
+        raise HTTPException(status_code=500, detail="Database is not configured")
+
+    try:
+        with psycopg2.connect(database_url) as connection:
+            with connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute("SELECT user_id, username, created_at FROM users")
+                rows = cursor.fetchall()
+        return [dict(row) for row in rows]
+    except Exception:
+        logger.exception("Failed to fetch users")
+        raise HTTPException(status_code=500, detail="Server Error") from None
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "server:app",
+        host=HOST,
+        port=PORT,
+        reload=RELOAD,
+        reload_dirs=[str(Path(__file__).parent)],
+    )
