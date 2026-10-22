@@ -13,10 +13,13 @@ from psycopg2.extras import RealDictCursor
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 load_dotenv(BACKEND_DIR / ".env")
 
-HOST = os.getenv("HOST", "127.0.0.1")
-PORT = int(os.getenv("PORT", "5001"))
+HOST = os.getenv("HOST", "")
+PORT = int(os.getenv("PORT", ""))
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 RELOAD = os.getenv("RELOAD", "true").lower() == "true"
+
+raw_origins = os.getenv("ALLOWED_ORIGINS", "")
+origins = [origin.strip() for origin in raw_origins.split(",")]
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mangos-api")
@@ -24,7 +27,8 @@ logger = logging.getLogger("mangos-api")
 app = FastAPI(title="Mangos API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
