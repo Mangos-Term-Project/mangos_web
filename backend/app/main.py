@@ -4,15 +4,16 @@ from pathlib import Path
 from typing import Any
 
 import psycopg2
-from psycopg2.extras import RealDictCursor
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from psycopg2.extras import RealDictCursor
 
-load_dotenv(Path(__file__).with_name(".env"))
+BACKEND_DIR = Path(__file__).resolve().parents[1]
+load_dotenv(BACKEND_DIR / ".env")
 
-HOST = os.getenv("HOST", "")
+HOST = os.getenv("HOST", "127.0.0.1")
 PORT = int(os.getenv("PORT", "5001"))
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 RELOAD = os.getenv("RELOAD", "true").lower() == "true"
@@ -37,13 +38,12 @@ async def log_requests(request, call_next):
 
 @app.get("/api/users")
 def get_users() -> list[dict[str, Any]]:
-    database_url = DATABASE_URL
-    if not database_url:
+    if not DATABASE_URL:
         logger.error("DATABASE_URL is not configured")
         raise HTTPException(status_code=500, detail="Database is not configured")
 
     try:
-        with psycopg2.connect(database_url) as connection:
+        with psycopg2.connect(DATABASE_URL) as connection:
             with connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 cursor.execute("SELECT user_id, username, created_at FROM users")
                 rows = cursor.fetchall()
@@ -55,7 +55,7 @@ def get_users() -> list[dict[str, Any]]:
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        "app.main:app",
         host=HOST,
         port=PORT,
         reload=RELOAD,

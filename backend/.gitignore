@@ -3,6 +3,7 @@
 .venv/
 __pycache__/
 *.py[cod]
+*.py[cod]
 
 # Editor directories and files
 .vscode/*
