@@ -15,7 +15,7 @@ function TestBackend() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Mangos Users</h1>
+      <h3>Testing API Call (Remove later)</h3>
       <ul>
         {users.map((user) => (
           <li key={user.user_id}>{user.username} (Created: {user.created_at})</li>

@@ -55,7 +55,7 @@ def get_users() -> list[dict[str, Any]]:
 
 if __name__ == "__main__":
     uvicorn.run(
-        "server:app",
+        "main:app",
         host=HOST,
         port=PORT,
         reload=RELOAD,
