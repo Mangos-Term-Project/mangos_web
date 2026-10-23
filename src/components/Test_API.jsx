@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function TestBackend() {
+function TestAPI() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -25,4 +25,4 @@ function TestBackend() {
   );
 }
 
-export default TestBackend;
+export default TestAPI;
