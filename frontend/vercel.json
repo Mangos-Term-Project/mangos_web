@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://mangos-web-backend.vercel.app/api/:path*"
+    }
+  ]
+}

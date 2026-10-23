@@ -16,17 +16,13 @@ load_dotenv(BACKEND_DIR / ".env")
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 RELOAD = os.getenv("RELOAD", "true").lower() == "true"
 
-raw_origins = os.getenv("ALLOWED_ORIGINS", "")
-origins = [origin.strip() for origin in raw_origins.split(",")]
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mangos-api")
 
 app = FastAPI(title="Mangos API")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
