@@ -10,8 +10,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg2.extras import RealDictCursor
 
-BACKEND_DIR = Path(__file__).resolve().parents[1]
-load_dotenv(BACKEND_DIR / ".env")
+API_DIR = Path(__file__).resolve().parent
+load_dotenv(API_DIR.parent / ".env")
 
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 RELOAD = os.getenv("RELOAD", "true").lower() == "true"
@@ -53,9 +53,9 @@ def get_users() -> list[dict[str, Any]]:
 
 if __name__ == "__main__":
     uvicorn.run(
-        "app.main:app",
+        "main:app",
         host=os.getenv("HOST", "127.0.0.1"),
         port=int(os.getenv("PORT", "5001")),
         reload=RELOAD,
-        reload_dirs=[str(Path(__file__).parent)],
+        reload_dirs=[str(API_DIR)],
     )

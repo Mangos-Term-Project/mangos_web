@@ -15,8 +15,8 @@ dependencies = [
 	"python-dotenv>=1.0,<2",
 ]
 
-[tool.setuptools.packages.find]
-include = ["app*"]
+[tool.setuptools]
+py-modules = ["main"]
 
 [tool.vercel]
-entrypoint = "app.main:app"
+entrypoint = "main:app"
