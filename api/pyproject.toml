@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mangos-api"
+version = "0.1.0"
+description = "FastAPI backend for the Mangos web application"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+	"fastapi>=0.115,<1",
+	"uvicorn[standard]>=0.30,<1",
+	"psycopg2-binary>=2.9.9,<3",
+	"python-dotenv>=1.0,<2",
+]
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[tool.vercel]
+entrypoint = "main:app"

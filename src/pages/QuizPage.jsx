@@ -54,7 +54,7 @@ function QuizPage() {
 				</div>
 
 				<div aria-label="Picture choices" className="quiz-choice-grid">
-					{choices.map((choice, index) => {
+					{choices.map((choice) => {
 						const isSelected = selectedChoice === choice.id
 						const isCorrect = isChecked && isSelected && choice.correct
 						const isIncorrect = isChecked && isSelected && !choice.correct

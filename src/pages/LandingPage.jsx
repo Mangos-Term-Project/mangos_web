@@ -1,4 +1,5 @@
 import '../styles/LandingPage.css'
+import TestAPI from '../components/Test_API.jsx'
 
 function LandingPage({ onStartLearning }) {
 
@@ -18,6 +19,9 @@ function LandingPage({ onStartLearning }) {
           <br />
           <span className='landing-subtitle'>English Learning</span>
         </h1>
+        <span>
+          <TestAPI />
+        </span>
         <p className="landing-description">
           Grow your confidence, one picture at a time.
         </p>

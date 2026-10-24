@@ -1,3 +1,7 @@
+.vite/
+
+.env
+
 # Logs
 logs
 *.log
