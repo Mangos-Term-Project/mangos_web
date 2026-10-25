@@ -1,3 +1,11 @@
+.app-loading {
+	min-height: 100svh;
+	display: grid;
+	place-items: center;
+	margin: 0;
+	color: var(--cocoa-600);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
