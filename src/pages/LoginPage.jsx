@@ -1,9 +1,25 @@
+import { useState } from 'react'
 import '../styles/LoginPage.css'
 
 function LoginPage({ onSubmit }) {
-	function handleSubmit(event) {
+	const [error, setError] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
+
+	async function handleSubmit(event) {
 		event.preventDefault()
-		onSubmit()
+		const formData = new FormData(event.currentTarget)
+
+		setError('')
+		setIsSubmitting(true)
+		try {
+			await onSubmit({
+				username: formData.get('username'),
+				password: formData.get('password'),
+			})
+		} catch (submitError) {
+			setError(submitError.message)
+			setIsSubmitting(false)
+		}
 	}
 
 	return (
@@ -25,6 +41,7 @@ function LoginPage({ onSubmit }) {
 
 					<label htmlFor="password">Password</label>
 					<input
+						aria-describedby={error ? 'login-error' : undefined}
 						autoComplete="current-password"
 						id="password"
 						name="password"
@@ -32,15 +49,15 @@ function LoginPage({ onSubmit }) {
 						required
 						type="password"
 					/>
+					{error && <p className="login-error" id="login-error" role="alert">{error}</p>}
 
-					<button className="login-submit" type="submit">Log in</button>
+					<button className="login-submit" disabled={isSubmitting} type="submit">
+						{isSubmitting ? 'Logging in...' : 'Log in'}
+					</button>
 				</form>
-				<p className="login-demo-note">Demo mode: any username and password will work.</p>
 			</section>
 		</main>
 	)
 }
 
 export default LoginPage
-
-

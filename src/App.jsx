@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
@@ -9,10 +9,9 @@ import DrawPage from './pages/DrawPage.jsx'
 import QuizPage from './pages/QuizPage.jsx'
 import StorePage from './pages/StorePage.jsx'
 import NavBar from './components/NavBar.jsx'
+import { getCurrentUser, login, logout, register } from './api/auth.js'
 import './App.css'
 
-const AUTH_STORAGE_KEY = 'mangos-demo-logged-in'
-const PROFILE_STORAGE_KEY = 'mangos-demo-profile'
 const PURCHASES_STORAGE_KEY = 'mangos-demo-purchases'
 
 function readStoredValue(key, fallback) {
@@ -26,23 +25,38 @@ function readStoredValue(key, fallback) {
 
 function App() {
   const navigate = useNavigate()
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    () => window.localStorage.getItem(AUTH_STORAGE_KEY) === 'true',
-  )
-  const [profile, setProfile] = useState(() => readStoredValue(PROFILE_STORAGE_KEY, {}))
+  const [user, setUser] = useState(null)
+  const [authChecked, setAuthChecked] = useState(false)
   const [purchasedItems, setPurchasedItems] = useState(() => readStoredValue(PURCHASES_STORAGE_KEY, []))
+  const isLoggedIn = user !== null
 
-  function handleDemoSignIn() {
-    window.localStorage.setItem(AUTH_STORAGE_KEY, 'true')
-    setIsLoggedIn(true)
+  useEffect(() => {
+    let cancelled = false
+
+    getCurrentUser()
+      .then((currentUser) => {
+        if (!cancelled) setUser(currentUser)
+      })
+      .catch(() => {
+        if (!cancelled) setUser(null)
+      })
+      .finally(() => {
+        if (!cancelled) setAuthChecked(true)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  async function handleLogin(credentials) {
+    setUser(await login(credentials))
     navigate('/home')
   }
 
-  function handleCreateAccount(newProfile) {
-    const savedProfile = { name: newProfile.name.trim(), username: newProfile.username.trim() }
-    window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(savedProfile))
-    setProfile(savedProfile)
-    handleDemoSignIn()
+  async function handleCreateAccount(details) {
+    setUser(await register(details))
+    navigate('/home')
   }
 
   function handlePurchase(item) {
@@ -54,14 +68,30 @@ function App() {
     })
   }
 
-  function handleSignOut() {
-    window.localStorage.removeItem(AUTH_STORAGE_KEY)
-    setIsLoggedIn(false)
+  async function handleSignOut() {
+    try {
+      await logout()
+    } catch (error) {
+      console.error('Sign out failed:', error)
+    }
+    setUser(null)
     navigate('/')
   }
 
   function requireLogin(element) {
     return isLoggedIn ? element : <Navigate to="/" replace />
+  }
+
+  function guestOnly(element) {
+    return isLoggedIn ? <Navigate to="/home" replace /> : element
+  }
+
+  if (!authChecked) {
+    return (
+      <main className="app">
+        <p className="app-loading" role="status">Loading...</p>
+      </main>
+    )
   }
 
   return (
@@ -75,10 +105,10 @@ function App() {
 
       <Routes>
         <Route path="/" element={<LandingPage onStartLearning={() => navigate('/login')} />} />
-        <Route path="/login" element={<LoginPage onSubmit={handleDemoSignIn} />} />
-        <Route path="/create-account" element={<CreateAccountPage onSubmit={handleCreateAccount} />} />
+        <Route path="/login" element={guestOnly(<LoginPage onSubmit={handleLogin} />)} />
+        <Route path="/create-account" element={guestOnly(<CreateAccountPage onSubmit={handleCreateAccount} />)} />
         <Route path="/home" element={requireLogin(<MemberPage />)} />
-        <Route path="/house" element={requireLogin(<HousePage accountName={profile.name || 'Learner'} items={purchasedItems} />)} />
+        <Route path="/house" element={requireLogin(<HousePage accountName={user?.name} items={purchasedItems} />)} />
         <Route path="/draw" element={requireLogin(<DrawPage />)} />
         <Route path="/quiz" element={requireLogin(<QuizPage />)} />
         <Route path="/store" element={requireLogin(<StorePage onPurchase={handlePurchase} purchasedItems={purchasedItems} />)} />

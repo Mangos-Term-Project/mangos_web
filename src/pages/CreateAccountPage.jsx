@@ -2,29 +2,55 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/CreateAccountPage.css'
 
+// Same rules as the API (api/main.py), so problems show before submitting.
+const USERNAME_PATTERN = /^[A-Za-z0-9_]{3,30}$/
+const NAME_MAX_LENGTH = 256
+const PASSWORD_MIN_LENGTH = 8
+const PASSWORD_MAX_BYTES = 72
+
+function validateAccount({ name, username, password }, confirmation) {
+	if (!name) return 'Please enter your name.'
+	if (name.length > NAME_MAX_LENGTH) return 'Name must be 256 characters or fewer.'
+	if (!USERNAME_PATTERN.test(username)) return 'Username must be 3 to 30 characters: letters, numbers or underscores.'
+	if (password.length < PASSWORD_MIN_LENGTH) return 'Password must be at least 8 characters.'
+	if (new TextEncoder().encode(password).length > PASSWORD_MAX_BYTES) return 'Password must be at most 72 characters.'
+	if (password !== confirmation) return 'Passwords do not match.'
+	return ''
+}
+
 function CreateAccountPage({ onSubmit }) {
 	const [password, setPassword] = useState('')
 	const [confirmation, setConfirmation] = useState('')
-	const [passwordError, setPasswordError] = useState('')
+	const [error, setError] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault()
+		const formData = new FormData(event.currentTarget)
+		const details = {
+			name: formData.get('name').trim(),
+			username: formData.get('username').trim(),
+			password,
+		}
 
-		if (password !== confirmation) {
-			setPasswordError('Passwords do not match.')
+		const validationError = validateAccount(details, confirmation)
+		if (validationError) {
+			setError(validationError)
 			return
 		}
 
-		setPasswordError('')
-		const formData = new FormData(event.currentTarget)
-		onSubmit({
-			name: formData.get('name'),
-			username: formData.get('username'),
-		})
+		setError('')
+		setIsSubmitting(true)
+		try {
+			await onSubmit(details)
+		} catch (submitError) {
+			setError(submitError.message)
+			setIsSubmitting(false)
+		}
 	}
 
-	function clearPasswordError() {
-		if (passwordError) setPasswordError('')
+	function clearError() {
+		if (error) setError('')
 	}
 
 	return (
@@ -60,7 +86,7 @@ function CreateAccountPage({ onSubmit }) {
 						name="password"
 						onChange={(event) => {
 							setPassword(event.target.value)
-							clearPasswordError()
+							clearError()
 						}}
 						placeholder="Choose a password"
 						required
@@ -70,25 +96,26 @@ function CreateAccountPage({ onSubmit }) {
 
 					<label htmlFor="confirm-password">Confirm your password</label>
 					<input
-						aria-describedby={passwordError ? 'password-error' : undefined}
+						aria-describedby={error ? 'create-account-error' : undefined}
 						autoComplete="new-password"
 						id="confirm-password"
 						name="confirmPassword"
 						onChange={(event) => {
 							setConfirmation(event.target.value)
-							clearPasswordError()
+							clearError()
 						}}
 						placeholder="Enter your password again"
 						required
 						type="password"
 						value={confirmation}
 					/>
-					{passwordError && <p className="password-error" id="password-error" role="alert">{passwordError}</p>}
+					{error && <p className="password-error" id="create-account-error" role="alert">{error}</p>}
 
-					<button className="create-account-submit" type="submit">Create account</button>
+					<button className="create-account-submit" disabled={isSubmitting} type="submit">
+						{isSubmitting ? 'Creating account...' : 'Create account'}
+					</button>
 				</form>
 
-				<p className="create-account-demo-note">Demo mode: account details are not saved.</p>
 				<p className="create-account-login">Already have an account? <Link to="/login">Log in</Link></p>
 			</section>
 		</main>
