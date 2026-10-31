@@ -30,13 +30,16 @@
 html {
 	min-width: 320px;
 	min-height: 100%;
+	overflow-x: clip;
 	background: var(--mango-50);
 }
 
 body {
 	min-width: 320px;
 	min-height: 100vh;
+	min-height: 100dvh;
 	margin: 0;
+	overflow-x: clip;
 	background:
 		radial-gradient(ellipse at 85% 0%, rgb(255 220 150 / 42%), transparent 38rem),
 		linear-gradient(180deg, #fffaf0 0%, #fff6e3 100%);
@@ -58,8 +61,15 @@ select {
 	font-size: inherit;
 }
 
+input,
+textarea,
+select {
+	font-size: 16px;
+}
+
 button {
 	color: inherit;
+	-webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -114,4 +124,17 @@ a:hover {
 .session-signout:hover {
 	background: var(--mango-400-light);
 	transform: translateY(-2px);
+}
+
+@media (max-width: 560px) {
+	.auth-gate {
+		padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+	}
+
+	.session-signout {
+		top: max(8px, env(safe-area-inset-top));
+		right: 10px;
+		min-height: 44px;
+		padding-inline: 14px;
+	}
 }

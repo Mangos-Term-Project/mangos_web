@@ -121,7 +121,7 @@
 
 @media (max-width: 480px) {
 	.store-page {
-		padding: 88px 10px 24px;
+		padding: max(80px, calc(68px + env(safe-area-inset-top))) 10px max(24px, env(safe-area-inset-bottom));
 	}
 
 	.store-window {
@@ -146,5 +146,9 @@
 		align-items: flex-start;
 		flex-direction: column;
 		gap: 5px;
+	}
+
+	.store-purchase-button {
+		min-height: 44px;
 	}
 }
