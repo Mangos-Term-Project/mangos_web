@@ -2,7 +2,7 @@
 	min-height: 100svh;
 	display: grid;
 	place-items: center;
-	padding: 104px 20px 40px;
+	padding: max(88px, calc(76px + env(safe-area-inset-top))) 20px max(40px, env(safe-area-inset-bottom));
 	background:
 		radial-gradient(ellipse at 18% 76%, rgb(255 220 150 / 32%), transparent 26rem),
 		radial-gradient(ellipse at 84% 22%, rgb(85 122 70 / 10%), transparent 24rem);
@@ -51,7 +51,7 @@
 
 .create-account-form input {
 	width: 100%;
-	min-height: 46px;
+	min-height: 52px;
 	padding: 0 13px;
 	border: 1px solid rgb(121 99 76 / 28%);
 	border-radius: 5px;

@@ -133,7 +133,8 @@
 @media (max-width: 560px) {
     .member-main {
 		width: min(100% - 32px, 480px);
-		padding-top: 54px;
+		padding-top: 42px;
+		padding-bottom: max(48px, env(safe-area-inset-bottom));
 	}
 
     .member-welcome {
@@ -145,6 +146,21 @@
 	}
 
 	.activity-card {
-		min-height: 260px;
+		min-height: 228px;
+		padding: 22px;
+		border-radius: 22px;
+	}
+
+	.activity-illustration {
+		top: 20px;
+		right: 22px;
+		width: 84px;
+		height: 84px;
+		border-radius: 24px;
+		font-size: 3.6rem;
+	}
+
+	.activity-card-copy {
+		gap: 10px;
 	}
 }
