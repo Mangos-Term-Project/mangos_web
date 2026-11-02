@@ -19,13 +19,13 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 44px 0 100px;
+	padding: max(92px, calc(70px + env(safe-area-inset-top))) 0 max(48px, env(safe-area-inset-bottom));
 	text-align: center;
 }
 
 .landing-hero h1 {
 	margin: 0;
-	font-size: clamp(4rem, 12vw, 9rem);
+	font-size: clamp(3.2rem, 12vw, 9rem);
 	font-weight: 850;
 	letter-spacing: -0.085em;
 	line-height: 0.88;
@@ -73,7 +73,7 @@
 	color: white;
     min-height: 54px;
 	padding-inline: 28px;
-    min-height: 46px;
+	min-height: 52px;
 	border: 0;
 	border-radius: 999px;
 	cursor: pointer;
@@ -156,6 +156,87 @@
 	left: 33%;
 	width: clamp(24px, 3.5vw, 46px);
 	animation-delay: -3s;
+}
+
+@media (max-width: 560px) {
+	.landing-hero {
+		width: min(100% - 32px, 420px);
+		padding-top: max(96px, calc(72px + env(safe-area-inset-top)));
+	}
+
+	.landing-kicker {
+		max-width: 28ch;
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+		line-height: 1.5;
+	}
+
+	.landing-hero h1 {
+		font-size: clamp(3.1rem, 16vw, 5rem);
+	}
+
+	.landing-title-fruit {
+		font-size: clamp(3rem, 17vw, 4.5rem);
+	}
+
+	.landing-description {
+		max-width: 30ch;
+		margin-block: 20px 24px;
+		font-size: 1rem;
+	}
+
+	.floating-mango {
+		font-size: 2.75rem;
+		opacity: 0.4;
+	}
+
+	.mango-one {
+		top: 17%;
+		left: 7%;
+	}
+
+	.mango-three {
+		top: 47%;
+		right: 5%;
+	}
+
+	.mango-four {
+		right: 9%;
+		bottom: 9%;
+	}
+
+	.mango-two,
+	.mango-five {
+		display: none;
+	}
+
+	.mango-six {
+		display: block;
+		bottom: 9%;
+		left: 8%;
+		width: auto;
+		font-size: 2.4rem;
+	}
+}
+
+@media (max-width: 560px) and (max-height: 600px) {
+	.mango-three {
+		display: none;
+	}
+
+	.mango-one {
+		top: 20%;
+	}
+
+	.mango-four {
+		bottom: 6%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.floating-mango {
+		animation: none;
+	}
 }
 
 @keyframes mango-drift {

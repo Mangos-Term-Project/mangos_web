@@ -98,7 +98,7 @@
 
 @media (max-width: 480px) {
 	.house-page {
-		padding: 92px 12px 28px;
+		padding: max(80px, calc(68px + env(safe-area-inset-top))) 12px max(28px, env(safe-area-inset-bottom));
 	}
 
 	.house-heading {
@@ -116,5 +116,11 @@
 
 	.house-item {
 		padding: 7px;
+	}
+}
+
+@media (max-width: 360px) {
+	.house-grid {
+		grid-template-columns: 1fr;
 	}
 }

@@ -207,7 +207,7 @@
 
 @media (max-width: 520px) {
 	.draw-page {
-		padding: 10px;
+		padding: max(76px, calc(64px + env(safe-area-inset-top))) 10px max(10px, env(safe-area-inset-bottom));
 	}
 
 	.draw-workspace {
@@ -220,11 +220,28 @@
 	}
 
 	.drawing-column {
-		min-height: 500px;
+		min-height: 0;
+		padding: 16px;
+	}
+
+	.reference-column {
+		padding: 18px 16px;
+	}
+
+	.drawing-toolbar {
+		align-items: flex-start;
+		margin-top: 16px;
+	}
+
+	.drawing-toolbar p {
+		max-width: 22ch;
+		line-height: 1.4;
 	}
 
 	.drawing-canvas-wrap {
-		min-height: 300px;
+		min-height: 240px;
+		height: min(42svh, 380px);
+		flex: 0 0 auto;
 	}
 
 	.reference-gallery {
