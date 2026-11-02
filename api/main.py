@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import bcrypt
+import certifi
 import psycopg2
 import psycopg2.errors
 import uvicorn
@@ -17,15 +18,18 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg2.extras import RealDictCursor
 from pydantic import BaseModel
+from redis import Redis
 
 API_DIR = Path(__file__).resolve().parent
 load_dotenv(API_DIR.parent / ".env")
 
 DATABASE_URL = os.getenv("DATABASE_URL", "")
+REDIS_URL = os.getenv("REDIS_URL", "")
 RELOAD = os.getenv("RELOAD", "true").lower() == "true"
 
 SESSION_COOKIE = "mangos_session"
 SESSION_SECONDS = 60 * 60
+SESSION_KEY_PREFIX = "mangos:session:"
 LOCAL_HOSTS = {"localhost", "127.0.0.1"}
 USERNAME_PATTERN = re.compile(r"[a-z0-9_]{3,30}")
 NAME_MAX_LENGTH = 256
@@ -39,6 +43,10 @@ DUMMY_PASSWORD_HASH = bcrypt.hashpw(b"mangos-dummy-password", bcrypt.gensalt()).
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mangos-api")
+
+redis_options: dict[str, Any] = {"decode_responses": True}
+redis_options["ssl_ca_certs"] = certifi.where()
+session_store = Redis.from_url(REDIS_URL, **redis_options) if REDIS_URL else None
 
 app = FastAPI(title="Mangos API")
 app.add_middleware(
@@ -88,18 +96,32 @@ def get_connection(action: str) -> Iterator[Any]:
         raise HTTPException(status_code=500, detail="Server Error") from None
 
 
+@contextmanager
+def get_session_store(action: str) -> Iterator[Redis]:
+    """Use the shared Redis client and convert connection failures to a generic 500."""
+    try:
+        if session_store is None:
+            raise RuntimeError("REDIS_URL is not configured")
+        yield session_store
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Failed to %s", action)
+        raise HTTPException(status_code=500, detail="Server Error") from None
+
+
 def hash_token(token: str) -> str:
     return hashlib.sha256(token.encode()).hexdigest()
 
 
-def create_session(cursor: Any, user_id: Any) -> str:
-    cursor.execute("DELETE FROM sessions WHERE user_id = %s AND expires_at <= now()", (user_id,))
+def session_key(token: str) -> str:
+    return f"{SESSION_KEY_PREFIX}{hash_token(token)}"
+
+
+def create_session(user_id: Any) -> str:
     token = secrets.token_urlsafe(32)
-    cursor.execute(
-        "INSERT INTO sessions (token_hash, user_id, expires_at) "
-        "VALUES (%s, %s, now() + make_interval(secs => %s))",
-        (hash_token(token), user_id, SESSION_SECONDS),
-    )
+    with get_session_store("create session") as store:
+        store.set(session_key(token), str(user_id), ex=SESSION_SECONDS)
     return token
 
 
@@ -188,7 +210,7 @@ def register(body: RegisterRequest, request: Request, response: Response) -> dic
             "INSERT INTO profiles (user_id, display_name) VALUES (%s, %s)",
             (user_id, name),
         )
-        token = create_session(cursor, user_id)
+        token = create_session(user_id)
 
     set_session_cookie(response, request, token)
     return user_response({"user_id": user_id, "username": username, "name": name})
@@ -209,7 +231,7 @@ def login(body: LoginRequest, request: Request, response: Response) -> dict[str,
         matched = password_matches(body.password, row["password_hash"] if row else DUMMY_PASSWORD_HASH)
         if row is None or not matched:
             raise HTTPException(status_code=401, detail=LOGIN_FAILED)
-        token = create_session(cursor, row["user_id"])
+        token = create_session(row["user_id"])
 
     set_session_cookie(response, request, token)
     return user_response(row)
@@ -221,14 +243,18 @@ def get_current_user(request: Request) -> dict[str, str]:
     if not token:
         raise HTTPException(status_code=401, detail="Not logged in.")
 
+    with get_session_store("fetch session") as store:
+        user_id = store.get(session_key(token))
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Not logged in.")
+
     with get_connection("fetch current user") as connection, connection.cursor() as cursor:
         cursor.execute(
             "SELECT u.user_id, u.username, p.display_name AS name "
-            "FROM sessions s "
-            "JOIN users u ON u.user_id = s.user_id "
+            "FROM users u "
             "LEFT JOIN profiles p ON p.user_id = u.user_id "
-            "WHERE s.token_hash = %s AND s.expires_at > now()",
-            (hash_token(token),),
+            "WHERE u.user_id = %s",
+            (user_id,),
         )
         row = cursor.fetchone()
 
@@ -241,8 +267,8 @@ def get_current_user(request: Request) -> dict[str, str]:
 def logout(request: Request, response: Response) -> dict[str, bool]:
     token = request.cookies.get(SESSION_COOKIE)
     if token:
-        with get_connection("log out") as connection, connection.cursor() as cursor:
-            cursor.execute("DELETE FROM sessions WHERE token_hash = %s", (hash_token(token),))
+        with get_session_store("log out") as store:
+            store.delete(session_key(token))
 
     clear_session_cookie(response, request)
     return {"ok": True}
