@@ -7,6 +7,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
+from uuid import UUID
 
 import bcrypt
 import certifi
@@ -14,10 +15,10 @@ import psycopg2
 import psycopg2.errors
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg2.extras import RealDictCursor
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from redis import Redis
 
 API_DIR = Path(__file__).resolve().parent
@@ -66,6 +67,11 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+
+class FlashCardRequest(BaseModel):
+    word_id: UUID
+    drawing: str = Field(max_length=2_000_000)
 
 
 @app.middleware("http")
@@ -167,6 +173,18 @@ def user_response(row: dict[str, Any]) -> dict[str, str]:
     }
 
 
+def authenticated_user_id(request: Request) -> str:
+    token = request.cookies.get(SESSION_COOKIE)
+    if not token:
+        raise HTTPException(status_code=401, detail="Not logged in.")
+
+    with get_session_store("fetch session") as store:
+        user_id = store.get(session_key(token))
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Not logged in.")
+    return user_id
+
+
 @app.get("/api/users")
 def get_users() -> list[dict[str, Any]]:
     with get_connection("fetch users") as connection, connection.cursor() as cursor:
@@ -239,14 +257,7 @@ def login(body: LoginRequest, request: Request, response: Response) -> dict[str,
 
 @app.get("/api/auth/me")
 def get_current_user(request: Request) -> dict[str, str]:
-    token = request.cookies.get(SESSION_COOKIE)
-    if not token:
-        raise HTTPException(status_code=401, detail="Not logged in.")
-
-    with get_session_store("fetch session") as store:
-        user_id = store.get(session_key(token))
-    if user_id is None:
-        raise HTTPException(status_code=401, detail="Not logged in.")
+    user_id = authenticated_user_id(request)
 
     with get_connection("fetch current user") as connection, connection.cursor() as cursor:
         cursor.execute(
@@ -261,6 +272,115 @@ def get_current_user(request: Request) -> dict[str, str]:
     if row is None:
         raise HTTPException(status_code=401, detail="Not logged in.")
     return user_response(row)
+
+
+@app.get("/api/words/next")
+def get_next_word(
+    request: Request,
+    exclude_words: list[str] = Query(default=[]),
+) -> dict[str, str] | None:
+    user_id = authenticated_user_id(request)
+    excluded_words = [word.strip().lower() for word in exclude_words if word.strip()]
+
+    with get_connection("fetch next word") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT w.word_id, w.word "
+            "FROM word w "
+            "WHERE LOWER(w.word) <> ALL(%s) "
+            "AND NOT EXISTS ("
+            "  SELECT 1 FROM flashcard f "
+            "  WHERE f.user_id = %s AND f.word_id = w.word_id"
+            ") "
+            "ORDER BY RANDOM() "
+            "LIMIT 1",
+            (excluded_words, user_id),
+        )
+        row = cursor.fetchone()
+    if row is None:
+        return None
+    return {"word_id": str(row["word_id"]), "word": row["word"]}
+
+
+@app.get("/api/flashcards")
+def get_flashcards(request: Request) -> list[dict[str, str | None]]:
+    user_id = authenticated_user_id(request)
+    with get_connection("fetch flash cards") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT f.flashcard_id, w.word, p.drawing_url "
+            "FROM flashcard f "
+            "JOIN word w ON w.word_id = f.word_id "
+            "LEFT JOIN user_flashcard_progress p "
+            "  ON p.user_id = f.user_id AND p.flashcard_id = f.flashcard_id "
+            "WHERE f.user_id = %s "
+            "ORDER BY w.word",
+            (user_id,),
+        )
+        rows = cursor.fetchall()
+    return [
+        {
+            "id": str(row["flashcard_id"]),
+            "name": row["word"],
+            "drawing": row["drawing_url"],
+        }
+        for row in rows
+    ]
+
+
+@app.post("/api/flashcards", status_code=201)
+def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, str]:
+    user_id = authenticated_user_id(request)
+    word_id = str(body.word_id)
+    if not body.drawing.startswith("data:image/png;base64,"):
+        raise HTTPException(status_code=400, detail="The drawing must be a PNG image.")
+
+    with get_connection("create flash card") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT word, word_id FROM word WHERE word_id = %s FOR UPDATE",
+            (word_id,),
+        )
+        word_row = cursor.fetchone()
+        if word_row is None:
+            raise HTTPException(status_code=404, detail="That word could not be found.")
+
+        cursor.execute(
+            "SELECT flashcard_id FROM flashcard WHERE user_id = %s AND word_id = %s LIMIT 1",
+            (user_id, word_id),
+        )
+        if cursor.fetchone() is not None:
+            raise HTTPException(status_code=409, detail="You have already saved a flash card for this word.")
+
+        cursor.execute(
+            "SELECT set_id FROM user_flashcard_sets "
+            "WHERE user_id = %s AND is_active IS TRUE "
+            "ORDER BY set_id LIMIT 1",
+            (user_id,),
+        )
+        set_row = cursor.fetchone()
+        if set_row is None:
+            cursor.execute(
+                "INSERT INTO user_flashcard_sets (user_id, name, is_active) "
+                "VALUES (%s, %s, TRUE) RETURNING set_id",
+                (user_id, "My Flash Cards"),
+            )
+            set_row = cursor.fetchone()
+
+        cursor.execute(
+            "INSERT INTO flashcard (user_id, set_id, word_id) "
+            "VALUES (%s, %s, %s) RETURNING flashcard_id",
+            (user_id, set_row["set_id"], word_id),
+        )
+        flashcard_id = cursor.fetchone()["flashcard_id"]
+        cursor.execute(
+            "INSERT INTO user_flashcard_progress (user_id, flashcard_id, drawing_url) "
+            "VALUES (%s, %s, %s)",
+            (user_id, flashcard_id, body.drawing),
+        )
+
+    return {
+        "id": str(flashcard_id),
+        "name": word_row["word"],
+        "drawing": body.drawing,
+    }
 
 
 @app.post("/api/auth/logout")

@@ -71,6 +71,12 @@
 	font-size: 0.9rem;
 }
 
+.drawing-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
 .clear-drawing-button {
 	padding: 8px 14px;
 	border: 1px solid rgb(121 99 76 / 20%);
@@ -80,6 +86,33 @@
 	cursor: pointer;
 	font-size: 0.85rem;
 	font-weight: 700;
+}
+
+.save-flashcard-button {
+	padding: 9px 15px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--leaf-500);
+	color: white;
+	cursor: pointer;
+	font-size: 0.85rem;
+	font-weight: 750;
+}
+
+.save-flashcard-button:hover {
+	filter: brightness(0.94);
+}
+
+.save-flashcard-button:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.flashcard-save-message {
+	min-height: 1.25em;
+	margin: 0 0 10px;
+	color: var(--leaf-500);
+	font-size: 0.85rem;
 }
 
 .clear-drawing-button:hover {
@@ -231,6 +264,11 @@
 	.drawing-toolbar {
 		align-items: flex-start;
 		margin-top: 16px;
+	}
+
+	.drawing-actions {
+		flex-wrap: wrap;
+		justify-content: flex-end;
 	}
 
 	.drawing-toolbar p {
