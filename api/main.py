@@ -8,9 +8,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode, urlsplit
-from urllib.request import urlopen
+from uuid import UUID
 
 import bcrypt
 import certifi
@@ -21,7 +19,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg2.extras import RealDictCursor
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from redis import Redis
 
 API_DIR = Path(__file__).resolve().parent
@@ -70,6 +68,11 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+
+class FlashCardRequest(BaseModel):
+    word_id: UUID
+    drawing: str = Field(max_length=2_000_000)
 
 
 @app.middleware("http")
@@ -171,6 +174,18 @@ def user_response(row: dict[str, Any]) -> dict[str, str]:
     }
 
 
+def authenticated_user_id(request: Request) -> str:
+    token = request.cookies.get(SESSION_COOKIE)
+    if not token:
+        raise HTTPException(status_code=401, detail="Not logged in.")
+
+    with get_session_store("fetch session") as store:
+        user_id = store.get(session_key(token))
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Not logged in.")
+    return user_id
+
+
 @app.get("/api/users")
 def get_users() -> list[dict[str, Any]]:
     with get_connection("fetch users") as connection, connection.cursor() as cursor:
@@ -243,14 +258,7 @@ def login(body: LoginRequest, request: Request, response: Response) -> dict[str,
 
 @app.get("/api/auth/me")
 def get_current_user(request: Request) -> dict[str, str]:
-    token = request.cookies.get(SESSION_COOKIE)
-    if not token:
-        raise HTTPException(status_code=401, detail="Not logged in.")
-
-    with get_session_store("fetch session") as store:
-        user_id = store.get(session_key(token))
-    if user_id is None:
-        raise HTTPException(status_code=401, detail="Not logged in.")
+    user_id = authenticated_user_id(request)
 
     with get_connection("fetch current user") as connection, connection.cursor() as cursor:
         cursor.execute(
@@ -267,64 +275,113 @@ def get_current_user(request: Request) -> dict[str, str]:
     return user_response(row)
 
 
-@app.get("/api/images/search")
-def search_images(request: Request, q: str = Query(min_length=1, max_length=80)):
-    query = " ".join(q.split()).casefold()
-    if not query:
-        raise HTTPException(status_code=400, detail="Enter a word to search.")
-    token = request.cookies.get(SESSION_COOKIE)
-    if not token:
-        raise HTTPException(status_code=401, detail="Sign in to search for pictures.")
+@app.get("/api/words/next")
+def get_next_word(
+    request: Request,
+    exclude_words: list[str] = Query(default=[]),
+) -> dict[str, str] | None:
+    user_id = authenticated_user_id(request)
+    excluded_words = [word.strip().lower() for word in exclude_words if word.strip()]
 
-    api_key = os.getenv("PIXABAY_API_KEY", "").strip()
-    cache_key = f"mangos:pixabay:v1:{hash_token(query)}"
-    with get_session_store("search pictures") as store:
-        user_id = store.get(session_key(token))
-        if user_id is None:
-            raise HTTPException(status_code=401, detail="Sign in to search for pictures.")
-        if not api_key:
-            raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
-        cached = store.get(cache_key)
-        if cached is not None:
-            return json.loads(cached)
+    with get_connection("fetch next word") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT w.word_id, w.word "
+            "FROM word w "
+            "WHERE LOWER(w.word) <> ALL(%s) "
+            "AND NOT EXISTS ("
+            "  SELECT 1 FROM flashcard f "
+            "  WHERE f.user_id = %s AND f.word_id = w.word_id"
+            ") "
+            "ORDER BY RANDOM() "
+            "LIMIT 1",
+            (excluded_words, user_id),
+        )
+        row = cursor.fetchone()
+    if row is None:
+        return None
+    return {"word_id": str(row["word_id"]), "word": row["word"]}
 
-        # Cap uncached requests per account to protect the shared API quota.
-        rate_key = f"mangos:pixabay:quota:{user_id}"
-        with store.pipeline() as pipe:
-            count, _ = pipe.incr(rate_key).expire(rate_key, 60, nx=True).execute()
-        if count > 10:
-            raise HTTPException(status_code=429, detail="Please wait a minute before searching again.")
 
-        params = urlencode({
-            "key": api_key, "q": query, "safesearch": "true",
-            "image_type": "illustration", "per_page": 12, "lang": "en",
-        })
-        try:
-            with urlopen(f"https://pixabay.com/api/?{params}", timeout=6) as response:
-                payload = json.load(response)
-        except HTTPError as error:
-            if error.code == 429:
-                raise HTTPException(status_code=429, detail="Picture search is busy. Try again shortly.") from None
-            logger.warning("Pixabay returned HTTP %s", error.code)
-            raise HTTPException(status_code=502, detail="Picture search is temporarily unavailable.") from None
-        except (URLError, TimeoutError, ValueError):
-            raise HTTPException(status_code=502, detail="Picture search is temporarily unavailable.") from None
+@app.get("/api/flashcards")
+def get_flashcards(request: Request) -> list[dict[str, str | None]]:
+    user_id = authenticated_user_id(request)
+    with get_connection("fetch flash cards") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT f.flashcard_id, w.word, p.drawing_url "
+            "FROM flashcard f "
+            "JOIN word w ON w.word_id = f.word_id "
+            "LEFT JOIN user_flashcard_progress p "
+            "  ON p.user_id = f.user_id AND p.flashcard_id = f.flashcard_id "
+            "WHERE f.user_id = %s "
+            "ORDER BY w.word",
+            (user_id,),
+        )
+        rows = cursor.fetchall()
+    return [
+        {
+            "id": str(row["flashcard_id"]),
+            "name": row["word"],
+            "drawing": row["drawing_url"],
+        }
+        for row in rows
+    ]
 
-        images = []
-        for hit in payload.get("hits", []):
-            thumbnail = hit.get("webformatURL", "")
-            source = hit.get("pageURL", "")
-            if (urlsplit(thumbnail).scheme, urlsplit(thumbnail).hostname) != ("https", "cdn.pixabay.com"):
-                continue
-            if (urlsplit(source).scheme, urlsplit(source).hostname) != ("https", "pixabay.com"):
-                continue
-            images.append({
-                "id": hit["id"], "thumbnail": thumbnail, "source": source,
-                "description": hit.get("tags") or "Reference illustration",
-            })
-        result = {"images": images}
-        store.set(cache_key, json.dumps(result), ex=86400)
-        return result
+
+@app.post("/api/flashcards", status_code=201)
+def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, str]:
+    user_id = authenticated_user_id(request)
+    word_id = str(body.word_id)
+    if not body.drawing.startswith("data:image/png;base64,"):
+        raise HTTPException(status_code=400, detail="The drawing must be a PNG image.")
+
+    with get_connection("create flash card") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT word, word_id FROM word WHERE word_id = %s FOR UPDATE",
+            (word_id,),
+        )
+        word_row = cursor.fetchone()
+        if word_row is None:
+            raise HTTPException(status_code=404, detail="That word could not be found.")
+
+        cursor.execute(
+            "SELECT flashcard_id FROM flashcard WHERE user_id = %s AND word_id = %s LIMIT 1",
+            (user_id, word_id),
+        )
+        if cursor.fetchone() is not None:
+            raise HTTPException(status_code=409, detail="You have already saved a flash card for this word.")
+
+        cursor.execute(
+            "SELECT set_id FROM user_flashcard_sets "
+            "WHERE user_id = %s AND is_active IS TRUE "
+            "ORDER BY set_id LIMIT 1",
+            (user_id,),
+        )
+        set_row = cursor.fetchone()
+        if set_row is None:
+            cursor.execute(
+                "INSERT INTO user_flashcard_sets (user_id, name, is_active) "
+                "VALUES (%s, %s, TRUE) RETURNING set_id",
+                (user_id, "My Flash Cards"),
+            )
+            set_row = cursor.fetchone()
+
+        cursor.execute(
+            "INSERT INTO flashcard (user_id, set_id, word_id) "
+            "VALUES (%s, %s, %s) RETURNING flashcard_id",
+            (user_id, set_row["set_id"], word_id),
+        )
+        flashcard_id = cursor.fetchone()["flashcard_id"]
+        cursor.execute(
+            "INSERT INTO user_flashcard_progress (user_id, flashcard_id, drawing_url) "
+            "VALUES (%s, %s, %s)",
+            (user_id, flashcard_id, body.drawing),
+        )
+
+    return {
+        "id": str(flashcard_id),
+        "name": word_row["word"],
+        "drawing": body.drawing,
+    }
 
 
 @app.post("/api/auth/logout")

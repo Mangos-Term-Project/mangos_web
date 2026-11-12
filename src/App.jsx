@@ -10,9 +10,11 @@ import QuizPage from './pages/QuizPage.jsx'
 import StorePage from './pages/StorePage.jsx'
 import NavBar from './components/NavBar.jsx'
 import { getCurrentUser, login, logout, register } from './api/auth.js'
+import { getFlashCards } from './api/flashcards.js'
 import './App.css'
 
 const PURCHASES_STORAGE_KEY = 'mangos-demo-purchases'
+const FLASHCARDS_STORAGE_KEY = 'mangos-demo-flashcards'
 
 function readStoredValue(key, fallback) {
   try {
@@ -28,14 +30,33 @@ function App() {
   const [user, setUser] = useState(null)
   const [authChecked, setAuthChecked] = useState(false)
   const [purchasedItems, setPurchasedItems] = useState(() => readStoredValue(PURCHASES_STORAGE_KEY, []))
+  const [flashCards, setFlashCards] = useState(() => {
+    const savedFlashCards = readStoredValue(FLASHCARDS_STORAGE_KEY, [])
+    return Array.isArray(savedFlashCards) ? savedFlashCards : []
+  })
+  const [flashCardError, setFlashCardError] = useState('')
   const isLoggedIn = user !== null
 
   useEffect(() => {
     let cancelled = false
 
     getCurrentUser()
-      .then((currentUser) => {
-        if (!cancelled) setUser(currentUser)
+      .then(async (currentUser) => {
+        if (cancelled) return
+        setUser(currentUser)
+        try {
+          const savedFlashCards = await getFlashCards()
+          if (cancelled) return
+          setFlashCards((currentCards) => {
+            const savedNames = new Set(savedFlashCards.map((card) => card.name.toLowerCase()))
+            return [
+              ...currentCards.filter((card) => !savedNames.has(card.name.toLowerCase())),
+              ...savedFlashCards,
+            ]
+          })
+        } catch (error) {
+          if (!cancelled) setFlashCardError(error.message)
+        }
       })
       .catch(() => {
         if (!cancelled) setUser(null)
@@ -66,6 +87,17 @@ function App() {
       window.localStorage.setItem(PURCHASES_STORAGE_KEY, JSON.stringify(nextItems))
       return nextItems
     })
+  }
+
+  function handleSaveFlashCard(flashCard) {
+    const nextFlashCards = [...flashCards, flashCard]
+    setFlashCards(nextFlashCards)
+    setFlashCardError('')
+    try {
+      window.localStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(nextFlashCards))
+    } catch (error) {
+      console.error('Could not cache saved flash cards:', error)
+    }
   }
 
   async function handleSignOut() {
@@ -107,9 +139,13 @@ function App() {
         <Route path="/" element={<LandingPage onStartLearning={() => navigate('/login')} />} />
         <Route path="/login" element={guestOnly(<LoginPage onSubmit={handleLogin} />)} />
         <Route path="/create-account" element={guestOnly(<CreateAccountPage onSubmit={handleCreateAccount} />)} />
-        <Route path="/home" element={requireLogin(<MemberPage />)} />
+        <Route path="/home" element={requireLogin(
+          <MemberPage flashCards={flashCards} flashCardError={flashCardError} />,
+        )} />
         <Route path="/house" element={requireLogin(<HousePage accountName={user?.name} items={purchasedItems} />)} />
-        <Route path="/draw" element={requireLogin(<DrawPage />)} />
+        <Route path="/draw" element={requireLogin(
+          <DrawPage flashCards={flashCards} onSaveFlashCard={handleSaveFlashCard} />,
+        )} />
         <Route path="/quiz" element={requireLogin(<QuizPage />)} />
         <Route path="/store" element={requireLogin(<StorePage onPurchase={handlePurchase} purchasedItems={purchasedItems} />)} />
         <Route path="*" element={<Navigate to={isLoggedIn ? '/home' : '/'} replace />} />
