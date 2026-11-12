@@ -160,20 +160,32 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 						<p className="draw-eyebrow">Get inspired</p>
 						<h1 id="reference-title">Picture search</h1>
 					</div>
-					<label className="image-search" htmlFor="image-search-input">
-						<FaSearch class="image-search-icon"/>
+					<form className="image-search" onSubmit={searchPictures}>
+						<FaSearch aria-hidden="true" className="image-search-icon"/>
 						<input
 							id="image-search-input"
+							aria-label="Search pictures"
+							maxLength={80}
 							onChange={(event) => setSearch(event.target.value)}
 							placeholder="Search pictures..."
 							type="search"
 							value={search}
 						/>
-					</label>
+						<button type="submit" disabled={loading || !search.trim()}>Search</button>
+					</form>
 
-					<div className="reference-gallery">
-						{/* TODO: Implement API call to fetch reference images */}
-					</div>
+					<p role="status" className="reference-status">
+						{loading ? 'Searching for pictures…' : message ||
+							(results?.length === 0 ? 'No pictures found. Try a more specific phrase.' : '')}
+					</p>
+					{results?.length > 0 && <div className="reference-gallery">
+						{results.map(({ id, source, thumbnail, description }) => (
+							<a key={id} href={source} target="_blank" rel="noreferrer">
+								<img src={thumbnail} alt={description} loading="lazy" referrerPolicy="no-referrer" />
+							</a>
+						))}
+					</div>}
+					<p className="reference-credit">Reference images from <a href="https://pixabay.com/">Pixabay</a>.</p>
 				</aside>
 			</section>
 		</main>
