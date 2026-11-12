@@ -1,4 +1,5 @@
 import hashlib
+import json
 import logging
 import os
 import re
@@ -7,6 +8,9 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode, urlsplit
+from urllib.request import urlopen
 
 import bcrypt
 import certifi
@@ -14,7 +18,7 @@ import psycopg2
 import psycopg2.errors
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from psycopg2.extras import RealDictCursor
 from pydantic import BaseModel
@@ -261,6 +265,66 @@ def get_current_user(request: Request) -> dict[str, str]:
     if row is None:
         raise HTTPException(status_code=401, detail="Not logged in.")
     return user_response(row)
+
+
+@app.get("/api/images/search")
+def search_images(request: Request, q: str = Query(min_length=1, max_length=80)):
+    query = " ".join(q.split()).casefold()
+    if not query:
+        raise HTTPException(status_code=400, detail="Enter a word to search.")
+    token = request.cookies.get(SESSION_COOKIE)
+    if not token:
+        raise HTTPException(status_code=401, detail="Sign in to search for pictures.")
+
+    api_key = os.getenv("PIXABAY_API_KEY", "").strip()
+    cache_key = f"mangos:pixabay:v1:{hash_token(query)}"
+    with get_session_store("search pictures") as store:
+        user_id = store.get(session_key(token))
+        if user_id is None:
+            raise HTTPException(status_code=401, detail="Sign in to search for pictures.")
+        if not api_key:
+            raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
+        cached = store.get(cache_key)
+        if cached is not None:
+            return json.loads(cached)
+
+        # Cap uncached requests per account to protect the shared API quota.
+        rate_key = f"mangos:pixabay:quota:{user_id}"
+        with store.pipeline() as pipe:
+            count, _ = pipe.incr(rate_key).expire(rate_key, 60, nx=True).execute()
+        if count > 10:
+            raise HTTPException(status_code=429, detail="Please wait a minute before searching again.")
+
+        params = urlencode({
+            "key": api_key, "q": query, "safesearch": "true",
+            "image_type": "illustration", "per_page": 12, "lang": "en",
+        })
+        try:
+            with urlopen(f"https://pixabay.com/api/?{params}", timeout=6) as response:
+                payload = json.load(response)
+        except HTTPError as error:
+            if error.code == 429:
+                raise HTTPException(status_code=429, detail="Picture search is busy. Try again shortly.") from None
+            logger.warning("Pixabay returned HTTP %s", error.code)
+            raise HTTPException(status_code=502, detail="Picture search is temporarily unavailable.") from None
+        except (URLError, TimeoutError, ValueError):
+            raise HTTPException(status_code=502, detail="Picture search is temporarily unavailable.") from None
+
+        images = []
+        for hit in payload.get("hits", []):
+            thumbnail = hit.get("webformatURL", "")
+            source = hit.get("pageURL", "")
+            if (urlsplit(thumbnail).scheme, urlsplit(thumbnail).hostname) != ("https", "cdn.pixabay.com"):
+                continue
+            if (urlsplit(source).scheme, urlsplit(source).hostname) != ("https", "pixabay.com"):
+                continue
+            images.append({
+                "id": hit["id"], "thumbnail": thumbnail, "source": source,
+                "description": hit.get("tags") or "Reference illustration",
+            })
+        result = {"images": images}
+        store.set(cache_key, json.dumps(result), ex=86400)
+        return result
 
 
 @app.post("/api/auth/logout")
