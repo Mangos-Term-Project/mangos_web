@@ -328,3 +328,37 @@
 .reference-credit {
 	font-size: 0.85rem;
 }
+
+.picture-search-button {
+	border: 0;
+	border-radius: 999px;
+	padding: 10px 14px;
+	background: var(--leaf-500);
+	color: white;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+.picture-search-button:disabled { opacity: .6; cursor: default; }
+.picture-search-status { color: var(--cocoa-600); line-height: 1.5; }
+.picture-search-status:empty { display: none; }
+.reference-picture {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	font-size: .8rem;
+	color: var(--cocoa-600);
+	text-decoration: none;
+}
+.reference-picture img {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: contain;
+	border-radius: 12px;
+	background: var(--mango-50);
+}
+.reference-picture:focus-visible, .picture-search-button:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 4px;
+}
+.picture-search-credit { font-size: .85rem; line-height: 1.5; color: var(--cocoa-600); }

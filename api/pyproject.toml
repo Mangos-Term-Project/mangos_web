@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-py-modules = ["main"]
+py-modules = ["main", "image_search"]
 
 [tool.vercel]
 entrypoint = "main:app"

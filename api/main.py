@@ -22,6 +22,11 @@ from psycopg2.extras import RealDictCursor
 from pydantic import BaseModel, Field
 from redis import Redis
 
+try:
+    from .image_search import ImageSearchError, fetch_images
+except ImportError:
+    from image_search import ImageSearchError, fetch_images
+
 API_DIR = Path(__file__).resolve().parent
 load_dotenv(API_DIR.parent / ".env")
 
@@ -273,6 +278,33 @@ def get_current_user(request: Request) -> dict[str, str]:
     if row is None:
         raise HTTPException(status_code=401, detail="Not logged in.")
     return user_response(row)
+
+
+@app.get("/api/images/search")
+def search_images(request: Request, q: str = Query(min_length=1, max_length=80)):
+    user_id = authenticated_user_id(request)
+    query = " ".join(q.split()).casefold()
+    if not query:
+        raise HTTPException(status_code=400, detail="Enter a word to search.")
+    key = os.getenv("PIXABAY_API_KEY", "").strip()
+    if not key:
+        raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
+    cache_key = f"mangos:images:v2:{hash_token(query)}"
+    with get_session_store("search reference pictures") as store:
+        cached = store.get(cache_key)
+        if cached:
+            return json.loads(cached)
+        with store.pipeline() as pipe:
+            count, _ = pipe.incr(f"mangos:images:rate:{user_id}").expire(
+                f"mangos:images:rate:{user_id}", 60, nx=True).execute()
+        if count > 10:
+            raise HTTPException(status_code=429, detail="Please wait a minute before searching again.")
+        try:
+            result = fetch_images(query, key)
+        except ImageSearchError as error:
+            raise HTTPException(status_code=error.status, detail=error.message) from None
+        store.set(cache_key, json.dumps(result), ex=86400)
+        return result
 
 
 @app.get("/api/words/next")
