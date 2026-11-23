@@ -5,6 +5,38 @@ import '../styles/DrawPage.css'
 
 function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [search, setSearch] = useState('')
+	const [images, setImages] = useState(null)
+	const [searchMessage, setSearchMessage] = useState('')
+	const [isSearching, setIsSearching] = useState(false)
+	const searchRequest = useRef(null)
+
+	useEffect(() => () => searchRequest.current?.abort(), [])
+
+	async function searchPictures(event) {
+		event.preventDefault()
+		const query = search.trim()
+		if (!query) return
+		searchRequest.current?.abort()
+		const controller = new AbortController()
+		searchRequest.current = controller
+		setIsSearching(true)
+		setImages(null)
+		setSearchMessage('')
+		try {
+			const response = await fetch(`/api/images/search?${new URLSearchParams({ q: query })}`, {
+				credentials: 'same-origin', signal: controller.signal,
+			})
+			const data = await response.json().catch(() => null)
+			if (!response.ok) throw new Error(typeof data?.detail === 'string'
+				? data.detail : 'Picture search is unavailable. Please try again.')
+			if (!Array.isArray(data?.images)) throw new Error('Picture search is unavailable. Please try again.')
+			if (!controller.signal.aborted) setImages(data.images)
+		} catch (error) {
+			if (!controller.signal.aborted) setSearchMessage(error.message || 'Could not load pictures.')
+		} finally {
+			if (!controller.signal.aborted) setIsSearching(false)
+		}
+	}
 	const [saveMessage, setSaveMessage] = useState('')
 	const [wordError, setWordError] = useState('')
 	const [currentWord, setCurrentWord] = useState(null)
@@ -160,20 +192,37 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 						<p className="draw-eyebrow">Get inspired</p>
 						<h1 id="reference-title">Picture search</h1>
 					</div>
-					<label className="image-search" htmlFor="image-search-input">
-						<FaSearch class="image-search-icon"/>
+					<form className="image-search" onSubmit={searchPictures}>
+						<FaSearch className="image-search-icon" aria-hidden="true" />
 						<input
 							id="image-search-input"
+							aria-label="Search reference pictures"
+							maxLength={80}
 							onChange={(event) => setSearch(event.target.value)}
 							placeholder="Search pictures..."
 							type="search"
 							value={search}
 						/>
-					</label>
-
-					<div className="reference-gallery">
-						{/* TODO: Implement API call to fetch reference images */}
+						<button className="picture-search-button" type="submit" disabled={isSearching || !search.trim()}>
+							{isSearching ? 'Searching…' : 'Search'}
+						</button>
+					</form>
+					<p className="picture-search-status" role="status">
+						{isSearching ? 'Looking for reference pictures…' : searchMessage ||
+							(images?.length === 0 ? 'No pictures found. Try a related word, such as clock for time.' : '')}
+					</p>
+					<div className="reference-gallery" aria-busy={isSearching}>
+						{images?.map((image) => (
+							<a className="reference-picture" key={image.id} href={image.source}
+								target="_blank" rel="noreferrer" aria-label="View source on Pixabay">
+								<img src={image.thumbnail} alt={image.description} loading="lazy" />
+								<span>View on Pixabay ↗</span>
+							</a>
+						))}
 					</div>
+					<p className="picture-search-credit">Reference pictures from <a href="https://pixabay.com/" target="_blank" rel="noreferrer">Pixabay</a>.
+						Use these as inspiration for your own drawing.
+					</p>
 				</aside>
 			</section>
 		</main>
