@@ -71,6 +71,16 @@
 	margin: 0 0 6px;
 }
 
+.word-hint-entry + .word-hint-entry {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid rgb(121 99 76 / 14%);
+}
+
+.word-hint .word-hint-part {
+	font-weight: 700;
+}
+
 .use-hint-button {
 	padding: 6px 12px;
 	border: 1px solid rgb(121 99 76 / 20%);

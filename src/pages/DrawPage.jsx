@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { getNextWord, saveFlashCard as saveFlashCardRequest } from '../api/flashcards.js'
 import '../styles/DrawPage.css'
-import { wordHints } from '../data/wordHints.js'
+import { getWordHints } from '../data/wordHints.js'
 
 function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [search, setSearch] = useState('')
@@ -140,10 +140,8 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			setIsSaving(false)
 		}
 	}
-	const hintKey = currentWord?.word?.trim().toLowerCase()
-	const wordHint = !isLoadingWord && !wordError && hintKey && Object.hasOwn(wordHints, hintKey)
-		? wordHints[hintKey]
-		: null
+	const hints = !isLoadingWord && !wordError ? getWordHints(currentWord?.word) : []
+	const showPartOfSpeech = hints.length > 1
 
 	return (
 		<main className="draw-page">
@@ -157,20 +155,27 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 								? 'Word unavailable'
 								: currentWord?.word ?? 'All words completed'}
 					</label>
-					{wordHint && (
+					{hints.length > 0 && (
 						<div className="word-hint">
-							<p><strong>Meaning:</strong> {wordHint.definition}</p>
-							<p>
-								Suggested picture search: <strong>{wordHint.searchPhrase}</strong>
-							</p>
-							<button
-								className="use-hint-button"
-								type="button"
-								onClick={() => setSearch(wordHint.searchPhrase)}
-								disabled={isSearching}
-							>
-								Use suggested phrase
-							</button>
+							{hints.map((hint) => (
+								<div className="word-hint-entry" key={hint.partOfSpeech}>
+									{showPartOfSpeech && (
+										<p className="word-hint-part">As {hint.partOfSpeech === 'adjective' ? 'an' : 'a'} {hint.partOfSpeech}:</p>
+									)}
+									<p><strong>Meaning:</strong> {hint.definition}</p>
+									<p>
+										Suggested picture search: <strong>{hint.searchPhrase}</strong>
+									</p>
+									<button
+										className="use-hint-button"
+										type="button"
+										onClick={() => setSearch(hint.searchPhrase)}
+										disabled={isSearching}
+									>
+										Use suggested phrase
+									</button>
+								</div>
+							))}
 						</div>
 					)}
 					<div className="drawing-toolbar">
