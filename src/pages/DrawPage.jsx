@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { getNextWord, saveFlashCard as saveFlashCardRequest } from '../api/flashcards.js'
 import '../styles/DrawPage.css'
+import { wordHints } from '../data/wordHints.js'
 
 function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [search, setSearch] = useState('')
@@ -139,6 +140,10 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			setIsSaving(false)
 		}
 	}
+	const hintKey = currentWord?.word?.trim().toLowerCase()
+	const wordHint = !isLoadingWord && !wordError && hintKey && Object.hasOwn(wordHints, hintKey)
+		? wordHints[hintKey]
+		: null
 
 	return (
 		<main className="draw-page">
@@ -152,7 +157,22 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 								? 'Word unavailable'
 								: currentWord?.word ?? 'All words completed'}
 					</label>
-
+					{wordHint && (
+						<div className="word-hint">
+							<p><strong>Meaning:</strong> {wordHint.definition}</p>
+							<p>
+								Suggested picture search: <strong>{wordHint.searchPhrase}</strong>
+							</p>
+							<button
+								className="use-hint-button"
+								type="button"
+								onClick={() => setSearch(wordHint.searchPhrase)}
+								disabled={isSearching}
+							>
+								Use suggested phrase
+							</button>
+						</div>
+					)}
 					<div className="drawing-toolbar">
 						<p>Use your mouse or finger to draw</p>
 						<div className="drawing-actions">
