@@ -279,7 +279,7 @@ WORD_PHRASES = {
     'foreign': ('passport', 'adjective'),
     'excellent': ('excellent grade', 'adjective'),
     'difficult': ('maze', 'adjective'),
-    'similar': ('look alike', 'adjective'),
+    'similar': ('twins', 'adjective'),
     'expensive': ('diamond ring', 'adjective'),
     'wide': ('wide river', 'adjective'),
     'narrow': ('narrow alley', 'adjective'),

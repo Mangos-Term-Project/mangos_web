@@ -290,7 +290,7 @@ export const wordHints = {
 		foreign: { definition: 'From another country.', searchPhrase: 'passport' },
 		excellent: { definition: 'Very, very good.', searchPhrase: 'excellent grade' },
 		difficult: { definition: 'Hard to do or understand.', searchPhrase: 'maze' },
-		similar: { definition: 'Almost the same.', searchPhrase: 'look alike' },
+		similar: { definition: 'Almost the same.', searchPhrase: 'twins' },
 		expensive: { definition: 'Costs a lot of money.', searchPhrase: 'diamond ring' },
 		wide: { definition: 'Large from side to side.', searchPhrase: 'wide river' },
 		narrow: { definition: 'Not wide.', searchPhrase: 'narrow alley' },
