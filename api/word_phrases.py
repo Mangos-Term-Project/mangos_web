@@ -242,7 +242,7 @@ WORD_PHRASES = {
     'local': ('neighborhood shop', 'adjective'),
     'late': ('running late clock', 'adjective'),
     'short': ('height chart', 'adjective'),
-    'single': ('single flower', 'adjective'),
+    'single': ('number one', 'adjective'),
     'simple': ('simple shapes', 'adjective'),
     'recent': ('newborn baby', 'adjective'),
     'wrong': ('red cross mark', 'adjective'),

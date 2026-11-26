@@ -251,7 +251,7 @@ export const wordHints = {
 		local: { definition: 'From the nearby area.', searchPhrase: 'neighborhood shop' },
 		late: { definition: 'After the usual or expected time.', searchPhrase: 'running late clock' },
 		short: { definition: 'Not tall or long.', searchPhrase: 'height chart', senses: [{ definition: 'Not tall.', searchPhrase: 'height chart' }, { definition: 'Not long.', searchPhrase: 'short sleeve shirt' }] },
-		single: { definition: 'Only one.', searchPhrase: 'single flower' },
+		single: { definition: 'Only one.', searchPhrase: 'number one', moreSearches: ['one finger', 'single flower'] },
 		simple: { definition: 'Easy and not complicated.', searchPhrase: 'simple shapes' },
 		recent: { definition: 'Happened a short time ago.', searchPhrase: 'newborn baby' },
 		wrong: { definition: 'Not correct.', searchPhrase: 'red cross mark' },
