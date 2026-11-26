@@ -13,6 +13,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	// Hand-picked pictures for the current word (checked for meaning and for young learners).
 	const [picked, setPicked] = useState(null)
 	const [resultsArePicked, setResultsArePicked] = useState(false)
+	const [searchGroups, setSearchGroups] = useState(null)
 	const searchRequest = useRef(null)
 	const enlargeDialogRef = useRef(null)
 
@@ -51,6 +52,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			setIsSearching(false)
 			setImages(pickedGroup.images)
 			setResultsArePicked(true)
+			setSearchGroups(null)
 			return
 		}
 		runSearch(hint.searchPhrase, hint.partOfSpeech === 'noun' ? 'all' : 'illustration')
@@ -65,6 +67,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 		setEnlargedImage(null)
 		setImages(null)
 		setResultsArePicked(false)
+		setSearchGroups(null)
 		setSearchMessage('')
 		try {
 			const response = await fetch(`/api/images/search?${new URLSearchParams({ q: query, image_type: type })}`, {
@@ -77,6 +80,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			if (!controller.signal.aborted) {
 				setImages(data.images)
 				setResultsArePicked(Boolean(data.picked))
+				setSearchGroups(data.picked && Array.isArray(data.groups) && data.groups.length > 1 ? data.groups : null)
 			}
 		} catch (error) {
 			if (!controller.signal.aborted) setSearchMessage(error.message || 'Could not load pictures.')
@@ -203,15 +207,17 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 
 	const pickedGroups = picked && picked.word === currentWord?.word ? picked.groups : null
 	// Search results show as one group; hand-picked pictures show one group per part of speech.
-	const galleryGroups = images ? [{ part: '', images }] : pickedGroups ?? []
+	// Nothing shows until the learner searches; picked pictures are what a search returns.
+	const galleryGroups = searchGroups ?? (images ? [{ part: '', images }] : [])
 	// Label hand-picked groups by part of speech and meaning when a word has more than one.
+	// Labels for a typed word's groups: part of speech, plus the meaning number when
+	// the same part has more than one (for example "As an adjective, meaning 2").
 	function groupLabel(group) {
-		if (images || !group.part) return ''
-		const hint = hints.find((item) => item.partOfSpeech === group.part)
-		const sense = hint?.senses?.[group.sense ?? 0]
-		const parts = hints.length > 1 ? `As ${group.part === 'adjective' ? 'an' : 'a'} ${group.part}` : ''
-		const meaning = hint && hint.senses.length > 1 && sense ? sense.definition : ''
-		return [parts, meaning].filter(Boolean).join(': ')
+		if (!group.part) return ''
+		const sameParts = galleryGroups.filter((item) => item.part === group.part).length
+		const parts = new Set(galleryGroups.map((item) => item.part)).size
+		const label = parts > 1 || sameParts > 1 ? `As ${group.part === 'adjective' ? 'an' : 'a'} ${group.part}` : ''
+		return sameParts > 1 ? `${label}, meaning ${(group.sense ?? 0) + 1}` : label
 	}
 
 	return (
@@ -314,7 +320,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 						{isSearching ? 'Looking for reference pictures…' : searchMessage ||
 							(images?.length === 0 ? 'No pictures found. Try a related word, such as clock for time.' : '')}
 					</p>
-					{(resultsArePicked || (!images && pickedGroups)) && (
+					{resultsArePicked && images && (
 						<p className="picked-title">Pictures picked for this word</p>
 					)}
 					{galleryGroups.map((group) => (
