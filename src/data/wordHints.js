@@ -155,7 +155,7 @@ export const wordHints = {
 		continue: { definition: 'To keep doing something.', searchPhrase: 'road ahead' },
 		need: { definition: 'To require something.', searchPhrase: 'thirsty' },
 		change: { definition: 'To make or become different.', searchPhrase: 'leaves changing color' },
-		feel: { definition: 'To have an emotion, or to touch something.', searchPhrase: 'feelings faces', senses: [{ definition: 'To have an emotion.', searchPhrase: 'feelings faces' }, { definition: 'To touch something.', searchPhrase: 'touching soft fur' }] },
+		feel: { definition: 'To have an emotion, or to touch something.', searchPhrase: 'feelings faces', senses: [{ definition: 'To have an emotion.', searchPhrase: 'feelings faces' }, { definition: 'To touch something.', searchPhrase: 'petting a dog', moreSearches: ['child petting cat', 'hand touching'] }] },
 		happen: { definition: 'To take place.', searchPhrase: 'surprise' },
 		become: { definition: 'To start to be something.', searchPhrase: 'caterpillar butterfly' },
 		wait: { definition: 'To stay until something happens.', searchPhrase: 'bus stop' },
