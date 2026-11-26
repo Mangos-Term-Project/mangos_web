@@ -9,22 +9,50 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [images, setImages] = useState(null)
 	const [searchMessage, setSearchMessage] = useState('')
 	const [isSearching, setIsSearching] = useState(false)
+	const [enlargedImage, setEnlargedImage] = useState(null)
 	const searchRequest = useRef(null)
+	const enlargeDialogRef = useRef(null)
 
 	useEffect(() => () => searchRequest.current?.abort(), [])
 
-	async function searchPictures(event) {
+	useEffect(() => {
+		const dialog = enlargeDialogRef.current
+		if (!dialog) return
+		if (enlargedImage && !dialog.open) dialog.showModal()
+		if (!enlargedImage && dialog.open) dialog.close()
+	}, [enlargedImage])
+
+	function closeEnlargedImage() {
+		setEnlargedImage(null)
+	}
+
+	function closeOnBackdropClick(event) {
+		// Clicks on the dialog's own box (outside its content) land on the backdrop.
+		if (event.target === event.currentTarget) closeEnlargedImage()
+	}
+
+	function searchPictures(event) {
 		event.preventDefault()
-		const query = search.trim()
+		runSearch(search.trim(), 'all')
+	}
+
+	// Verbs and adjectives are often clearer as illustrations than as photos.
+	function searchSuggestion(hint) {
+		setSearch(hint.searchPhrase)
+		runSearch(hint.searchPhrase, hint.partOfSpeech === 'noun' ? 'all' : 'illustration')
+	}
+
+	async function runSearch(query, type) {
 		if (!query) return
 		searchRequest.current?.abort()
 		const controller = new AbortController()
 		searchRequest.current = controller
 		setIsSearching(true)
+		setEnlargedImage(null)
 		setImages(null)
 		setSearchMessage('')
 		try {
-			const response = await fetch(`/api/images/search?${new URLSearchParams({ q: query })}`, {
+			const response = await fetch(`/api/images/search?${new URLSearchParams({ q: query, image_type: type })}`, {
 				credentials: 'same-origin', signal: controller.signal,
 			})
 			const data = await response.json().catch(() => null)
@@ -169,10 +197,10 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 									<button
 										className="use-hint-button"
 										type="button"
-										onClick={() => setSearch(hint.searchPhrase)}
+										onClick={() => searchSuggestion(hint)}
 										disabled={isSearching}
 									>
-										Use suggested phrase
+										Search for this
 									</button>
 								</div>
 							))}
@@ -238,16 +266,41 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 					</p>
 					<div className="reference-gallery" aria-busy={isSearching}>
 						{images?.map((image) => (
-							<a className="reference-picture" key={image.id} href={image.source}
-								target="_blank" rel="noreferrer" aria-label="View source on Pixabay">
-								<img src={image.thumbnail} alt={image.description} loading="lazy" />
-								<span>View on Pixabay ↗</span>
-							</a>
+							<figure className="reference-picture" key={image.id}>
+								<button
+									aria-label={`Enlarge picture: ${image.description}`}
+									className="reference-thumb-button"
+									onClick={() => setEnlargedImage(image)}
+									type="button"
+								>
+									<img src={image.thumbnail} alt="" loading="lazy" />
+								</button>
+							</figure>
 						))}
 					</div>
-					<p className="picture-search-credit">Reference pictures from <a href="https://pixabay.com/" target="_blank" rel="noreferrer">Pixabay</a>.
-						Use these as inspiration for your own drawing.
-					</p>
+					<p className="picture-search-credit">Pictures from Pixabay. Tap a picture to see it larger.</p>
+					<dialog
+						aria-labelledby="enlarged-picture-title"
+						className="enlarged-picture-dialog"
+						onCancel={closeEnlargedImage}
+						onClick={closeOnBackdropClick}
+						onClose={closeEnlargedImage}
+						ref={enlargeDialogRef}
+					>
+						{enlargedImage && (
+							<div className="enlarged-picture-content">
+								<div className="enlarged-picture-header">
+									<h2 id="enlarged-picture-title">Reference picture</h2>
+									<button className="enlarged-picture-close" type="button" onClick={closeEnlargedImage} autoFocus>
+										Close
+									</button>
+								</div>
+								<img src={enlargedImage.thumbnail} alt={enlargedImage.description} />
+								<p className="enlarged-picture-description">{enlargedImage.description}</p>
+								<p className="enlarged-picture-credit">Pictures from Pixabay.</p>
+							</div>
+						)}
+					</dialog>
 				</aside>
 			</section>
 		</main>

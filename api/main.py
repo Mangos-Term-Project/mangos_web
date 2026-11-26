@@ -281,7 +281,11 @@ def get_current_user(request: Request) -> dict[str, str]:
 
 
 @app.get("/api/images/search")
-def search_images(request: Request, q: str = Query(min_length=1, max_length=80)):
+def search_images(
+    request: Request,
+    q: str = Query(min_length=1, max_length=80),
+    image_type: str = Query(default="all", pattern="^(all|photo|illustration|vector)$"),
+):
     user_id = authenticated_user_id(request)
     query = " ".join(q.split()).casefold()
     if not query:
@@ -289,7 +293,8 @@ def search_images(request: Request, q: str = Query(min_length=1, max_length=80))
     key = os.getenv("PIXABAY_API_KEY", "").strip()
     if not key:
         raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
-    cache_key = f"mangos:images:v2:{hash_token(query)}"
+    # v3: results depend on the picture type as well as the words.
+    cache_key = f"mangos:images:v3:{image_type}:{hash_token(query)}"
     with get_session_store("search reference pictures") as store:
         cached = store.get(cache_key)
         if cached:
@@ -300,7 +305,7 @@ def search_images(request: Request, q: str = Query(min_length=1, max_length=80))
         if count > 10:
             raise HTTPException(status_code=429, detail="Please wait a minute before searching again.")
         try:
-            result = fetch_images(query, key)
+            result = fetch_images(query, key, image_type)
         except ImageSearchError as error:
             raise HTTPException(status_code=error.status, detail=error.message) from None
         store.set(cache_key, json.dumps(result), ex=86400)
