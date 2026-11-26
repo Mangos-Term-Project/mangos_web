@@ -1,0 +1,177 @@
+.account-page {
+	min-height: 100svh;
+	display: grid;
+	place-items: center;
+	padding: max(100px, calc(88px + env(safe-area-inset-top))) 16px max(40px, env(safe-area-inset-bottom));
+	background:
+		radial-gradient(ellipse at 18% 76%, rgb(255 220 150 / 32%), transparent 26rem),
+		radial-gradient(ellipse at 84% 22%, rgb(85 122 70 / 10%), transparent 24rem);
+}
+
+.account-panel {
+	width: min(100%, 520px);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: clamp(24px, 6vw, 44px);
+	border: 1px solid rgb(121 99 76 / 14%);
+	border-radius: 12px;
+	background: rgb(255 255 255 / 92%);
+	box-shadow: 0 22px 60px rgb(61 43 25 / 9%);
+}
+
+.account-eyebrow {
+	margin: 0;
+	color: var(--leaf-500);
+	font-size: 0.78rem;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+
+.account-panel h1 {
+	margin: 0;
+	font-size: clamp(1.7rem, 7vw, 2.3rem);
+	line-height: 1.1;
+}
+
+.account-panel h2 {
+	margin: 0 0 8px;
+	font-size: 1.1rem;
+}
+
+.account-description {
+	margin: 0;
+	color: var(--cocoa-600);
+	line-height: 1.55;
+}
+
+.account-details {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+}
+
+.account-details div {
+	display: grid;
+	grid-template-columns: 110px 1fr;
+	gap: 10px;
+}
+
+.account-details dt {
+	color: var(--cocoa-600);
+	font-weight: 700;
+}
+
+.account-details dd {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.account-section {
+	padding-top: 14px;
+	border-top: 1px solid rgb(121 99 76 / 14%);
+}
+
+.email-verification {
+	display: grid;
+	gap: 14px;
+}
+
+.email-verification-form {
+	display: grid;
+	gap: 8px;
+}
+
+.email-verification-form label {
+	font-size: 0.9rem;
+	font-weight: 750;
+}
+
+.email-verification-form input {
+	width: 100%;
+	min-height: 50px;
+	padding: 0 14px;
+	border: 1px solid rgb(121 99 76 / 28%);
+	border-radius: 6px;
+	background: #fffdf8;
+	color: var(--cocoa-900);
+	font-size: 1rem;
+}
+
+#verify-code {
+	font-size: 1.4rem;
+	letter-spacing: 0.3em;
+}
+
+.email-help {
+	margin: 0;
+	color: var(--cocoa-600);
+	font-size: 0.85rem;
+}
+
+.email-message {
+	min-height: 1.4em;
+	margin: 0;
+	color: var(--leaf-500);
+	font-weight: 700;
+}
+
+.email-message:empty {
+	min-height: 0;
+}
+
+.email-message.is-error {
+	color: #a6402b;
+}
+
+.email-primary-button,
+.email-secondary-button,
+.account-signout,
+.account-language button {
+	min-height: 48px;
+	padding: 0 20px;
+	border-radius: 999px;
+	font-weight: 750;
+	cursor: pointer;
+}
+
+.email-primary-button {
+	border: 0;
+	background: var(--cocoa-900);
+	color: white;
+}
+
+.email-secondary-button,
+.account-signout,
+.account-language button {
+	border: 1px solid rgb(121 99 76 / 24%);
+	background: white;
+	color: var(--cocoa-900);
+}
+
+.email-primary-button:disabled,
+.email-secondary-button:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.account-language {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 8px;
+}
+
+.account-language button[aria-pressed='true'] {
+	border-color: var(--leaf-500);
+	background: #f2f8ed;
+}
+
+.account-signout {
+	align-self: flex-start;
+}
+
+.account-panel button:focus-visible,
+.account-panel input:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 2px;
+}

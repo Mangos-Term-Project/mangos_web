@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useLanguage } from '../i18n/language.js'
 import '../styles/LoginPage.css'
 
 function LoginPage({ onSubmit }) {
+	const { t, translateMessage } = useLanguage()
 	const [error, setError] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -17,7 +19,7 @@ function LoginPage({ onSubmit }) {
 				password: formData.get('password'),
 			})
 		} catch (submitError) {
-			setError(submitError.message)
+			setError(translateMessage(submitError.message))
 			setIsSubmitting(false)
 		}
 	}
@@ -25,34 +27,34 @@ function LoginPage({ onSubmit }) {
 	return (
 		<main className="login-page">
 			<section aria-labelledby="login-title" className="login-panel">
-				<p className="login-eyebrow">Welcome back</p>
-				<h1 id="login-title">Log in to Mangos</h1>
-				<p className="login-description">Pick up where your English practice left off.</p>
+				<p className="login-eyebrow">{t('login.eyebrow')}</p>
+				<h1 id="login-title">{t('login.title')}</h1>
+				<p className="login-description">{t('login.description')}</p>
 
 				<form className="login-form" onSubmit={handleSubmit}>
-					<label htmlFor="username">Username</label>
+					<label htmlFor="username">{t('login.username')}</label>
 					<input
 						autoComplete="username"
 						id="username"
 						name="username"
-						placeholder="Your username"
+						placeholder={t('login.usernamePlaceholder')}
 						required
 					/>
 
-					<label htmlFor="password">Password</label>
+					<label htmlFor="password">{t('login.password')}</label>
 					<input
 						aria-describedby={error ? 'login-error' : undefined}
 						autoComplete="current-password"
 						id="password"
 						name="password"
-						placeholder="Your password"
+						placeholder={t('login.passwordPlaceholder')}
 						required
 						type="password"
 					/>
 					{error && <p className="login-error" id="login-error" role="alert">{error}</p>}
 
 					<button className="login-submit" disabled={isSubmitting} type="submit">
-						{isSubmitting ? 'Logging in...' : 'Log in'}
+						{isSubmitting ? t('login.submitting') : t('nav.logIn')}
 					</button>
 				</form>
 			</section>

@@ -109,9 +109,46 @@
 .quiz-drawing {
 	display: block;
 	width: 100%;
-	height: auto;
+	aspect-ratio: 10 / 7;
 	min-height: 96px;
-	color: var(--mango-600);
+	object-fit: contain;
+	border-radius: 12px;
+	background: white;
+}
+
+.quiz-choice:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 3px;
+}
+
+.quiz-message {
+	max-width: 640px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+	text-align: center;
+}
+
+.quiz-message h1 {
+	margin: 0;
+	font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+.quiz-message p {
+	margin: 0;
+	color: var(--cocoa-600);
+	line-height: 1.5;
+}
+
+.quiz-link-button {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.quiz-note {
+	font-size: 0.88rem;
 }
 
 .quiz-footer {
@@ -207,4 +244,33 @@
 	.quiz-submit-button {
 		width: 100%;
 	}
+}
+
+.quiz-set-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 6px;
+}
+
+.quiz-set-button {
+	min-height: 48px;
+	padding: 0 20px;
+	border: 1px solid rgb(121 99 76 / 22%);
+	border-radius: 999px;
+	background: white;
+	color: var(--cocoa-900);
+	cursor: pointer;
+	font-weight: 750;
+}
+
+.quiz-set-button:focus-visible,
+.quiz-submit-button:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 3px;
+}
+
+.quiz-save-error {
+	color: #a6402b;
 }

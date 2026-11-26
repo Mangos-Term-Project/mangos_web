@@ -1,31 +1,42 @@
 import { Link } from 'react-router-dom'
+import { petPicture } from '../data/pets.js'
+import { useLanguage } from '../i18n/language.js'
 import '../styles/HousePage.css'
 
-function HousePage({ accountName, items }) {
+function HousePage({ accountName, pets, loadError }) {
+	const { t, translateMessage } = useLanguage()
+
+	function petName(pet) {
+		const key = `pet.${pet.id}`
+		const translated = t(key)
+		return translated === key ? pet.name : translated
+	}
+
 	return (
 		<main className="house-page">
 			<section aria-labelledby="house-title" className="house-content">
 				<header className="house-heading">
-					{/*<p className="house-eyebrow">Your house</p>*/}
-					<h1 id="house-title">{accountName}'s House</h1>
-					<p className="house-item-count">{items.length} {items.length === 1 ? 'item' : 'items'}</p>
+					<h1 id="house-title">{t('house.title', { name: accountName ?? '' })}</h1>
+					<p className="house-item-count">
+						{pets.length === 1 ? t('house.petCountOne') : t('house.petCount', { count: pets.length })}
+					</p>
 				</header>
 
-				{items.length ? (
-					<div aria-label="Items in your house" className="house-grid">
-						{items.map((item) => (
-							<article className="house-item" key={item.id}>
-								<div aria-label={`${item.name} image placeholder`} className="house-item-image" role="img">
-									<span>Image coming soon</span>
-								</div>
-								<h2>{item.name}</h2>
+				{loadError && <p className="house-error" role="alert">{translateMessage(loadError)}</p>}
+
+				{pets.length ? (
+					<div aria-label={t('house.petsLabel')} className="house-grid">
+						{pets.map((pet) => (
+							<article className="house-item" key={pet.id}>
+								<div aria-hidden="true" className="house-item-image house-pet">{petPicture(pet.id)}</div>
+								<h2>{petName(pet)}</h2>
 							</article>
 						))}
 					</div>
 				) : (
 					<div className="house-empty-state">
-						<p>Your house is waiting for its first item.</p>
-						<Link to="/store">Browse the store <span aria-hidden="true">→</span></Link>
+						<p>{t('house.empty')}</p>
+						<Link to="/store">{t('house.browse')} <span aria-hidden="true">→</span></Link>
 					</div>
 				)}
 			</section>

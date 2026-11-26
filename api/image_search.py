@@ -7,6 +7,9 @@ from urllib.request import Request, urlopen
 
 logger = logging.getLogger("mangos-api")
 
+# Pixabay's documented image_type values.
+IMAGE_TYPES = ("all", "photo", "illustration", "vector")
+
 
 class ImageSearchError(Exception):
     def __init__(self, status, message):
@@ -22,9 +25,11 @@ def allowed_url(value, hosts):
         return False
 
 
-def fetch_images(query, key):
+def fetch_images(query, key, image_type="all"):
+    if image_type not in IMAGE_TYPES:
+        raise ImageSearchError(400, "Choose a valid picture type.")
     params = urlencode({"key": key, "q": query, "safesearch": "true",
-                        "image_type": "all", "per_page": 12, "lang": "en"})
+                        "image_type": image_type, "per_page": 12, "lang": "en"})
     request = Request("https://pixabay.com/api/?" + params, headers={
         "User-Agent": "MangosLearningEnglish/1.0",
         "Accept": "application/json",
