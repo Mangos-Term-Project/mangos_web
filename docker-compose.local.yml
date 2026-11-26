@@ -1,0 +1,41 @@
+# LOCAL TESTING ONLY. Starts throwaway PostgreSQL, Redis and Mailpit (a fake
+# inbox that catches email) on this computer. Nothing here connects to
+# Supabase, the production Redis, or a real email provider.
+#
+#   docker compose -f docker-compose.local.yml up -d
+#   docker compose -f docker-compose.local.yml down -v   # delete local data
+#
+# Ports listen on 127.0.0.1 only. The password below is a fixed local-only
+# value, not a credential for any real service.
+name: mangos-local
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mangos
+      POSTGRES_PASSWORD: mangos_local_only
+      POSTGRES_DB: mangos
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - mangos-local-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mangos -d mangos"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:56379:6379"
+
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "127.0.0.1:11025:1025"   # SMTP
+      - "127.0.0.1:18025:8025"   # web inbox: http://127.0.0.1:18025
+
+volumes:
+  mangos-local-postgres:

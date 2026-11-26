@@ -55,6 +55,17 @@ class ImageSearchTests(unittest.TestCase):
                     "https://user:pass@pixabay.com/a", "https://pixabay.com:999/a"]:
             self.assertFalse(allowed_url(url, {"pixabay.com"}))
 
+    def test_picture_type_is_passed_and_validated(self):
+        with patch("api.image_search.urlopen", return_value=io.BytesIO(b'{"hits": []}')) as call:
+            fetch_images("running", "secret", "illustration")
+        query = parse_qs(urlsplit(call.call_args.args[0].full_url).query)
+        self.assertEqual(query["image_type"], ["illustration"])
+        with patch("api.image_search.urlopen") as call:
+            with self.assertRaises(ImageSearchError) as caught:
+                fetch_images("running", "secret", "anything&key=x")
+        self.assertEqual(caught.exception.status, 400)
+        call.assert_not_called()
+
     def test_no_results(self):
         with patch("api.image_search.urlopen", return_value=io.BytesIO(b'{"hits": []}')):
             self.assertEqual(fetch_images("clock", "secret"), {"images": []})
