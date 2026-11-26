@@ -18,10 +18,12 @@ verbs. Verbs and adjectives are also hard to photograph.
 1. **Shorter phrases.** 79 phrases were rewritten as short tag words
    (for example "wish", "puddle jump", "starting blocks"). No phrase is
    longer than three words, and no two words share a phrase.
-2. **Drawings first for verbs and adjectives.** Learners can choose All,
-   Drawings or Photos. Verb and adjective suggestions search drawings
-   (Pixabay `image_type=illustration`), which usually show an action or a
-   quality more clearly than a photo.
+2. **Illustrations first for verbs and adjectives.** Learners can choose
+   All, Illustrations or Photos. Verb and adjective suggestions search
+   illustrations (Pixabay `image_type=illustration`), which usually show an
+   action or a quality more clearly than a photo. A fourth choice, **My
+   drawings**, shows the learner's own saved drawings instead, and tapping
+   one opens it for editing.
 3. **One tap.** "Search for this" searches the suggestion immediately.
 4. **The meaning is always shown** next to the word, so learners do not
    rely on a picture alone.
@@ -46,6 +48,11 @@ With the Pixabay key, we ran every suggested search exactly as the app does
     ("true false" showed "FAKE NEWS"; now "correct answer"), want
     ("wish" → "child wishing"), current ("live news" → "now"), recent
     ("fresh bread" → "latest news").
+- A team member flagged **central**: "town center" showed old towns. The
+  literal words alone matched other meanings ("center" showed a call
+  center, "middle" showed the Middle East). "center target" showed
+  bullseyes in all six pictures, so it was chosen. **Rule of thumb: the
+  literal word plus one concrete thing.**
   - **4 still have no clearly fitting picture** under any phrase we tried:
     seem, happen, familiar, common. For these, learners rely on the
     meaning shown with the word and, in Spanish mode, its translation.

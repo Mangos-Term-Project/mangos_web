@@ -52,7 +52,10 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 
 	function searchPictures(event) {
 		event.preventDefault()
-		runSearch(search.trim(), imageType)
+		// Typing a search while "My drawings" is open searches every picture type.
+		const type = imageType === 'mine' ? 'all' : imageType
+		if (type !== imageType) setImageType(type)
+		runSearch(search.trim(), type)
 	}
 
 	// Verbs and adjectives are often clearer as drawings than as photos, so their
@@ -66,6 +69,8 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 
 	function changeImageType(type) {
 		setImageType(type)
+		// "My drawings" shows the learner's own saved drawings; no search needed.
+		if (type === 'mine') return
 		if (search.trim()) runSearch(search.trim(), type)
 	}
 
@@ -116,6 +121,7 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 	// drawing (which changes flashCards) does not swap the current word.
 	const savedWordsKey = flashCards.map((flashCard) => flashCard.name.toLowerCase()).sort().join('\n')
 	const newestFirst = [...flashCards].reverse()
+	const ownDrawings = newestFirst.filter((card) => card.drawing)
 
 	useEffect(() => {
 		let cancelled = false
@@ -399,11 +405,16 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 					</form>
 					<fieldset className="picture-type">
 						<legend>{t('draw.pictureType')}</legend>
-						{[['all', 'draw.typeAll'], ['illustration', 'draw.typeDrawings'], ['photo', 'draw.typePhotos']].map(([type, label]) => (
-							<label className={`picture-type-option${imageType === type ? ' is-selected' : ''}`} key={type}>
+						{[
+							['all', 'draw.typeAll'],
+							['illustration', 'draw.typeDrawings'],
+							['photo', 'draw.typePhotos'],
+							['mine', 'draw.typeMine'],
+						].map(([type, label]) => (
+							<label className={`picture-type-option${type === 'mine' ? ' is-mine' : ''}${imageType === type ? ' is-selected' : ''}`} key={type}>
 								<input
 									checked={imageType === type}
-									disabled={isSearching}
+									disabled={isSearching && type !== 'mine'}
 									name="picture-type"
 									onChange={() => changeImageType(type)}
 									type="radio"
@@ -413,6 +424,33 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 							</label>
 						))}
 					</fieldset>
+					{imageType === 'mine' ? (
+						<>
+							<p className="picture-search-status" role="status">
+								{ownDrawings.length ? t('draw.myDrawingsHelp') : t('draw.noOwnDrawings')}
+							</p>
+							<div className="reference-gallery">
+								{ownDrawings.map((card) => (
+									<figure
+										className={`reference-picture own-drawing${editingCard?.id === card.id ? ' is-editing' : ''}`}
+										key={card.id}
+									>
+										<button
+											aria-current={editingCard?.id === card.id ? 'true' : undefined}
+											aria-label={t('draw.editCard', { word: card.name })}
+											className="reference-thumb-button"
+											onClick={() => startEditing(card)}
+											type="button"
+										>
+											<img alt="" loading="lazy" src={card.drawing} />
+										</button>
+										<figcaption lang="en">{card.name}</figcaption>
+									</figure>
+								))}
+							</div>
+						</>
+					) : (
+					<>
 					<p className="picture-search-status" role="status">
 						{isSearching ? t('draw.lookingForPictures') : searchMessage ||
 							(images?.length === 0 ? t('draw.noPictures') : '')}
@@ -434,6 +472,8 @@ function DrawPage({ flashCards, onSaveFlashCard, onDrawingUpdated }) {
 					<p className="picture-search-credit">
 						{t('draw.pictureCredit')} {t('draw.pictureHelp')}
 					</p>
+					</>
+					)}
 					<dialog
 						aria-labelledby="enlarged-picture-title"
 						className="enlarged-picture-dialog"

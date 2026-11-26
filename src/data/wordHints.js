@@ -271,7 +271,7 @@ export const wordHints = {
 		cold: { definition: 'Having a low temperature.', searchPhrase: 'snow and ice' },
 		hot: { definition: 'Having a high temperature.', searchPhrase: 'fire flames' },
 		dead: { definition: 'No longer alive.', searchPhrase: 'dead leaves' },
-		central: { definition: 'In the middle.', searchPhrase: 'town center' },
+		central: { definition: 'In the middle.', searchPhrase: 'center target' },
 		safe: { definition: 'Not in danger.', searchPhrase: 'bike helmet' },
 		nice: { definition: 'Pleasant or kind.', searchPhrase: 'sunny garden' },
 		dark: { definition: 'With little or no light.', searchPhrase: 'night sky' },

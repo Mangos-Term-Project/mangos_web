@@ -17,7 +17,7 @@ you can open during the demo.
 | 4 | Blocked until verified | Before step 2, go to /draw | Still shows the verify screen | ☐ | ☐ |
 | 5 | Create a card | Draw → draw the word → Save flash card | "+10 coins!"; coin tracker goes up by 10 | ☐ | ☐ |
 | 6 | Hints | On Draw, read the meaning and suggestion | Meaning and suggested search shown | ☐ | ☐ |
-| 7 | Picture search | Tap **Search for this**; switch Drawings/Photos | Pictures appear; credit line "Pictures from Pixabay." | ☐ | ☐ |
+| 7 | Picture search | Tap **Search for this**; switch Illustrations/Photos; then choose **My drawings** and tap one | Pictures appear; credit line "Pictures from Pixabay."; My drawings shows your own drawings and opens the tapped one for editing | ☐ | ☐ |
 | 8 | Enlarge a picture | Tap a picture | Opens larger **inside Mangos**; Close returns; no Pixabay website | ☐ | ☐ |
 | 9 | Make 4+ cards | Repeat step 5 | Coins increase each time | ☐ | ☐ |
 | 10 | Card sets | Home → Review and edit your flash cards | Sets shown as tiles with card counts and "Review or edit" | ☐ | ☐ |

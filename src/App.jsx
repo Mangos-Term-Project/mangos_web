@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import CreateAccountPage from './pages/CreateAccountPage.jsx'
@@ -34,6 +34,13 @@ function removeLegacyFlashCardCache() {
 
 function App() {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  // Each page opens at the top. Without this, going from a scrolled-down
+  // Home page to Draw (for example "Edit drawing") left the canvas off-screen.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
   const [user, setUser] = useState(null)
   const [authChecked, setAuthChecked] = useState(false)
   const { t } = useLanguage()
