@@ -1,202 +1,90 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { recordReview } from '../api/account.js'
-import { useLanguage } from '../i18n/language.js'
-import SpanishTranslation from '../components/SpanishTranslation.jsx'
+import { FaImage } from "react-icons/fa";
 import '../styles/QuizPage.css'
 
-const CHOICES_PER_QUESTION = 4
-const MAX_QUESTIONS_PER_ROUND = 10
-const ALL_CARDS = 'all'
+const answerImages = [
+	{ id: 'choice1', label: 'choice1', kind: 'choice1', correct: true },
+	{ id: 'choice2', label: 'choice2', kind: 'choice2', correct: false },
+	{ id: 'choice3', label: 'choice3', kind: 'choice3', correct: false },
+	{ id: 'choice4', label: 'choice4', kind: 'choice4', correct: false },
+]
 
-function shuffle(items) {
-	const copy = [...items]
-	for (let index = copy.length - 1; index > 0; index -= 1) {
-		const swapIndex = Math.floor(Math.random() * (index + 1))
-		;[copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]]
-	}
-	return copy
+function Drawing({ kind, label }) {
+	return (
+		<svg aria-label={label} className='quiz-drawing' role="img" viewBox="0 0 240 160">
+			{kind === 'choice1' && (
+				< FaImage />
+			)}
+			{kind === 'choice2' && (
+				< FaImage />
+			)}
+			{kind === 'choice3' && (
+				< FaImage />
+			)}
+			{kind === 'choice4' && (
+				< FaImage />
+			)}
+		</svg>
+	)
 }
 
-function hasDrawing(card) {
-	return typeof card.drawing === 'string' && card.drawing !== ''
-}
-
-// Questions come from the chosen set. Wrong choices come from all of the
-// learner's drawings so a small set still has enough pictures to choose from.
-function buildRound(questionCards, allCards) {
-	const pool = allCards.filter(hasDrawing)
-	if (pool.length < CHOICES_PER_QUESTION) return []
-	return shuffle(questionCards.filter(hasDrawing)).slice(0, MAX_QUESTIONS_PER_ROUND).map((answer) => {
-		const others = shuffle(pool.filter((card) => card.id !== answer.id)).slice(0, CHOICES_PER_QUESTION - 1)
-		return { answer, choices: shuffle([answer, ...others]) }
-	})
-}
-
-function QuizPage({ flashCards = [], onReviewed }) {
-	const { t, translateMessage } = useLanguage()
-	const [round, setRound] = useState([])
-	const [questionIndex, setQuestionIndex] = useState(0)
+function QuizPage() {
+	const [choices] = useState(() => answerImages)
 	const [selectedChoice, setSelectedChoice] = useState(null)
 	const [isChecked, setIsChecked] = useState(false)
-	const [isSaving, setIsSaving] = useState(false)
-	const [correctCount, setCorrectCount] = useState(0)
-	const [coinsEarned, setCoinsEarned] = useState(0)
-	const [saveError, setSaveError] = useState('')
 
-	const drawnCards = flashCards.filter(hasDrawing)
-	const sets = []
-	for (const card of drawnCards) {
-		const key = card.set_id ?? card.set_name
-		let set = sets.find((item) => item.id === key)
-		if (!set) {
-			set = { id: key, name: card.set_name, cards: [] }
-			sets.push(set)
-		}
-		set.cards.push(card)
-	}
-	const question = round[questionIndex]
-	const isFinished = round.length > 0 && questionIndex >= round.length
-	const isCorrect = isChecked && selectedChoice === question?.answer.id
-
-	function setLabel(set) {
-		if (!set.name || set.name === 'My Flash Cards') return t('home.defaultSet')
-		const match = set.name.match(/^Set (\d+)$/)
-		return match ? t('home.numberedSet', { number: match[1] }) : set.name
+	function checkAnswer() {
+		if (selectedChoice) setIsChecked(true)
 	}
 
-	function startRound(setId) {
-		const questionCards = setId === ALL_CARDS ? drawnCards : sets.find((set) => set.id === setId)?.cards ?? []
-		setRound(buildRound(questionCards, drawnCards))
-		setQuestionIndex(0)
+	function tryAgain() {
 		setSelectedChoice(null)
 		setIsChecked(false)
-		setCorrectCount(0)
-		setCoinsEarned(0)
-		setSaveError('')
 	}
 
-	async function checkAnswer() {
-		if (!selectedChoice || isChecked || isSaving) return
-		const correct = selectedChoice === question.answer.id
-		setIsSaving(true)
-		setSaveError('')
-		try {
-			const result = await recordReview(question.answer.id, { source: 'quiz', chosen_flashcard_id: selectedChoice })
-			onReviewed?.(question.answer.id, result)
-			setCoinsEarned((total) => total + (result.coins_awarded ?? 0))
-		} catch (error) {
-			setSaveError(translateMessage(error.message))
-		} finally {
-			setIsSaving(false)
-		}
-		setIsChecked(true)
-		if (correct) setCorrectCount((count) => count + 1)
-	}
-
-	function nextQuestion() {
-		setQuestionIndex((index) => index + 1)
-		setSelectedChoice(null)
-		setIsChecked(false)
-		setSaveError('')
-	}
-
-	if (drawnCards.length < CHOICES_PER_QUESTION) {
-		return (
-			<main className="quiz-page">
-				<section className="quiz-window quiz-message">
-					<p className="quiz-eyebrow">{t('quiz.eyebrow')}</p>
-					<h1>{t('quiz.needMoreTitle')}</h1>
-					<p>{t('quiz.needMore', { needed: CHOICES_PER_QUESTION, count: drawnCards.length })}</p>
-					<Link className="quiz-submit-button quiz-link-button" to="/draw">{t('quiz.createCards')}</Link>
-				</section>
-			</main>
-		)
-	}
-
-	if (!question && !isFinished) {
-		return (
-			<main className="quiz-page">
-				<section className="quiz-window quiz-message">
-					<p className="quiz-eyebrow">{t('quiz.eyebrow')}</p>
-					<h1>{t('quiz.chooseTitle')}</h1>
-					<p>{t('quiz.chooseHelp')}</p>
-					<div className="quiz-set-list">
-						<button className="quiz-submit-button" onClick={() => startRound(ALL_CARDS)} type="button">
-							{t('quiz.allCards', { count: Math.min(drawnCards.length, MAX_QUESTIONS_PER_ROUND) })}
-						</button>
-						{sets.length > 1 && sets.map((set) => (
-							<button className="quiz-set-button" key={set.id} onClick={() => startRound(set.id)} type="button">
-								{setLabel(set)} · {t('quiz.questionCount', { count: Math.min(set.cards.length, MAX_QUESTIONS_PER_ROUND) })}
-							</button>
-						))}
-					</div>
-				</section>
-			</main>
-		)
-	}
-
-	if (isFinished) {
-		return (
-			<main className="quiz-page">
-				<section className="quiz-window quiz-message">
-					<p className="quiz-eyebrow">{t('quiz.roundComplete')}</p>
-					<h1>{t('quiz.score', { correct: correctCount, total: round.length })}</h1>
-					<p>{coinsEarned ? t('quiz.coinsEarned', { count: coinsEarned }) : t('quiz.noCoins')}</p>
-					<button className="quiz-submit-button" onClick={() => setRound([])} type="button">{t('quiz.playAgain')}</button>
-				</section>
-			</main>
-		)
-	}
+	const selectedAnswer = choices.find((choice) => choice.id === selectedChoice)
 
 	return (
 		<main className="quiz-page">
 			<section className="quiz-window">
+
 				<div className="quiz-heading">
-					<p className="quiz-eyebrow">{t('quiz.position', { current: questionIndex + 1, total: round.length })}</p>
-					<h1 className="quiz-word" lang="en">{question.answer.name}</h1>
-					<SpanishTranslation className="quiz-word-spanish" word={question.answer.name} />
+					<p className="quiz-eyebrow">Set 1 of 1 · Question 1 of 100</p>
+					<h1 className="quiz-word">Time</h1>
 				</div>
 
-				<div aria-label={t('quiz.choices')} className="quiz-choice-grid" role="group">
-					{question.choices.map((choice, index) => {
+				<div aria-label="Picture choices" className="quiz-choice-grid">
+					{choices.map((choice) => {
 						const isSelected = selectedChoice === choice.id
-						const isAnswer = choice.id === question.answer.id
-						const stateClass = isChecked
-							? isAnswer ? ' is-correct' : isSelected ? ' is-incorrect' : ''
-							: ''
+						const isCorrect = isChecked && isSelected && choice.correct
+						const isIncorrect = isChecked && isSelected && !choice.correct
+
 						return (
 							<button
-								aria-label={t('quiz.choiceLabel', { number: index + 1 })}
 								aria-pressed={isSelected}
-								className={`quiz-choice${isSelected ? ' is-selected' : ''}${stateClass}`}
-								disabled={isChecked || isSaving}
+								className={`quiz-choice${isSelected ? ' is-selected' : ''}${isCorrect ? ' is-correct' : ''}${isIncorrect ? ' is-incorrect' : ''}`}
+								disabled={isChecked}
 								key={choice.id}
 								onClick={() => setSelectedChoice(choice.id)}
 								type="button"
 							>
-								<img alt="" className="quiz-drawing" src={choice.drawing} />
+								<Drawing kind={choice.kind} label={choice.label} />
 							</button>
 						)
 					})}
 				</div>
 
 				<div className="quiz-footer">
-					<p aria-live="polite" className={`quiz-feedback${isChecked ? (isCorrect ? ' feedback-correct' : ' feedback-incorrect') : ''}`}>
+					<p aria-live="polite" className={`quiz-feedback${isChecked ? (selectedAnswer?.correct ? ' feedback-correct' : ' feedback-incorrect') : ''}`}>
 						{isChecked
-							? isCorrect
-								? t('quiz.correct', { word: question.answer.name })
-								: t('quiz.incorrect', { word: question.answer.name })
-							: t('quiz.selectOne')}
-						{saveError && <span className="quiz-save-error"> {t('quiz.notSaved', { error: saveError })}</span>}
+							? selectedAnswer?.correct ? 'That\'s right! You found the picture for “time.”' : 'Not quite—take another look and try again.'
+							: 'Select one picture to answer.'}
 					</p>
 					{isChecked ? (
-						<button className="quiz-submit-button" onClick={nextQuestion} type="button">
-							{questionIndex + 1 < round.length ? t('quiz.next') : t('quiz.results')}
-						</button>
+						<button className="quiz-submit-button" onClick={tryAgain} type="button">Try again</button>
 					) : (
-						<button className="quiz-submit-button" disabled={!selectedChoice || isSaving} onClick={checkAnswer} type="button">
-							{isSaving ? t('quiz.checking') : t('quiz.check')}
+						<button className="quiz-submit-button" disabled={!selectedChoice} onClick={checkAnswer} type="button">
+							Check answer
 						</button>
 					)}
 				</div>

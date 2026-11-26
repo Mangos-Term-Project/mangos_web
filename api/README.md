@@ -29,30 +29,4 @@ without logging the key, query, URL, or raw provider response. If Pixabay return
 403, obtain its explanation or contact Pixabay before claiming the integration
 works. A User-Agent identifies Mangos; it does not bypass provider restrictions.
 
-Run the tests from the repository root: `python -m pytest tests`. Database
-tests also need a local test database; see ../docs/DEPLOYMENT.md.
-
-Picture type: `GET /api/images/search?q=running&image_type=illustration`.
-Allowed types are all (default), photo, illustration and vector. The cache
-key includes the type.
-
-## Accounts, coins, reviews and email
-
-New tables are added by the files in `migrations/` (run them in order before
-deploying; see ../docs/DEPLOYMENT.md). Endpoints:
-
-| Method and path | Purpose |
-|---|---|
-| `GET /api/auth/config` | Whether email verification is required |
-| `GET /api/account` | Coins, owned pets and email status for the signed-in account |
-| `POST /api/account/email` | Send a verification code (1 a minute, 3 an hour) |
-| `POST /api/account/email/verify` | Check a code (15 minutes, single use, 5 tries) |
-| `GET /api/pets` | Pet catalog with owned flags |
-| `POST /api/pets/{pet_id}/purchase` | Buy a pet; balance checked and deducted in one transaction |
-| `PUT /api/flashcards/{id}/drawing` | Replace your own drawing |
-| `POST /api/flashcards/{id}/reviews` | Record a review or quiz answer; updates the schedule and pays rewards |
-
-While verification is required, every learning endpoint returns 403 until
-the account's email is verified. Email settings (`EMAIL_VERIFICATION_ENABLED`
-and `SMTP_*`) are listed in ../docs/DEPLOYMENT.md. Codes are stored only as
-SHA-256 digests and are never logged.
+Run provider unit tests: python -m unittest discover -s tests -v

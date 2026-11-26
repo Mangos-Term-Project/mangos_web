@@ -118,10 +118,3 @@
 		animation: none;
 	}
 }
-
-.create-account-help {
-	margin: -2px 0 4px;
-	color: var(--cocoa-600);
-	font-size: 0.85rem;
-	line-height: 1.45;
-}
