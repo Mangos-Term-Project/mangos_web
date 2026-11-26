@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { getNextWord, saveFlashCard as saveFlashCardRequest } from '../api/flashcards.js'
 import '../styles/DrawPage.css'
-import { getWordHints } from '../data/wordHints.js'
 
 function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [search, setSearch] = useState('')
@@ -98,9 +97,9 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const drawingRef = useRef(false)
 
 	// Shown under "Pictures picked for this word" as soon as the word appears.
-	async function loadPicked(word) {
+	async function loadPicked(word, partOfSpeech) {
 		try {
-			const response = await fetch(`/api/images/word?${new URLSearchParams({ word })}`, { credentials: 'same-origin' })
+			const response = await fetch(`/api/images/word?${new URLSearchParams({ word, part_of_speech: partOfSpeech })}`, { credentials: 'same-origin' })
 			const data = await response.json().catch(() => null)
 			if (response.ok && Array.isArray(data?.images) && data.images.length) setPicked({ word, groups: Array.isArray(data.groups) && data.groups.length ? data.groups : [{ part: '', images: data.images }] })
 		} catch {
@@ -115,7 +114,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			.then((word) => {
 				if (cancelled) return
 				setCurrentWord(word)
-				if (word) loadPicked(word.word)
+				if (word) loadPicked(word.word, word.part_of_speech)
 				if (!word) setSaveMessage('You have made flash cards for every available word.')
 			})
 			.catch((error) => {
@@ -202,7 +201,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			setIsSaving(false)
 		}
 	}
-	const hints = !isLoadingWord && !wordError ? getWordHints(currentWord?.word) : []
+	const hints = !isLoadingWord && !wordError ? currentWord?.hints ?? [] : []
 	const showPartOfSpeech = hints.length > 1
 
 	const pickedGroups = picked && picked.word === currentWord?.word ? picked.groups : null

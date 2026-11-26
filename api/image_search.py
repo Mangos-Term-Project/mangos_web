@@ -1,6 +1,10 @@
 """Pixabay reference search. Credentials and provider diagnostics stay server-side."""
 import json
 import logging
+import ssl
+
+import certifi
+from http.client import HTTPException as HTTPProtocolError
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
 from urllib.request import Request, urlopen
@@ -38,22 +42,28 @@ def _request(params):
         "Accept": "application/json",
     })
     try:
-        with urlopen(request, timeout=8) as response:
+        tls_context = ssl.create_default_context(cafile=certifi.where())
+        with urlopen(request, timeout=8, context=tls_context) as response:
             payload = json.load(response)
     except HTTPError as error:
-        # Classify without logging the response, request URL, key, or query.
-        body = error.read(2048).decode(errors="replace").lower()
-        kind = "invalid-key" if "invalid" in body and "key" in body else (
-            "html-block" if "<html" in body or "<!doctype" in body else "provider-error")
-        logger.warning("Pixabay HTTP %s (%s)", error.code, kind)
-        if error.code == 429:
-            raise ImageSearchError(429, "Picture search has reached its limit. Please try again shortly.") from None
-        if kind == "invalid-key":
-            raise ImageSearchError(503, "Picture search needs an API key update. Please tell your teacher.") from None
-        if error.code == 403:
-            raise ImageSearchError(502, "The picture provider refused the request. Please try again later.") from None
-        raise ImageSearchError(502, "The picture provider could not complete this search.") from None
-    except (URLError, TimeoutError, ValueError):
+        try:
+            body = error.read(2048).decode("utf-8", errors="replace").strip()
+        except (OSError, HTTPProtocolError):
+            body = ""
+        # Pixabay's request URL contains the key, so redact it before returning
+        # or logging the response body. Keep diagnostics bounded and one-line.
+        api_key = str(params.get("key") or "")
+        encoded_key = urlencode({"key": api_key}).partition("=")[2]
+        for secret in (api_key, encoded_key):
+            if secret:
+                body = body.replace(secret, "[redacted]")
+        body = " ".join((body or str(error.reason or "No response body")).split())[:2048]
+        status = error.code if 400 <= error.code <= 599 else 502
+        message = f"Pixabay returned HTTP {status}: {body}"
+        logger.warning("%s", message)
+        raise ImageSearchError(status, message) from None
+    except (URLError, TimeoutError, OSError, HTTPProtocolError, ValueError) as error:
+        logger.warning("Pixabay request failed (%s)", type(error).__name__)
         raise ImageSearchError(502, "Could not reach the picture provider. Please try again.") from None
     if not isinstance(payload, dict) or not isinstance(payload.get("hits"), list):
         raise ImageSearchError(502, "The picture provider sent an unexpected response.")
@@ -67,6 +77,8 @@ def _image(hit, filter_tags=True):
     thumbnail = hit.get("webformatURL", "")
     source = hit.get("pageURL", "")
     tags = hit.get("tags") or ""
+    if not isinstance(tags, str):
+        tags = ""
     if not allowed_url(thumbnail, {"cdn.pixabay.com", "pixabay.com"}) or not allowed_url(source, {"pixabay.com"}):
         return None
     if filter_tags and is_blocked(tags):
