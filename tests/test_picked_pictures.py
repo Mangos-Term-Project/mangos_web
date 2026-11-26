@@ -123,8 +123,8 @@ class PickedPictureTests(unittest.TestCase):
 
     def test_pictures_for_one_meaning_are_labeled_with_that_meaning(self):
         with patch.object(main, "fetch_image_by_id", side_effect=self.fake_by_id):
-            groups = self.client.get("/api/images/word", params={"word": "point"}).json()["groups"]
-        self.assertEqual([(g["part"], g["sense"]) for g in groups], [("noun", 1)])
+            groups = self.client.get("/api/images/word", params={"word": "light"}).json()["groups"]
+        self.assertEqual([(g["part"], g["sense"]) for g in groups], [("adjective", 0), ("adjective", 1)])
 
     def test_word_without_picks_returns_nothing(self):
         response = self.client.get("/api/images/word", params={"word": "elephant"})
