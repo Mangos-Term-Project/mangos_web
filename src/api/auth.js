@@ -1,7 +1,7 @@
 import { request } from './client.js'
 
-export function register({ name, username, password }) {
-  return request('/api/auth/register', { method: 'POST', body: { name, username, password } })
+export function register({ name, username, password, email }) {
+  return request('/api/auth/register', { method: 'POST', body: { name, username, password, email } })
 }
 
 export function login({ username, password }) {
@@ -14,4 +14,8 @@ export function logout() {
 
 export function getCurrentUser() {
   return request('/api/auth/me')
+}
+
+export function getAuthConfig() {
+  return request('/api/auth/config')
 }

@@ -124,3 +124,15 @@
 		grid-template-columns: 1fr;
 	}
 }
+
+.house-pet {
+	display: grid;
+	place-items: center;
+	font-size: clamp(3rem, 8vw, 4.5rem);
+	line-height: 1;
+}
+
+.house-error {
+	color: #a6402b;
+	text-align: center;
+}
