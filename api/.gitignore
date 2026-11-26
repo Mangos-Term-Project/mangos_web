@@ -3,5 +3,3 @@
 __pycache__/
 *.py[cod]
 *.egg-info
-# Local cache written by api/tools/check_hint_searches.py
-.hint_search_cache.json

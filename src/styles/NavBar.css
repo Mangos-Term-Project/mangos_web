@@ -105,44 +105,6 @@
 	background: var(--mango-400-light);
 }
 
-.coin-balance {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	min-height: 40px;
-	margin: 0;
-	padding: 0 14px;
-	border: 1px solid rgb(121 99 76 / 14%);
-	border-radius: 999px;
-	background: white;
-	color: var(--cocoa-900);
-	font-size: 0.88rem;
-	font-weight: 800;
-	white-space: nowrap;
-}
-
-.coin-icon {
-	color: var(--mango-500);
-}
-
-.language-toggle {
-	padding: 0 14px;
-	border: 1px solid rgb(121 99 76 / 18%) !important;
-	background: white;
-	color: var(--cocoa-900);
-}
-
-.language-short {
-	display: none;
-}
-
-.account-actions button:focus-visible,
-.nav-icon-button:focus-visible,
-.brand-mark:focus-visible {
-	outline: 3px solid var(--leaf-500);
-	outline-offset: 2px;
-}
-
 @media (max-width: 560px) {
 	.header {
 		min-height: max(70px, calc(58px + env(safe-area-inset-top)));
@@ -179,25 +141,6 @@
 		min-height: 44px;
 		padding-inline: clamp(7px, 2.5vw, 12px);
 		font-size: clamp(0.72rem, 3.2vw, 0.86rem);
-	}
-
-	/* On phones, Sign out lives on the Account page to keep the bar on one row. */
-	.signout-button {
-		display: none;
-	}
-
-	.coin-balance {
-		min-height: 36px;
-		padding: 0 10px;
-		font-size: 0.78rem;
-	}
-
-	.language-long {
-		display: none;
-	}
-
-	.language-short {
-		display: inline;
 	}
 }
 
