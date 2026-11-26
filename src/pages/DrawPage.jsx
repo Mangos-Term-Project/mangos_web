@@ -239,7 +239,8 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 												<strong>{hint.senses.length > 1 ? `Meaning ${index + 1}:` : 'Meaning:'}</strong> {sense.definition}
 											</p>
 											<p>
-												Suggested picture search: <strong>{sense.searchPhrase}</strong>
+												{sense.moreSearches?.length ? 'Suggested picture searches:' : 'Suggested picture search:'}{' '}
+												<strong>{[sense.searchPhrase, ...(sense.moreSearches ?? [])].join(' · ')}</strong>
 											</p>
 											<button
 												className="use-hint-button"
