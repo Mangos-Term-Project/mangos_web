@@ -10,6 +10,9 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [searchMessage, setSearchMessage] = useState('')
 	const [isSearching, setIsSearching] = useState(false)
 	const [enlargedImage, setEnlargedImage] = useState(null)
+	// Hand-picked pictures for the current word (checked for meaning and for young learners).
+	const [picked, setPicked] = useState(null)
+	const [resultsArePicked, setResultsArePicked] = useState(false)
 	const searchRequest = useRef(null)
 	const enlargeDialogRef = useRef(null)
 
@@ -39,6 +42,17 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	// Verbs and adjectives are often clearer as illustrations than as photos.
 	function searchSuggestion(hint) {
 		setSearch(hint.searchPhrase)
+		// A meaning with hand-picked pictures shows those, not an open search.
+		const pickedGroup = pickedGroups?.find((group) => group.part === hint.partOfSpeech && (group.sense ?? 0) === (hint.sense ?? 0))
+		if (pickedGroup) {
+			searchRequest.current?.abort()
+			setEnlargedImage(null)
+			setSearchMessage('')
+			setIsSearching(false)
+			setImages(pickedGroup.images)
+			setResultsArePicked(true)
+			return
+		}
 		runSearch(hint.searchPhrase, hint.partOfSpeech === 'noun' ? 'all' : 'illustration')
 	}
 
@@ -50,6 +64,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 		setIsSearching(true)
 		setEnlargedImage(null)
 		setImages(null)
+		setResultsArePicked(false)
 		setSearchMessage('')
 		try {
 			const response = await fetch(`/api/images/search?${new URLSearchParams({ q: query, image_type: type })}`, {
@@ -59,7 +74,10 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			if (!response.ok) throw new Error(typeof data?.detail === 'string'
 				? data.detail : 'Picture search is unavailable. Please try again.')
 			if (!Array.isArray(data?.images)) throw new Error('Picture search is unavailable. Please try again.')
-			if (!controller.signal.aborted) setImages(data.images)
+			if (!controller.signal.aborted) {
+				setImages(data.images)
+				setResultsArePicked(Boolean(data.picked))
+			}
 		} catch (error) {
 			if (!controller.signal.aborted) setSearchMessage(error.message || 'Could not load pictures.')
 		} finally {
@@ -75,6 +93,17 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const canvasRef = useRef(null)
 	const drawingRef = useRef(false)
 
+	// Shown under "Pictures picked for this word" as soon as the word appears.
+	async function loadPicked(word) {
+		try {
+			const response = await fetch(`/api/images/word?${new URLSearchParams({ word })}`, { credentials: 'same-origin' })
+			const data = await response.json().catch(() => null)
+			if (response.ok && Array.isArray(data?.images) && data.images.length) setPicked({ word, groups: Array.isArray(data.groups) && data.groups.length ? data.groups : [{ part: '', images: data.images }] })
+		} catch {
+			// The word can still be drawn; the search box below still works.
+		}
+	}
+
 	useEffect(() => {
 		let cancelled = false
 
@@ -82,6 +111,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			.then((word) => {
 				if (cancelled) return
 				setCurrentWord(word)
+				if (word) loadPicked(word.word)
 				if (!word) setSaveMessage('You have made flash cards for every available word.')
 			})
 			.catch((error) => {
@@ -171,6 +201,19 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const hints = !isLoadingWord && !wordError ? getWordHints(currentWord?.word) : []
 	const showPartOfSpeech = hints.length > 1
 
+	const pickedGroups = picked && picked.word === currentWord?.word ? picked.groups : null
+	// Search results show as one group; hand-picked pictures show one group per part of speech.
+	const galleryGroups = images ? [{ part: '', images }] : pickedGroups ?? []
+	// Label hand-picked groups by part of speech and meaning when a word has more than one.
+	function groupLabel(group) {
+		if (images || !group.part) return ''
+		const hint = hints.find((item) => item.partOfSpeech === group.part)
+		const sense = hint?.senses?.[group.sense ?? 0]
+		const parts = hints.length > 1 ? `As ${group.part === 'adjective' ? 'an' : 'a'} ${group.part}` : ''
+		const meaning = hint && hint.senses.length > 1 && sense ? sense.definition : ''
+		return [parts, meaning].filter(Boolean).join(': ')
+	}
+
 	return (
 		<main className="draw-page">
 			<section aria-label="Draw and explore images" className="draw-workspace">
@@ -190,18 +233,24 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 									{showPartOfSpeech && (
 										<p className="word-hint-part">As {hint.partOfSpeech === 'adjective' ? 'an' : 'a'} {hint.partOfSpeech}:</p>
 									)}
-									<p><strong>Meaning:</strong> {hint.definition}</p>
-									<p>
-										Suggested picture search: <strong>{hint.searchPhrase}</strong>
-									</p>
-									<button
-										className="use-hint-button"
-										type="button"
-										onClick={() => searchSuggestion(hint)}
-										disabled={isSearching}
-									>
-										Search for this
-									</button>
+									{hint.senses.map((sense, index) => (
+										<div className="word-hint-sense" key={sense.searchPhrase}>
+											<p>
+												<strong>{hint.senses.length > 1 ? `Meaning ${index + 1}:` : 'Meaning:'}</strong> {sense.definition}
+											</p>
+											<p>
+												Suggested picture search: <strong>{sense.searchPhrase}</strong>
+											</p>
+											<button
+												className="use-hint-button"
+												type="button"
+												onClick={() => searchSuggestion({ partOfSpeech: hint.partOfSpeech, sense: index, searchPhrase: sense.searchPhrase })}
+												disabled={isSearching}
+											>
+												Search for this
+											</button>
+										</div>
+									))}
 								</div>
 							))}
 						</div>
@@ -264,20 +313,28 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 						{isSearching ? 'Looking for reference pictures…' : searchMessage ||
 							(images?.length === 0 ? 'No pictures found. Try a related word, such as clock for time.' : '')}
 					</p>
-					<div className="reference-gallery" aria-busy={isSearching}>
-						{images?.map((image) => (
-							<figure className="reference-picture" key={image.id}>
-								<button
-									aria-label={`Enlarge picture: ${image.description}`}
-									className="reference-thumb-button"
-									onClick={() => setEnlargedImage(image)}
-									type="button"
-								>
-									<img src={image.thumbnail} alt="" loading="lazy" />
-								</button>
-							</figure>
-						))}
-					</div>
+					{(resultsArePicked || (!images && pickedGroups)) && (
+						<p className="picked-title">Pictures picked for this word</p>
+					)}
+					{galleryGroups.map((group) => (
+						<div key={`${group.part}-${group.sense ?? 0}`}>
+							{groupLabel(group) && <p className="picked-part">{groupLabel(group)}</p>}
+							<div className="reference-gallery" aria-busy={isSearching}>
+								{group.images.map((image) => (
+									<figure className="reference-picture" key={image.id}>
+										<button
+											aria-label={`Enlarge picture: ${image.description}`}
+											className="reference-thumb-button"
+											onClick={() => setEnlargedImage(image)}
+											type="button"
+										>
+											<img src={image.thumbnail} alt="" loading="lazy" />
+										</button>
+									</figure>
+								))}
+							</div>
+						</div>
+					))}
 					<p className="picture-search-credit">Pictures from Pixabay. Tap a picture to see it larger.</p>
 					<dialog
 						aria-labelledby="enlarged-picture-title"
