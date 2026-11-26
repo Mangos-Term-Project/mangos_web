@@ -386,14 +386,35 @@
 .picture-search-button:disabled { opacity: .6; cursor: default; }
 .picture-search-status { color: var(--cocoa-600); line-height: 1.5; }
 .picture-search-status:empty { display: none; }
+.picture-search-button:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 4px;
+}
+.picture-search-credit { font-size: .85rem; line-height: 1.5; color: var(--cocoa-600); }
+
 .reference-picture {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
+	margin: 0;
 	font-size: .8rem;
 	color: var(--cocoa-600);
-	text-decoration: none;
 }
+
+.reference-thumb-button {
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: 1px solid rgb(121 99 76 / 18%);
+	border-radius: 12px;
+	background: var(--mango-50);
+	cursor: zoom-in;
+}
+
+.reference-thumb-button:hover {
+	border-color: var(--leaf-500);
+}
+
 .reference-picture img {
 	width: 100%;
 	aspect-ratio: 4 / 3;
@@ -401,8 +422,69 @@
 	border-radius: 12px;
 	background: var(--mango-50);
 }
-.reference-picture:focus-visible, .picture-search-button:focus-visible {
+
+.enlarged-picture-dialog {
+	width: min(760px, calc(100vw - 32px));
+	max-height: calc(100dvh - 32px);
+	padding: 0;
+	border: none;
+	border-radius: 18px;
+	background: white;
+	color: var(--cocoa-900);
+	box-shadow: 0 20px 60px rgb(61 43 25 / 35%);
+}
+
+.enlarged-picture-dialog::backdrop {
+	background: rgb(61 43 25 / 60%);
+}
+
+.enlarged-picture-content {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px;
+}
+
+.enlarged-picture-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.enlarged-picture-header h2 {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.enlarged-picture-close {
+	min-height: 44px;
+	padding: 8px 18px;
+	border: 1px solid rgb(121 99 76 / 20%);
+	border-radius: 999px;
+	background: var(--mango-50);
+	color: var(--cocoa-900);
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.enlarged-picture-content img {
+	display: block;
+	width: 100%;
+	max-height: calc(100dvh - 220px);
+	object-fit: contain;
+	border-radius: 12px;
+	background: var(--mango-50);
+}
+
+.enlarged-picture-description {
+	margin: 0;
+	font-size: .9rem;
+	color: var(--cocoa-600);
+}
+
+.reference-thumb-button:focus-visible,
+.enlarged-picture-close:focus-visible {
 	outline: 3px solid var(--leaf-500);
 	outline-offset: 4px;
 }
-.picture-search-credit { font-size: .85rem; line-height: 1.5; color: var(--cocoa-600); }
