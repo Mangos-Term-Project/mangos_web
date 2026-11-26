@@ -23,12 +23,55 @@ from pydantic import BaseModel, Field
 from redis import Redis
 
 try:
-    from .image_search import ImageSearchError, fetch_images
+    from .content_filter import is_blocked
+    from .image_search import ImageSearchError, fetch_image_by_id, fetch_images
+    from .word_pictures import WORD_PICTURES as PICKED_BY_PART
+    from .word_phrases import WORD_PHRASES
 except ImportError:
-    from image_search import ImageSearchError, fetch_images
+    from content_filter import is_blocked
+    from image_search import ImageSearchError, fetch_image_by_id, fetch_images
+    from word_pictures import WORD_PICTURES as PICKED_BY_PART
+    from word_phrases import WORD_PHRASES
 
 API_DIR = Path(__file__).resolve().parent
 load_dotenv(API_DIR.parent / ".env")
+
+
+PARTS_OF_SPEECH = ("noun", "verb", "adjective")
+
+
+def load_word_pictures() -> dict[str, list[tuple[str, int, list[int]]]]:
+    """Hand-picked Pixabay picture IDs per vocabulary word (api/word_pictures.py).
+
+    Every listed picture was checked by a person for meaning and suitability
+    for children. A word in two parts of speech (work, open...) keeps separate
+    pictures for each, in noun, verb, adjective order.
+    """
+    pictures: dict[str, list[tuple[str, int, list[int]]]] = {}
+    for part in PARTS_OF_SPEECH:
+        for word, ids in PICKED_BY_PART.get(part, {}).items():
+            # A list of lists means one list per meaning (sense), in the hint's order.
+            senses = ids if ids and isinstance(ids[0], list) else [ids]
+            for index, sense_ids in enumerate(senses):
+                if sense_ids:
+                    pictures.setdefault(word.lower(), []).append((part, index, [int(i) for i in sense_ids]))
+    return pictures
+
+
+def word_forms(word: str) -> set[str]:
+    """Simple forms a learner might type: go/goes/going, live/lives/living/lived."""
+    forms = {word, f"{word}s", f"{word}es", f"{word}ed", f"{word}ing"}
+    if word.endswith("e"):
+        forms |= {f"{word}d", f"{word[:-1]}ing"}
+    if word.endswith("y"):
+        forms |= {f"{word[:-1]}ies", f"{word[:-1]}ied"}
+    return forms
+
+
+WORD_PICTURES = load_word_pictures()
+PICKED_FOR_TYPED = {form: word for word in WORD_PICTURES for form in word_forms(word)}
+# Any other vocabulary word (or form) typed in search uses its checked phrase instead.
+PHRASE_FOR_TYPED = {form: word for word in WORD_PHRASES for form in word_forms(word)}
 
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 REDIS_URL = os.getenv("REDIS_URL", "")
@@ -293,8 +336,21 @@ def search_images(
     key = os.getenv("PIXABAY_API_KEY", "").strip()
     if not key:
         raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
-    # v3: results depend on the picture type as well as the words.
-    cache_key = f"mangos:images:v3:{image_type}:{hash_token(query)}"
+    # Searches containing rude, adult or frightening words are refused (content_filter.py).
+    if is_blocked(query):
+        raise HTTPException(status_code=400, detail="Please try a different word.")
+    # A vocabulary word (or a simple form of it, like "happens") shows its hand-picked pictures.
+    picked_word = PICKED_FOR_TYPED.get(query)
+    if picked_word:
+        return picked_pictures(picked_word, key)
+    vocabulary_word = PHRASE_FOR_TYPED.get(query)
+    if vocabulary_word:
+        phrase, part = WORD_PHRASES[vocabulary_word]
+        query = phrase
+        if image_type == "all" and part != "noun":
+            image_type = "illustration"  # same as the app's suggested search
+    # v4: results now pass the child-safety filter.
+    cache_key = f"mangos:images:v4:{image_type}:{hash_token(query)}"
     with get_session_store("search reference pictures") as store:
         cached = store.get(cache_key)
         if cached:
@@ -310,6 +366,44 @@ def search_images(
             raise HTTPException(status_code=error.status, detail=error.message) from None
         store.set(cache_key, json.dumps(result), ex=86400)
         return result
+
+
+def picked_pictures(word: str, key: str) -> dict[str, Any]:
+    """The hand-picked pictures for a word, fetched by ID and cached for 24 hours."""
+    cache_key = f"mangos:images:picked:v3:{word}"
+    with get_session_store("load picked pictures") as store:
+        cached = store.get(cache_key)
+        if cached:
+            return json.loads(cached)
+        groups = []
+        for part, sense, ids in WORD_PICTURES.get(word, []):
+            images = []
+            for image_id in ids:
+                try:
+                    image = fetch_image_by_id(image_id, key)
+                except ImageSearchError as error:
+                    raise HTTPException(status_code=error.status, detail=error.message) from None
+                if image:
+                    images.append(image)
+            if images:
+                groups.append({"part": part, "sense": sense, "images": images})
+        # "images" lists every picture; "groups" splits them by part of speech.
+        result = {"images": [image for group in groups for image in group["images"]], "groups": groups, "picked": True}
+        store.set(cache_key, json.dumps(result), ex=86400)
+        return result
+
+
+@app.get("/api/images/word")
+def word_pictures(request: Request, word: str = Query(min_length=1, max_length=40)):
+    """Hand-picked pictures for a vocabulary word; empty when none are picked yet."""
+    authenticated_user_id(request)
+    normalized = word.strip().casefold()
+    if normalized not in WORD_PICTURES:
+        return {"images": [], "groups": [], "picked": False}
+    key = os.getenv("PIXABAY_API_KEY", "").strip()
+    if not key:
+        raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
+    return picked_pictures(normalized, key)
 
 
 @app.get("/api/words/next")

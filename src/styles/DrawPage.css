@@ -488,3 +488,24 @@
 	outline: 3px solid var(--leaf-500);
 	outline-offset: 4px;
 }
+
+/* Heading over the hand-picked pictures for the current word. */
+.picked-title {
+	margin: 14px 0 0;
+	color: var(--leaf-500);
+	font-size: 0.9rem;
+	font-weight: 800;
+}
+
+.picked-part {
+	margin: 12px 0 0;
+	color: var(--cocoa-900);
+	font-size: 0.85rem;
+	font-weight: 750;
+}
+
+.word-hint-sense + .word-hint-sense {
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px dashed rgb(121 99 76 / 20%);
+}
