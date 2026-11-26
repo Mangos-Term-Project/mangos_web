@@ -30,6 +30,27 @@ verbs. Verbs and adjectives are also hard to photograph.
    ("show your users where the images and videos are from, whenever search
    results are displayed"); the terms do not require a link.
 
+## What real searches showed (November 25, 2026)
+
+With the Pixabay key, we ran every suggested search exactly as the app does
+(same phrase and picture type):
+
+- **All 297 phrases return at least 20 pictures**; none comes back empty.
+- We then looked at the first six pictures for the 32 hardest words (16
+  abstract verbs, 16 abstract adjectives):
+  - **24 clearly fit**, for example become (caterpillars and butterflies),
+    consider (people thinking), include (group hugs), recommend (star
+    ratings), whole (whole pizzas), mental (brains), legal (scales of
+    justice), single (one flower), fine (OK hand signs).
+  - **4 were improved** by testing alternatives side by side: true
+    ("true false" showed "FAKE NEWS"; now "correct answer"), want
+    ("wish" → "child wishing"), current ("live news" → "now"), recent
+    ("fresh bread" → "latest news").
+  - **4 still have no clearly fitting picture** under any phrase we tried:
+    seem, happen, familiar, common. For these, learners rely on the
+    meaning shown with the word and, in Spanish mode, its translation.
+    These are the best candidates for team-picked pictures.
+
 ## Checking the phrases
 
 `api/tools/check_hint_searches.py` counts how many pictures each phrase
