@@ -60,12 +60,19 @@ verification works until a real email has been received.
 
 ### Children under 13
 
-**Team decision needed before turning email verification on.** Learners
-include children under 13. The team must decide whose email address is
-collected (the learner's, a parent's or guardian's, or a teacher's), what
-consent is needed, and what the sign-up form should say. The code does not
-assume an answer: the form says only "Email address", and several accounts
-may share one address (for example siblings using a parent's email).
+Learners without an email, including children under 13, sign up with a
+parent's, guardian's or teacher's email. The sign-up form says: "Email
+address (yours, or a parent's, guardian's or teacher's)" and "Under 13 or
+no email? Ask a parent, guardian or teacher to use their email." The code
+goes to that adult, so every account is still verified. One email can be
+used for several accounts (for example siblings, or a class using a
+teacher's email).
+
+**Still a team decision, to confirm with the instructor before launch:**
+apps for children under 13 in the US are covered by COPPA, which has rules
+about parental permission before collecting a child's personal
+information. Decide whether a parent or teacher must give permission, how,
+and what the form should say about it. The app does not record consent.
 
 ## Existing accounts
 

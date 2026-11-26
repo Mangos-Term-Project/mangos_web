@@ -25,7 +25,7 @@ finished and tested, but waiting on the steps in
 | Feature | Status | What is left |
 |---|---|---|
 | Email delivery for verification | Code finished and tested with a local test inbox | The team must choose an email service (any SMTP provider), add its settings in Vercel, and send a real test email. |
-| Children under 13 and email | Not decided | The team must decide whose email address is used (learner, parent or guardian, or teacher) and what consent is needed. See [DEPLOYMENT.md](DEPLOYMENT.md#children-under-13). |
+| Children under 13 and email | Sign-up lets learners use a parent's, guardian's or teacher's email | Confirm with the instructor how parental permission (COPPA) is handled. See [DEPLOYMENT.md](DEPLOYMENT.md#children-under-13). |
 | Picture relevance for verbs and adjectives | Phrases rewritten; drawings-first search added | Run `api/tools/check_hint_searches.py` with the Pixabay key and fix any phrase that finds few pictures. See [PICTURE_SEARCH.md](PICTURE_SEARCH.md). |
 | Pet artwork, prices and coin amounts | Working with placeholder pets (emoji) and proposed prices and rewards | The team should confirm or replace the pets, prices, coin rewards and the review schedule. |
 | Spanish word translations | All 297 words translated | A Spanish speaker should review the 11 entries marked in `src/data/wordTranslations.js`. |
