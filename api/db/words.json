@@ -1,0 +1,5563 @@
+[
+  {
+    "word_id": "686fb83f-f5f9-46f2-97b3-f260d0e78799",
+    "word": "Able",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Can do something.",
+        "search_phrase": "can do",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          156066,
+          468079,
+          7256813
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1cf07443-5aaf-4caf-9ce9-855b6e974dfa",
+    "word": "Angry",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Very upset.",
+        "search_phrase": "angry face",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1296508,
+          1585265,
+          4836224,
+          1585197
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "98329299-2664-4ed6-9157-eda6ef4161c9",
+    "word": "Bad",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not good.",
+        "search_phrase": "thumbs down",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          489521,
+          440352,
+          5995249
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "09fd97e7-c2ec-4534-8333-ceff288c405e",
+    "word": "Big",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Large in size.",
+        "search_phrase": "elephant",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          24722,
+          3526681,
+          24732,
+          1598359
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8e759804-cd3e-44c3-b8f8-89d7dd6af419",
+    "word": "Boring",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not interesting.",
+        "search_phrase": "bored student",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9041767,
+          29492,
+          145013,
+          9452001
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "feede9b8-4256-44fe-8b75-7bf7d1843bfe",
+    "word": "Bright",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Full of light.",
+        "search_phrase": "sun shining",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2026487,
+          625805,
+          157522,
+          2024473
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "dd76c7a7-c82d-4df9-9f86-bbd6f5cab1ee",
+    "word": "Busy",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having a lot to do.",
+        "search_phrase": "multitasking",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2840792,
+          1633667,
+          2882427,
+          8614982
+        ]
+      },
+      {
+        "definition": "Full of activity.",
+        "search_phrase": "busy street",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10188318,
+          9587641,
+          9020965,
+          205638
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a81268ec-e572-4187-beeb-8c2b6320f1a4",
+    "word": "Calm",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Peaceful and quiet.",
+        "search_phrase": "calm lake",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4387209,
+          6207925,
+          6260668,
+          8691370
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b8f10332-457c-4c31-807a-8e39924f3cf7",
+    "word": "Central",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "In the middle.",
+        "search_phrase": "center target",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2070972,
+          1414775,
+          2889040,
+          1291636,
+          155726
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6a20e0d8-228d-4706-8aef-0cb7d2f427f7",
+    "word": "Clean",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not dirty.",
+        "search_phrase": "clean kitchen",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8175613,
+          2025752,
+          161124,
+          3569876
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7d288ebb-6728-4d50-a51e-d8dd6fa3b0f7",
+    "word": "Clear",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Easy to see through or understand.",
+        "search_phrase": "clear water",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5650335,
+          4998513,
+          8801040,
+          10014181
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4d97e098-7e0e-42bd-a5cf-64a11763efed",
+    "word": "Cold",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having a low temperature.",
+        "search_phrase": "snow and ice",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4687221,
+          64157,
+          8413748,
+          6858401
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d590864a-6967-4eb7-9d78-3a0e28928ffd",
+    "word": "Common",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Found often or shared by many people.",
+        "search_phrase": "everyday objects",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8835018,
+          10365694,
+          2127510,
+          1300645
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b268d1ec-f671-4fe9-b9cb-7d5d158648af",
+    "word": "Current",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Happening now.",
+        "search_phrase": "breaking news on tv",
+        "more_searches": [
+          "news reporter"
+        ],
+        "pixabay_image_ids": [
+          7613045,
+          7613046,
+          7091305,
+          2399668
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d80cec35-5656-43d4-a877-220f73d513d3",
+    "word": "Dark",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "With little or no light.",
+        "search_phrase": "night sky",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2024127,
+          4919501,
+          4875339,
+          5375005
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "48c5d6ca-03a4-49ca-8bfa-b8df3e061e8a",
+    "word": "Dead",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "No longer alive.",
+        "search_phrase": "dinosaur skeleton museum",
+        "more_searches": [
+          "wilted flower",
+          "dry leaves"
+        ],
+        "pixabay_image_ids": [
+          2435665,
+          2368475,
+          7687604,
+          7607979,
+          1634105
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e3fbbc6c-e988-415d-9c0c-25851e258b59",
+    "word": "deep",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Going far down.",
+        "search_phrase": "deep ocean",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10210903,
+          7105870,
+          158250,
+          2464799
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "85a3d325-8cb5-4dd9-94f5-da95547ce577",
+    "word": "different",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not the same.",
+        "search_phrase": "different colors",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7085916,
+          1356079,
+          1356062,
+          8839570
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f8b859f7-b288-4a1c-ab34-68cca91977a0",
+    "word": "Difficult",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Hard to do or understand.",
+        "search_phrase": "maze",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7447920,
+          4121590,
+          2037286,
+          155972
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a29a6463-f82f-42fd-a0ff-240e402a50ac",
+    "word": "early",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Before the usual time.",
+        "search_phrase": "sunrise alarm clock",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6564536,
+          6564569,
+          1968097,
+          1673577
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "32087571-1332-458c-b400-1bfb5a270c15",
+    "word": "Easy",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not hard to do.",
+        "search_phrase": "easy puzzle",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          162124,
+          9638685,
+          9308134,
+          9308130
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f7ce4cdc-8771-4528-b0fd-048b69c144e8",
+    "word": "Excellent",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Very, very good.",
+        "search_phrase": "excellent grade",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          156087,
+          303928,
+          3024488,
+          5257905
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5d057588-832c-4c25-afd1-b6632607d9b4",
+    "word": "Expensive",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Costs a lot of money.",
+        "search_phrase": "diamond ring",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          159635,
+          1295824,
+          2029787,
+          2712466
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "96364738-ad28-403e-84d0-34f7eeab347f",
+    "word": "Familiar",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Known well.",
+        "search_phrase": "old friends",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8650290,
+          7808776,
+          10365694,
+          4187953
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a040808b-47a0-4dae-bea7-ce654bc1b5bc",
+    "word": "few",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not many.",
+        "search_phrase": "three apples",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1302430,
+          157714,
+          157936,
+          1298308
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "26e3d4c7-cd10-4f1a-b65e-0774fe90b560",
+    "word": "Fine",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Okay or good.",
+        "search_phrase": "ok hand sign",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5673661,
+          1299636,
+          307289,
+          307076
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "104d1340-3749-4ff2-85b7-1e053326a49f",
+    "word": "First",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Before all others.",
+        "search_phrase": "first place medal",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1622523,
+          1060918,
+          295094,
+          1294003
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d1c2e9e0-54a4-4d1a-8d04-75b225e8ed60",
+    "word": "flat",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Smooth and level, with no bumps.",
+        "search_phrase": "flat road",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10250377,
+          8865137,
+          962690,
+          5899921
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c1498502-5065-4f70-abbe-aa35629ba9a8",
+    "word": "Foreign",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "From another country.",
+        "search_phrase": "passport",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8621284,
+          7293705,
+          9838867,
+          3953229
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f97b32ee-d9e4-4cd5-8f34-4d0624b907aa",
+    "word": "Free",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Costs nothing.",
+        "search_phrase": "free sign",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10537432,
+          8739558,
+          706798,
+          5015462
+        ]
+      },
+      {
+        "definition": "Not trapped.",
+        "search_phrase": "bird flying free",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7893439,
+          41260,
+          3426187,
+          6839511
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "07e49691-e64c-42d9-9f55-a2081d252417",
+    "word": "Friendly",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Kind and pleasant to others.",
+        "search_phrase": "friendly wave",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1905155,
+          2023311,
+          5765632,
+          2029286
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ae4183c8-4a96-4941-b999-5ddd674b90ec",
+    "word": "Full",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Has no more room inside.",
+        "search_phrase": "full glass",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          305660,
+          305659,
+          303285,
+          159057
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a6fff691-c8d5-4e89-af5c-020c1bad6e2d",
+    "word": "Funny",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Makes you laugh.",
+        "search_phrase": "laughing kids",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6969771,
+          310724,
+          2766697
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e979c555-846f-4a9e-a24a-30f019a97dc0",
+    "word": "Good",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Nice, right, or done well.",
+        "search_phrase": "thumbs up",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8081644,
+          1748813,
+          31664,
+          1429327
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ce43cf84-0289-4d13-b32a-ddab7197ddbe",
+    "word": "Great",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Very good.",
+        "search_phrase": "celebration fireworks",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          157248,
+          3297107,
+          9293297,
+          152044
+        ]
+      },
+      {
+        "definition": "Very large.",
+        "search_phrase": "huge mountain",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          34536,
+          9979198,
+          10337638,
+          10223379
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "79548bf6-04ae-4127-99b8-7aea812fbf84",
+    "word": "Happy",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Feeling good and pleased.",
+        "search_phrase": "smiling person",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10583112,
+          9798054,
+          1563663,
+          9798059
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d151ab27-b8f4-4134-b7f5-8c990e905c33",
+    "word": "Hard",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not soft; firm.",
+        "search_phrase": "hard rock stone",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          312644,
+          155644
+        ]
+      },
+      {
+        "definition": "Difficult to do.",
+        "search_phrase": "hard homework",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9295105,
+          8985311,
+          9200129,
+          10001720
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "077b6a0e-8ac1-41ed-b496-c7a1019593e2",
+    "word": "Healthy",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Well and strong.",
+        "search_phrase": "fresh vegetables",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          575529,
+          320081,
+          155616,
+          40295
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6aeb0947-2bf9-4c2d-b35a-f1ac3d2f3fc3",
+    "word": "Helpful",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Ready to help.",
+        "search_phrase": "tutor helping student",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1297779,
+          9654164,
+          6831603,
+          9857301
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d660d1cf-0dea-4913-94bd-659371723c17",
+    "word": "High",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Far above the ground.",
+        "search_phrase": "skyscraper",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9193823,
+          5057263,
+          1893201,
+          3867295
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8c1b8f80-24a8-4246-8ebf-d1cb0eba4d15",
+    "word": "Honest",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Tells the truth.",
+        "search_phrase": "pinky promise",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6018855,
+          4065818,
+          7989156,
+          774835
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7a9a727d-f0b4-4818-8b47-8b4a466e9c27",
+    "word": "Hot",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having a high temperature.",
+        "search_phrase": "fire flames",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          422746,
+          1363003,
+          1943313,
+          1073217
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0961d70a-3ed9-496e-83cf-8ea0d0068040",
+    "word": "Human",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "About people.",
+        "search_phrase": "human hand",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8331123,
+          1925875,
+          10233473
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a4ce84f0-2f91-47e5-b6d6-c5737dc69272",
+    "word": "Important",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Matters a lot.",
+        "search_phrase": "red important stamp",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1705212,
+          4685285,
+          4727720
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "911f4c62-8c10-4d35-9d47-78fe95e98d4b",
+    "word": "Interesting",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Catches your attention.",
+        "search_phrase": "curious child",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3326960,
+          8433758,
+          8020367,
+          8867109
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d5a6bd04-a94c-4b8b-a1e0-70065c2083e0",
+    "word": "Large",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Big in size.",
+        "search_phrase": "tallest buildings",
+        "more_searches": [
+          "empire state building",
+          "huge whale"
+        ],
+        "pixabay_image_ids": [
+          9304557,
+          8207549,
+          7845819,
+          9426675,
+          10583247,
+          565239
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "982f96ce-1015-4490-90fe-99bec8858d9d",
+    "word": "Last",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "After all others; final.",
+        "search_phrase": "december 31 calendar",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          157969,
+          160983,
+          1064044,
+          41473,
+          2192605,
+          4927530
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "135e56d3-5c11-42e0-b830-e307dde18c5f",
+    "word": "Late",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "After the usual or expected time.",
+        "search_phrase": "running late clock",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5762754,
+          3362037,
+          3857337,
+          1740707
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f043a3d4-c3cf-4eb3-b3be-12fbbb21c82c",
+    "word": "Left",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "On the side opposite right.",
+        "search_phrase": "left arrow sign",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2718071,
+          24820,
+          7283513,
+          35171
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1d64cccd-c42c-4345-a45b-a160c40a1570",
+    "word": "Legal",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Allowed by law.",
+        "search_phrase": "law justice",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8442199,
+          2071539,
+          5665991
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a57297f2-0937-4884-a1be-dd9c2e6ac37d",
+    "word": "Light",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not heavy.",
+        "search_phrase": "feather floating",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1674847,
+          1326177,
+          833327,
+          4567519
+        ]
+      },
+      {
+        "definition": "Full of light; bright.",
+        "search_phrase": "bright lamp",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4514505,
+          1173249,
+          311119,
+          310054
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d015fa9c-e65e-4f3e-bef4-c5ec87a5434b",
+    "word": "Likely",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Probably going to happen.",
+        "search_phrase": "rain clouds",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          149344,
+          4820504,
+          156134,
+          7616961
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "322ed776-3c0f-47bc-9f33-4e92ccc816b9",
+    "word": "little",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Small in size.",
+        "search_phrase": "tiny kitten",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9232673,
+          8992558,
+          8992563,
+          8992562
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "accffc24-52a7-4c53-8050-49fbf2991da1",
+    "word": "Local",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "From the nearby area.",
+        "search_phrase": "neighborhood shop",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6725046,
+          4625652,
+          9955416
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "74d9234e-80f0-494a-8770-787a0ea31613",
+    "word": "Long",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Great in length.",
+        "search_phrase": "long road",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          48393,
+          40035,
+          3531510,
+          5855508
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7ed7fa20-e54f-4bd1-b1bb-2ebaaba04e59",
+    "word": "low",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Small in amount.",
+        "search_phrase": "low battery",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10259753,
+          145215,
+          2831535,
+          7103575
+        ]
+      },
+      {
+        "definition": "Close to the ground.",
+        "search_phrase": "crawling baby",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          303724,
+          575916,
+          9322226
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ca799bb7-4969-4ee4-a764-df23e892bd99",
+    "word": "Lucky",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having good things happen by chance.",
+        "search_phrase": "four leaf clover",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          152047,
+          8826598,
+          587484,
+          8632218
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0da09106-a7bf-424c-82a5-d181d8b97351",
+    "word": "Mental",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "About the mind.",
+        "search_phrase": "brain",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2062057,
+          7420599,
+          5712086,
+          512758
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ac916a78-a485-448f-958b-68bc161036df",
+    "word": "Modern",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "New and up to date.",
+        "search_phrase": "modern building",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7187496,
+          8206042,
+          1893201,
+          5622725
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "66af17b5-a6fa-4fa8-9f1e-88df34616c4f",
+    "word": "narrow",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not wide.",
+        "search_phrase": "narrow alley",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5783045,
+          9119204,
+          9119202,
+          4370679
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4d2691c8-602a-48bf-9041-dea924615e39",
+    "word": "New",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Just made or bought.",
+        "search_phrase": "new shoes",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9563478,
+          8855762,
+          3311671,
+          7686499
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "66762bc7-9b36-4822-91f5-22fcf9432e0a",
+    "word": "Next",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Coming right after.",
+        "search_phrase": "waiting line",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4058350,
+          3527570,
+          9307573,
+          4326819
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "be5d0c84-0447-4771-85a4-f7ad4417ab2a",
+    "word": "Nice",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Pleasant or kind.",
+        "search_phrase": "sunny garden",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2159970,
+          9233053,
+          3362888,
+          8920814
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "bfcab4d3-60c0-4b12-af8e-2fef5cc03003",
+    "word": "Old",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having lived or existed for many years.",
+        "search_phrase": "grandparents",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5518002,
+          9698054,
+          9701882,
+          4387074
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2cab2d7d-a185-413b-a35e-2eb0b3f64e76",
+    "word": "Other",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Different from the one already mentioned.",
+        "search_phrase": "choice doors",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1013678,
+          6689322,
+          6882667
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "33d25628-8ab6-4175-b926-c9c1c5fc59d0",
+    "word": "Own",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Belonging to you.",
+        "search_phrase": "house keys",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2114455,
+          589068,
+          6544495,
+          9104181
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "235d9179-9095-4158-9f01-bc925f4f46cd",
+    "word": "physical",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "About the body.",
+        "search_phrase": "person exercising",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2029661,
+          3275316,
+          2025775,
+          4394727
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "517ad78d-e32d-4512-b020-fff8ce09477a",
+    "word": "Poor",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having very little money.",
+        "search_phrase": "empty wallet",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4025287,
+          564244,
+          8628154,
+          5688115
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "75e5f689-c9a5-4722-a379-d7791bb30c32",
+    "word": "Popular",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Liked by many people.",
+        "search_phrase": "crowd cheering",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1458869,
+          10461282,
+          9354214
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e6d6131f-3c8e-4c9c-b690-5636f4585ec6",
+    "word": "Private",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Just for one person or group.",
+        "search_phrase": "keep out sign",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4772157,
+          37284,
+          147899
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8e404242-8518-4066-9edb-69ba70f3d667",
+    "word": "Public",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Open to everyone.",
+        "search_phrase": "public park",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10541396,
+          2039987,
+          8673807
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f2db9820-5488-4d27-81ba-894d68e993b1",
+    "word": "Quiet",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Making little or no sound.",
+        "search_phrase": "quiet library",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3702062,
+          8403784,
+          7660955,
+          310799
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "42e910fb-fc62-4d46-8b5f-f7fd53416cb7",
+    "word": "Ready",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Prepared to do something.",
+        "search_phrase": "starting blocks",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1013719,
+          3107884,
+          2872201,
+          2667167
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "971249e8-dbe9-4da2-a213-e23468704026",
+    "word": "Real",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Truly exists; not fake.",
+        "search_phrase": "planet earth",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1617121,
+          1303628,
+          8549451,
+          160172
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "43413ee7-185a-49de-9dbb-2c84baadca99",
+    "word": "Recent",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Happened a short time ago.",
+        "search_phrase": "newborn baby",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7780328,
+          507132,
+          5454100,
+          507133
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "278f9840-edee-4385-af44-4bc1bd93755f",
+    "word": "Rich",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having a lot of money.",
+        "search_phrase": "gold coins",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8632224,
+          3024279,
+          7980065,
+          5606272
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d6c382f9-ce0d-494e-a4fd-f406a0792f41",
+    "word": "right",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Correct.",
+        "search_phrase": "green checkmark",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1002802,
+          10469658,
+          151676,
+          40319
+        ]
+      },
+      {
+        "definition": "On the side opposite left.",
+        "search_phrase": "right arrow",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1294468,
+          2207745,
+          39526,
+          25832
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "80b356b7-ed4f-4b76-9566-289a41070cd6",
+    "word": "Safe",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not in danger.",
+        "search_phrase": "child wearing helmet",
+        "more_searches": [
+          "safety cones"
+        ],
+        "pixabay_image_ids": [
+          10319001,
+          9810659,
+          31883,
+          160826,
+          1492046,
+          98597
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c04a50ea-30f1-4cc4-a2d8-9951cdfc1eb5",
+    "word": "same",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Exactly alike.",
+        "search_phrase": "identical twins",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          49003,
+          6830074,
+          6583823
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e43fb0fc-3d3a-4c3e-80dc-bad55b96a367",
+    "word": "Serious",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not joking.",
+        "search_phrase": "serious student",
+        "more_searches": [
+          "report card"
+        ],
+        "pixabay_image_ids": [
+          1999710,
+          403004,
+          9638685,
+          9308130
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d2eb2ef1-abe8-40d7-9155-383f9d8d33c7",
+    "word": "Short",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not tall.",
+        "search_phrase": "height chart",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2797403,
+          5433471,
+          3421907,
+          1660345,
+          4613193,
+          5740589,
+          3068300,
+          4818869
+        ]
+      },
+      {
+        "definition": "Not long.",
+        "search_phrase": "short sleeve shirt",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          181707,
+          6378445
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0805d3d1-834a-4eb3-836e-e2e78a23ccb7",
+    "word": "Similar",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Almost the same.",
+        "search_phrase": "twins",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2028268,
+          6908460,
+          2028267,
+          9602633
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5987efc9-1a59-4129-aa61-edba899a0900",
+    "word": "simple",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Easy and not complicated.",
+        "search_phrase": "simple shapes",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2438744,
+          304570,
+          147190,
+          2717442
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3dd3ebaf-8313-4616-8fb0-e3fe4d4d8d51",
+    "word": "single",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Only one.",
+        "search_phrase": "number one",
+        "more_searches": [
+          "one finger",
+          "single flower"
+        ],
+        "pixabay_image_ids": [
+          38484,
+          9251726,
+          2024506,
+          157937,
+          310854,
+          1952024,
+          7875159
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f67fa29e-f179-4462-850f-4e75775acd5b",
+    "word": "Small",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not large.",
+        "search_phrase": "small mouse",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9401907,
+          8723351,
+          7904045,
+          8688763
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5de01104-8698-4b1b-b209-c3a5c284b0a4",
+    "word": "Smart",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Quick to learn and understand.",
+        "search_phrase": "student solving math",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9626593,
+          7036660,
+          8806323,
+          2439933
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fd8fe296-b03a-4ae6-bcb3-18b3ef95a84f",
+    "word": "special",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Different and better than usual.",
+        "search_phrase": "gift bow",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4536515,
+          4567561,
+          1893642,
+          2927962
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1d8a3b0c-55d7-4cdb-9dd2-015bf8153a61",
+    "word": "Strong",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Having a lot of power.",
+        "search_phrase": "weightlifter",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2227543,
+          8622357,
+          9491034,
+          10035413
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e96ae724-51a7-475d-9112-f9c8488fa37c",
+    "word": "Sure",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Certain; with no doubt.",
+        "search_phrase": "confident",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          41891,
+          1424994,
+          8663329
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c6e5714b-2995-40eb-8682-e9afd53b7441",
+    "word": "True",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Real and correct; not false.",
+        "search_phrase": "correct answer",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          151676,
+          1152155,
+          1976099,
+          7829430
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b8a9854f-3794-48f6-b26d-c661065506a6",
+    "word": "useful",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Helpful for doing something.",
+        "search_phrase": "toolbox",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          310409,
+          155603,
+          10053296,
+          3577933
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "07eae4a7-23a7-4f06-92e6-016626af5f87",
+    "word": "Various",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Several different kinds.",
+        "search_phrase": "assorted candies",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          993781,
+          1514016,
+          8297362,
+          5702225
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "62885016-1a59-453d-8f56-eab3b6592eac",
+    "word": "whole",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "All of something, with nothing missing.",
+        "search_phrase": "whole pizza",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5991179,
+          3412595,
+          8593436,
+          2003616
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c9a23275-50d8-47a4-b689-b0113aa16f38",
+    "word": "wide",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Large from side to side.",
+        "search_phrase": "wide river",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          110305,
+          835453,
+          2054837,
+          1044107
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a3ddff45-45b6-49d2-ade1-75e514d5a38f",
+    "word": "wrong",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not correct.",
+        "search_phrase": "red cross mark",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2061132,
+          146096,
+          31226,
+          2061131
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fb004666-5c43-4c22-b2e3-49f73f13c254",
+    "word": "Young",
+    "part_of_speech": "adjective",
+    "senses": [
+      {
+        "definition": "Not old.",
+        "search_phrase": "puppy",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1417208,
+          3431913,
+          6987017,
+          7200102
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d4789d4d-6a65-416b-8bfc-befaf064df7a",
+    "word": "age",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "How old someone or something is.",
+        "search_phrase": "birthday candles",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1114056,
+          8435096,
+          8116621,
+          380178
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a096d17a-7e55-4a5b-9e3b-282f3ddbc4a0",
+    "word": "air",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The invisible gas around us that we breathe.",
+        "search_phrase": "blue sky",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7050884,
+          533541,
+          7158340,
+          49520
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4d8cfc66-08c0-45b2-b84f-e8a2a34a7940",
+    "word": "Apple",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A round fruit that can have red, green, or yellow skin.",
+        "search_phrase": "apple fruit",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          154492
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b0b935e8-a8eb-4155-abee-210fa3ac2aa2",
+    "word": "area",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A part of a place or region.",
+        "search_phrase": "playground area",
+        "more_searches": [
+          "city map"
+        ],
+        "pixabay_image_ids": [
+          4458716,
+          4458712,
+          525349,
+          4320755,
+          5137225
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "dbc2d046-3e83-4733-8c35-27d08caee08f",
+    "word": "Art",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Paintings, drawings, and other things people create.",
+        "search_phrase": "painting easel",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10570434,
+          2578454,
+          5551390,
+          316440
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a3634811-59f7-494d-be71-91240e39bb85",
+    "word": "Back",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The rear part of your body, from your neck to your hips.",
+        "search_phrase": "back view",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2591874,
+          1509956,
+          4187023,
+          2915187
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7effbcba-d398-478a-98ac-a43c78279a5e",
+    "word": "Bicycle",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A vehicle with two wheels that a person pedals.",
+        "search_phrase": "bicycle with basket",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8105731
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7b1fb76e-c032-44ac-a62a-b05e43af7d56",
+    "word": "Body",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "All of a person or animal, from head to feet.",
+        "search_phrase": "body diagram",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          254120,
+          254129,
+          2277447,
+          1859518
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "40e631ee-18cf-47a5-94e3-a626ed312015",
+    "word": "Book",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Pages with words, joined together inside a cover.",
+        "search_phrase": "stack of books",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5937716,
+          160172,
+          5615562,
+          3091212
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a61a0dd3-63a2-4eb7-810c-6cece5fc3aad",
+    "word": "Boy",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A young male person.",
+        "search_phrase": "boy portrait",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10126263,
+          8558714,
+          8515719,
+          311392
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6c898676-eeb9-4c5e-af70-6c29aab87727",
+    "word": "Bus",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A large vehicle that carries many passengers.",
+        "search_phrase": "yellow school bus",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8996380
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b7e6d899-6318-4cad-bd3a-ff731cb511d5",
+    "word": "Business",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The work of buying and selling things.",
+        "search_phrase": "small shop owner",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8494322,
+          5467838,
+          8656653,
+          6217124
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9ac0379b-0b65-4668-81d1-3383aa3d7384",
+    "word": "Car",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A road vehicle with four wheels and an engine.",
+        "search_phrase": "car",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          146580,
+          158548,
+          2179220,
+          1400243
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6839c7a2-06a1-4b24-a8a5-171d9cacc6c6",
+    "word": "case",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A box or container that holds or protects something.",
+        "search_phrase": "carrying case",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          308468,
+          1139882,
+          146669,
+          4697390
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "24190e41-4217-40d3-aa41-740adb6278d0",
+    "word": "Chair",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A piece of furniture made for one person to sit on.",
+        "search_phrase": "wooden chair",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1336497
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9a62dea2-0411-48b4-9703-fe4253ae8e36",
+    "word": "Change",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "When something becomes different.",
+        "search_phrase": "seasons change",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          158601,
+          1994663,
+          776932,
+          7776120
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1be2a0ae-cf0f-4808-a78b-4c490dfe5df4",
+    "word": "Child",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A young person.",
+        "search_phrase": "happy child",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          390555,
+          6578335,
+          3386242,
+          2178857
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3de8d14d-2152-496e-88e5-eaeecc89539c",
+    "word": "City",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A large town with many buildings and people.",
+        "search_phrase": "city skyline",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8170058,
+          5501210,
+          3862939,
+          1777986
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a02de3b1-79ea-44ea-b05d-f8352fc7877d",
+    "word": "College",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A school for study after high school.",
+        "search_phrase": "college campus",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6027028,
+          4751778,
+          8259184,
+          5188610
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b797e52c-eb69-49da-9ce7-320e9a91fffd",
+    "word": "Company",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A business that sells goods or services.",
+        "search_phrase": "company office building",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4884852,
+          8016589,
+          8531835,
+          22039
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4657dd8c-873a-4c8b-b2c0-21d998248528",
+    "word": "Day",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The 24 hours from one midnight to the next.",
+        "search_phrase": "sunny day sky",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5277704,
+          1987414,
+          5065670,
+          7190396
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c85de783-a990-4dce-bb64-5e22b17c1f7c",
+    "word": "Dog",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A common animal that people keep as a pet.",
+        "search_phrase": "small dog sitting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8165447
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "56eeb6fd-38f8-4dcd-b098-45bba07c728d",
+    "word": "Door",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A panel you open to go in or out of a room.",
+        "search_phrase": "wooden door",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          681835,
+          8029231,
+          7913270,
+          2096367
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "cddab87d-3a15-4418-98dd-1921f06993ff",
+    "word": "Education",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Learning, especially at school.",
+        "search_phrase": "classroom students",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1093758,
+          286245,
+          160168,
+          3518726
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7ed2c234-e561-4ec0-8eeb-e977e76cd4e0",
+    "word": "end",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The last part of something.",
+        "search_phrase": "finish line",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1867053,
+          908176,
+          1648337,
+          10348552
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c7810cbd-da61-43a6-82cc-becb6a8f2f2f",
+    "word": "Eye",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The part of your body you see with.",
+        "search_phrase": "human eye",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10491430,
+          3805227,
+          9266169,
+          1173863
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6d59fc69-157b-4a5c-b6c5-253a9bdbdb74",
+    "word": "Face",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The front of your head, with your eyes, nose, and mouth.",
+        "search_phrase": "smiling face",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2634974,
+          607834,
+          657753,
+          3194977
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c1d6f4f5-bb10-4e7d-a033-642bfaf912e2",
+    "word": "Fact",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Something that is true.",
+        "search_phrase": "encyclopedia books",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3446451,
+          159852,
+          1261800,
+          286240
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1f8edf0f-ec00-4c3a-817f-6ee4a006c9e5",
+    "word": "Father",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A male parent.",
+        "search_phrase": "dad and kids",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1294906,
+          149865,
+          156444,
+          2022689
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "04930679-7ea5-4608-95d5-7ea6405030f3",
+    "word": "Flower",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The colorful part of a plant that can grow into fruit or seeds.",
+        "search_phrase": "simple flower",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7746724
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "bf81367d-897c-4008-99dc-1ca2ad12f241",
+    "word": "Foot",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The part of your body at the end of your leg.",
+        "search_phrase": "bare foot",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4746255,
+          9291939,
+          7114292,
+          5428252
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "58af221b-1494-4b9c-be13-8a15be2fcd11",
+    "word": "Force",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A push or pull that makes something move.",
+        "search_phrase": "pushing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          649498,
+          2831226,
+          9802257,
+          8798319
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9c53c0f1-59be-439e-94a1-fe364987790b",
+    "word": "Friend",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A person you like and trust.",
+        "search_phrase": "friends laughing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2567915,
+          6126262,
+          1876033,
+          4960165
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f3438065-8026-410a-a72f-e28a5a1c4b50",
+    "word": "Game",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An activity with rules that you play for fun.",
+        "search_phrase": "board game",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1511866,
+          1744790,
+          3467512,
+          1080527
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "77f2a91c-459a-4796-b117-3aada8d23380",
+    "word": "Girl",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A young female person.",
+        "search_phrase": "girl portrait",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3316342,
+          7370081,
+          1293888,
+          1297289
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5b8966fc-96fd-4693-84c1-75937b2a2131",
+    "word": "Group",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Several people or things together.",
+        "search_phrase": "group of friends",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3104635,
+          6027028,
+          4187953,
+          4273865
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3a347727-dcaf-470d-a2ac-bfee877d3e5d",
+    "word": "Guy",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A man (informal).",
+        "search_phrase": "young man smiling",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7011010,
+          4494498,
+          2202472,
+          1885144
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0611a87f-6f5a-4283-8266-8424b2065265",
+    "word": "Hand",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The part of your body at the end of your arm.",
+        "search_phrase": "open hand palm",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          663726,
+          2571553,
+          1921036,
+          1925875
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "58593e5c-24ad-4df1-b581-37f69d840a0c",
+    "word": "Hat",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A covering worn on the head.",
+        "search_phrase": "hat",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          159463
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "12588fa3-a5e1-4e9f-a8e3-e9e7ef1d49f4",
+    "word": "Head",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The top part of your body, with your eyes and brain.",
+        "search_phrase": "human head profile",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7539656,
+          1418613,
+          2029363,
+          1299985
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "74fe947f-513e-4b80-89f8-fe3a0d63f087",
+    "word": "Health",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "How well your body and mind are.",
+        "search_phrase": "healthy lifestyle",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2592247,
+          3553814,
+          9421788,
+          4127336
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8ba5c54c-bf16-4c70-9ab9-e9e97b7ca609",
+    "word": "History",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Events that happened in the past.",
+        "search_phrase": "ancient ruins",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10460078,
+          1594689,
+          9505450,
+          2725918
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5b6a5e14-1334-4295-88db-395788e8043c",
+    "word": "Home",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The place where you live.",
+        "search_phrase": "home sweet home",
+        "more_searches": [
+          "cozy home"
+        ],
+        "pixabay_image_ids": [
+          10478124,
+          8854280,
+          5946821,
+          10441688
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d25e6a34-e315-4e6e-9011-62ac54b2c45e",
+    "word": "hour",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Sixty minutes.",
+        "search_phrase": "hourglass",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          620397,
+          1703349,
+          5235953,
+          5459686
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "08d00693-918f-4f85-9638-836a06b9f0b3",
+    "word": "House",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A building where people live.",
+        "search_phrase": "house exterior",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          540796,
+          6566412,
+          6504533,
+          1836070
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "861475ff-aa83-426f-9024-7f0d53f43a5f",
+    "word": "Idea",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A thought or plan in your mind.",
+        "search_phrase": "light bulb",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4514505,
+          1875247,
+          376926,
+          1173249
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1a89a901-2dab-4962-81a3-fec4f34e9253",
+    "word": "Issue",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An important topic or problem people talk about.",
+        "search_phrase": "meeting discussion",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5382501,
+          1453895,
+          594091,
+          6027028
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "73d0e16f-adb2-4ec7-a55e-ea6cdf1caa6b",
+    "word": "Job",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The work a person does to earn money.",
+        "search_phrase": "construction worker",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10411397,
+          5736096,
+          1080592,
+          8400990
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "286848f1-740e-467f-a7e8-3cad9ae97330",
+    "word": "Kid",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A child.",
+        "search_phrase": "kids playing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1525755,
+          463558,
+          6688951,
+          7304385
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ce651456-4658-4e1f-b32b-36ff5a8372f4",
+    "word": "kind",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A type or group of similar things.",
+        "search_phrase": "fruit variety",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          82524,
+          5565966,
+          5000516,
+          7239412
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "dbac8f43-5ccd-4574-a2e5-ee0316f2a3db",
+    "word": "Law",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A rule made by a government.",
+        "search_phrase": "judge gavel",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2492011,
+          8442199,
+          719066,
+          8866848
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "14a4afee-4c8f-4bdc-bebe-65f31187785a",
+    "word": "level",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "One stage or step in a series.",
+        "search_phrase": "stairs steps",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3112405,
+          6805808,
+          6517488,
+          4955342
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c837e7e3-1264-4150-9fa3-6387da41363b",
+    "word": "Life",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Being alive; the time from birth to death.",
+        "search_phrase": "green seedling sprouting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5241253,
+          1838658,
+          8338691,
+          7110591
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "396941ff-7dd5-42ae-a0a7-96a3ca276708",
+    "word": "Line",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A long, thin mark.",
+        "search_phrase": "straight lines",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          159678,
+          8317057,
+          35282,
+          4076861
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fbf85501-09ed-42aa-a2ab-5d0075850401",
+    "word": "Man",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An adult male person.",
+        "search_phrase": "man portrait",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2194457,
+          613601,
+          1836445,
+          3803551
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8961d1bc-4ca6-4e72-b0a1-173b56cc98fb",
+    "word": "Market",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A place where people buy and sell goods.",
+        "search_phrase": "farmers market",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4856748,
+          1841132,
+          1275551,
+          9299968
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "cfdd4a91-6803-4e09-bc19-4d894321cc10",
+    "word": "Member",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A person who belongs to a group.",
+        "search_phrase": "team members",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          152746,
+          1331579,
+          157818,
+          308531
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "46eb3a06-608e-45a3-bc4b-385bb642fc73",
+    "word": "minute",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Sixty seconds.",
+        "search_phrase": "stopwatch",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2636259,
+          259303,
+          153398,
+          2442462
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "606b3220-b7a4-4fd2-8d15-ac5dbffe144a",
+    "word": "Moment",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A very short time.",
+        "search_phrase": "fireworks burst",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          574739,
+          1953253,
+          180553,
+          865104
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e8d5db9e-d123-4464-ba73-1e442989502a",
+    "word": "Money",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Coins and paper bills used to buy things.",
+        "search_phrase": "coins and banknotes",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1726618,
+          1673582,
+          1642988,
+          9363965
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "db609c5f-5399-402b-a723-f303ddf656a1",
+    "word": "morning",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The early part of the day.",
+        "search_phrase": "sunrise morning",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3189339,
+          2090495,
+          3197686,
+          1934897
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5f939f48-df38-40ff-a044-9fd1add84cf7",
+    "word": "Mother",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A female parent.",
+        "search_phrase": "mother and baby",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2717347,
+          2610205,
+          4100420,
+          84628
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a039099c-a5a2-42a5-a8d0-f6c7e3fdd53c",
+    "word": "Music",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Sounds arranged in a pleasing way.",
+        "search_phrase": "musical notes",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1417670,
+          786136,
+          5775895,
+          546303
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "83f85d0f-cb62-4bea-8a0f-809e6bfde185",
+    "word": "Name",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The word someone or something is called.",
+        "search_phrase": "name tag",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2063053,
+          146679,
+          311163,
+          1714231
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "16d934e0-601b-4737-886c-60da4803094c",
+    "word": "Nation",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A country and its people.",
+        "search_phrase": "world flags",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          67861,
+          1751293,
+          3204671,
+          2026073
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "21a03a64-b02f-419c-983f-34fec60ceed2",
+    "word": "News",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Information about recent events.",
+        "search_phrase": "newspaper",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1172463,
+          1853667,
+          350376,
+          7286576
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b02fb5d8-0ab3-416f-81c9-c310414bc226",
+    "word": "Number",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A word or symbol for an amount, like 1, 2, or 3.",
+        "search_phrase": "colorful numbers",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1866497,
+          4014181,
+          181539,
+          9967530
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "acbbbbd2-a796-40c2-bebf-3e57cdef2deb",
+    "word": "office",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A room or building where people work at desks.",
+        "search_phrase": "office desk",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1207834,
+          1868496,
+          9481358,
+          594132
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2aed2d76-6c05-4bb6-b2a9-fb485b35eb79",
+    "word": "Orange",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A round citrus fruit with a thick orange-colored skin.",
+        "search_phrase": "orange fruit",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4547207
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8f810608-ca1f-4448-ad2e-2f2903e0f2c0",
+    "word": "Others",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Other people or things.",
+        "search_phrase": "crowd of people",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1044891,
+          400811,
+          6129239,
+          5275027
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c61caa79-01ce-4314-a46e-4cc439ce8100",
+    "word": "Parent",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A mother or father.",
+        "search_phrase": "parents with children",
+        "more_searches": [
+          "mother father child"
+        ],
+        "pixabay_image_ids": [
+          3602245,
+          6475821,
+          5075043,
+          5155038,
+          7071179
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "88213332-0747-4f14-8605-03d948a411cb",
+    "word": "part",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "One piece of something bigger.",
+        "search_phrase": "puzzle pieces",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1705339,
+          3223941,
+          20333,
+          1713170
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7a12daeb-831b-4137-ba02-b40fceb0c378",
+    "word": "Party",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A celebration where people gather.",
+        "search_phrase": "birthday party",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1114056,
+          8435096,
+          8116621,
+          1786430
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "972838a6-29f6-450a-9299-61643cd94adb",
+    "word": "Person",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "One human being.",
+        "search_phrase": "person portrait",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          613601,
+          2604283,
+          933097,
+          2179204
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "43695132-9ddb-4888-a440-057612cc18b7",
+    "word": "Place",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A particular area or location.",
+        "search_phrase": "town square",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6994803,
+          5541729,
+          6557996,
+          6467081
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "154e5ea8-f763-427e-b83a-bc27cc7ab4f8",
+    "word": "Plan",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An idea of what you will do and how.",
+        "search_phrase": "blueprint",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1857175,
+          3979490,
+          8664842,
+          9014868
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ba585b5c-a5e5-437d-8b4e-d91c043f97be",
+    "word": "point",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A sharp end.",
+        "search_phrase": "sharp pencil tip",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          450621,
+          199883,
+          1080452,
+          1722669
+        ]
+      },
+      {
+        "definition": "A small dot.",
+        "search_phrase": "polka dots",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4925033,
+          2315563,
+          1036453,
+          7858138
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f279d0b6-a525-4c02-8ac2-1e5ba2e8d4c3",
+    "word": "Policy",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A set of rules or plans that a group follows.",
+        "search_phrase": "rule book document",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5899193,
+          1752625
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f93b684b-a320-4415-85d3-cb67a6a3686f",
+    "word": "Power",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Strength or energy that makes things work.",
+        "search_phrase": "power lines electricity",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3387882,
+          7997980,
+          1868352,
+          6961772
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "be6d2436-1260-43ad-922c-698cd77d0dbf",
+    "word": "President",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The leader of a country or organization.",
+        "search_phrase": "mount rushmore",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3608620,
+          2147740,
+          1157477
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9ef4a611-9b74-4198-954b-2bce4072b905",
+    "word": "Price",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "How much money something costs.",
+        "search_phrase": "price tag",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2004245,
+          151102,
+          374404,
+          1085390
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4aa6b4e8-4bb0-4207-996b-87d2bb83edba",
+    "word": "Problem",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Something difficult that needs to be solved.",
+        "search_phrase": "confused person thinking",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5663412,
+          4695538,
+          28741,
+          1184896
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "67da3632-05a3-4452-b117-516184ed5209",
+    "word": "Process",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A series of steps to do something.",
+        "search_phrase": "flowchart steps",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10526621,
+          1786704,
+          2868276,
+          516277
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "27bae9c9-348a-43fb-8af6-237b2f43ecb9",
+    "word": "Reason",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Why something happens.",
+        "search_phrase": "question mark",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          350169,
+          634903,
+          1019820,
+          1015308
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "57adfc62-5f7d-4578-af92-c8cf78e393e9",
+    "word": "Research",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Careful study to find new facts.",
+        "search_phrase": "scientist with microscope",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2141259,
+          3822863,
+          2821207,
+          3184432
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "cada19cb-314b-4577-94c4-f678000f131b",
+    "word": "Result",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "What happens because of something else.",
+        "search_phrase": "report card",
+        "more_searches": [
+          "scoreboard"
+        ],
+        "pixabay_image_ids": [
+          9638685,
+          9308134,
+          145166,
+          1938928,
+          4341729
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c8820cc5-9dba-4ce3-8866-01594301f390",
+    "word": "Room",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A space inside a building with walls.",
+        "search_phrase": "living room",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5339245,
+          2732939,
+          1622401,
+          1835923
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d18ccb8c-9cf2-4adb-bd5d-440981597674",
+    "word": "Sense",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "One of the ways your body notices things, like sight or touch.",
+        "search_phrase": "smell flower",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          19033,
+          1963807,
+          2973126,
+          4861734
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2d7c95f9-e0ba-4212-92bd-dd149462a8c2",
+    "word": "Service",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Work done to help others, like in a restaurant.",
+        "search_phrase": "waiter serving food",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9437922,
+          939434,
+          9342785,
+          4510141
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8c789575-c0c7-47bc-a777-daa294d91539",
+    "word": "Shoe",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A covering worn on the foot.",
+        "search_phrase": "sneaker shoe",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8595773
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7c64b37f-5a56-4487-aea3-fe99a9d39d40",
+    "word": "side",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The left or right part of something.",
+        "search_phrase": "car side view",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          49278,
+          146580,
+          150155,
+          406290
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "25159e06-5a67-4b1e-bf4b-3dafcf755cfb",
+    "word": "Story",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A tale about people and events, real or made up.",
+        "search_phrase": "open storybook",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4203628,
+          2160539,
+          2841722,
+          2948634
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "df408714-b07b-4366-b768-e8e817f8391e",
+    "word": "Student",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A person who is learning at a school.",
+        "search_phrase": "student studying",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3087585,
+          1093758,
+          865116,
+          286245
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "56a4a272-7dbd-4dd6-ae32-dffde71d4ca6",
+    "word": "Study",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Time spent learning about a subject.",
+        "search_phrase": "studying books",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1052014,
+          1052010,
+          925589,
+          9629691
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1db75a92-ddb8-42fd-b6b3-8144ed68d352",
+    "word": "Teacher",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A person who helps students learn.",
+        "search_phrase": "teacher in classroom",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10562972,
+          10271298,
+          10113450,
+          9597548
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "8c4bb36c-913a-46fe-978f-4173a12895b8",
+    "word": "Team",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A group of people working or playing together.",
+        "search_phrase": "soccer team kids",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3023031,
+          7392838,
+          2093961,
+          2447163
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4676aa60-cc0e-40ae-ab5b-1f5e0fd2b153",
+    "word": "Test",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A set of questions that checks what you know.",
+        "search_phrase": "exam paper",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2521144,
+          10381601,
+          5204379,
+          1373314
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "90d611e0-a272-46ad-90da-e60aa442fd9a",
+    "word": "thing",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An object you can see or touch.",
+        "search_phrase": "household objects",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1386029,
+          3282513,
+          1297454,
+          2027031
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "32041a8b-f51c-4ffd-a00b-45d0007af8f5",
+    "word": "Time",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The minutes, hours, and days as they pass.",
+        "search_phrase": "clock face",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3101625,
+          150754,
+          10587018,
+          1891569
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "00c365fc-c289-432a-bee6-4d5ee555f994",
+    "word": "War",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Fighting between countries or groups.",
+        "search_phrase": "soldiers in uniform",
+        "more_searches": [
+          "honor guard"
+        ],
+        "pixabay_image_ids": [
+          67636,
+          197797,
+          10568002,
+          7289008
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2ef50033-5552-4d1c-b906-d9328dbe4a4d",
+    "word": "Water",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The clear liquid in rivers, rain, and the sea.",
+        "search_phrase": "glass of water",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2001912,
+          2032980,
+          1532300,
+          2315559
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ac82c2ba-8ae3-4501-974c-8ac9730d4a00",
+    "word": "way",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A path or direction to a place.",
+        "search_phrase": "direction signpost",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          973993,
+          2792576,
+          2713360,
+          6609445
+        ]
+      },
+      {
+        "definition": "A method of doing something.",
+        "search_phrase": "step by step instructions",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6655274,
+          413093,
+          4168389,
+          9046592
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2d8a2db1-4044-4a41-923e-f9cd0b46f0ae",
+    "word": "Week",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "Seven days in a row.",
+        "search_phrase": "weekly planner calendar",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5058722,
+          5058719,
+          5058720,
+          5058723
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6a065cea-b7dd-47aa-968f-152daf0959d8",
+    "word": "Woman",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "An adult female person.",
+        "search_phrase": "woman portrait",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8378634,
+          2359121,
+          10514828,
+          787522
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b76f8a1c-f88f-456f-9f6a-52df477ee91f",
+    "word": "word",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A group of letters that has a meaning.",
+        "search_phrase": "letter tiles",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9344644,
+          5570168,
+          15546,
+          4958234
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d5032bff-5aa5-4c30-b8d0-12d52e3eae03",
+    "word": "world",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "The Earth and all the people and places on it.",
+        "search_phrase": "earth globe",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8703270,
+          600497,
+          2401458,
+          1743392
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4b1327a4-f763-4a7e-8301-672eff665937",
+    "word": "year",
+    "part_of_speech": "noun",
+    "senses": [
+      {
+        "definition": "A period of 12 months.",
+        "search_phrase": "calendar pages",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2428560,
+          660670,
+          7544098,
+          1847346
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "35a33484-9e42-403c-ae76-9a230310fd30",
+    "word": "Achieve",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To succeed in doing something.",
+        "search_phrase": "summit flag",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4694346,
+          10236859,
+          5836546,
+          9515602
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "651944fa-1e40-497e-8b67-bfadfcedd19c",
+    "word": "add",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To put numbers together to find the total.",
+        "search_phrase": "addition math",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8806323,
+          2026160,
+          651318,
+          2439933
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5840e4b1-ae85-42f4-a3fa-0d1eb9206a8a",
+    "word": "Allow",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To let someone do something.",
+        "search_phrase": "open gate",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1202904,
+          5145129,
+          5145128,
+          819980
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a9a70fa7-28a7-4e69-a992-cb6cb7cfb50e",
+    "word": "Appear",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To come into view.",
+        "search_phrase": "magician rabbit hat",
+        "more_searches": [
+          "rainbow appearing"
+        ],
+        "pixabay_image_ids": [
+          2040912,
+          2026918,
+          9553822,
+          7728399,
+          26389,
+          7307023
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "653e3c48-fc76-464a-8611-43ca1ff805af",
+    "word": "Ask",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To say a question.",
+        "search_phrase": "raising hand",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1297782,
+          1297289,
+          1295605,
+          10113438
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a33d3057-d84e-4513-b2e8-c785c44e5091",
+    "word": "Avoid",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To stay away from something.",
+        "search_phrase": "umbrella in rain",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5709418,
+          6233868,
+          10112984,
+          10490770
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9bdb6e19-6dc1-49ac-9e49-39fcdbfe21b0",
+    "word": "Be",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To exist, or to describe what someone or something is.",
+        "search_phrase": "verb to be",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1025453,
+          1779748,
+          2009202,
+          7304768
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "628c9655-c7de-4d09-9515-212853f5912d",
+    "word": "Become",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To start to be something.",
+        "search_phrase": "caterpillar butterfly",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          158822,
+          5658110,
+          156957,
+          36249
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ef042611-321c-401d-8508-8b51bf18e62b",
+    "word": "Belong",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To be owned by someone.",
+        "search_phrase": "dog and owner",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3658428,
+          2885709,
+          3278734,
+          8885268
+        ]
+      },
+      {
+        "definition": "To be part of a group.",
+        "search_phrase": "puzzle piece fitting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1705339,
+          2856320,
+          3155663,
+          1020409
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1cd76543-6c46-4c93-85dc-c47e32ea11ad",
+    "word": "Break",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To separate something into pieces.",
+        "search_phrase": "broken glass",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4020981,
+          9356333,
+          8929622
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "cd27c1b6-df1c-4c43-a582-e922b919f20f",
+    "word": "Bring",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To carry something to a place.",
+        "search_phrase": "carrying groceries",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9956451,
+          10163654,
+          8638203,
+          6239646
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a4f97977-602c-45a2-8d13-216eec8a352b",
+    "word": "Build",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To put parts together to make something.",
+        "search_phrase": "building blocks",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3388163,
+          4380054,
+          297773,
+          4338371
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "beb49b33-02da-473f-80f7-b2a90420d604",
+    "word": "Call",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To phone someone.",
+        "search_phrase": "phone call",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1831922,
+          4623581,
+          157358,
+          5030997
+        ]
+      },
+      {
+        "definition": "To shout to someone.",
+        "search_phrase": "shouting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1459128,
+          10402177,
+          3265766
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2fecbcae-fa78-495c-84dc-a78b37967d62",
+    "word": "Choose",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To pick from several options.",
+        "search_phrase": "choice options",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1613314,
+          973992,
+          1697537,
+          1013995
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3c9c8e63-b1c8-4e68-9bce-4f1e116aa349",
+    "word": "Close",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To shut something.",
+        "search_phrase": "closing door",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1013742,
+          1013705,
+          1013706,
+          8940713,
+          10401779
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0121193e-4772-45f7-aed3-d1517f190802",
+    "word": "Come",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To move toward someone or a place.",
+        "search_phrase": "dog running",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          32025,
+          8979141,
+          9437073,
+          9437072
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7cd2c2c7-09fb-473f-aa21-32df39b2793e",
+    "word": "Consider",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To think carefully about something.",
+        "search_phrase": "pondering",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          28741,
+          3978394,
+          2023899
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "be10d301-fbc1-4bce-8f3a-ad5396f827c6",
+    "word": "Continue",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To keep doing something.",
+        "search_phrase": "road ahead",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          160708,
+          145154,
+          6725,
+          24115
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fdff706c-c1ea-45b5-8de1-2a5cb7dd5bbe",
+    "word": "Cover",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To put something over something else.",
+        "search_phrase": "umbrella rain",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5709418,
+          6233868,
+          8930656,
+          9961540
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e55de51a-c323-42c3-ab01-dd085fe0614a",
+    "word": "Create",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something new.",
+        "search_phrase": "artist painting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          591564,
+          8826329,
+          6884189,
+          1297400
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "625d3e2b-2b7f-475c-8d7a-d5b492c4b63a",
+    "word": "Decide",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make a choice.",
+        "search_phrase": "crossroads",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2030780,
+          311388,
+          2320124,
+          1019796
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "93e23e46-f6d5-4761-b69b-83a3253fa445",
+    "word": "Depend",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To need someone or something.",
+        "search_phrase": "trust",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          312343,
+          5783064,
+          10564287
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6a936327-e232-442f-b5a0-879b35581e2e",
+    "word": "Develop",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To grow or change over time.",
+        "search_phrase": "plant growth stages",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          154734,
+          5064037,
+          5665223,
+          3989959
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4641704b-1ce2-4c69-be5c-e606f197fae7",
+    "word": "discover",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To find something for the first time.",
+        "search_phrase": "explorer with map",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4496459,
+          8476519,
+          7043140,
+          8798632
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "39bc5a53-d4b3-404e-b89e-6a8fef28c60a",
+    "word": "Discuss",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To talk about something with others.",
+        "search_phrase": "group discussion",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7721486,
+          7476556,
+          2990424,
+          7476567
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3680643c-7f79-4e05-8013-2afe3a43f798",
+    "word": "Do",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To carry out an action.",
+        "search_phrase": "person doing chores",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8175613,
+          2848310,
+          162212,
+          3614744
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e90c66ca-bcd4-4653-8d6c-70193791c94a",
+    "word": "Drive",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To control a car or other vehicle.",
+        "search_phrase": "driving a car",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          10153221,
+          158795,
+          8273345,
+          158548
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9c265126-7b1d-4f3c-9e49-e5afd30ee9d6",
+    "word": "Establish",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To start or set up something that will last.",
+        "search_phrase": "building foundation construction",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9051168,
+          8615139,
+          8574908,
+          9994415
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0f0ae131-6892-40e2-b0dc-b787bd65417e",
+    "word": "Experience",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To live through something.",
+        "search_phrase": "adventure",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4363073,
+          7628303,
+          7965543
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c1f6f25c-39d0-4e10-bd83-db105ad84a3b",
+    "word": "explain",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something clear and easy to understand.",
+        "search_phrase": "teacher at whiteboard",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          607831,
+          9043367,
+          9338943,
+          2308610
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1e753f65-ddac-4667-8fa9-389c5bffbba0",
+    "word": "Feel",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To have an emotion.",
+        "search_phrase": "feelings faces",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          29072,
+          3160324,
+          7750835,
+          4584557
+        ]
+      },
+      {
+        "definition": "To touch something.",
+        "search_phrase": "petting a dog",
+        "more_searches": [
+          "child petting cat",
+          "hand touching"
+        ],
+        "pixabay_image_ids": [
+          5930881,
+          7441659,
+          6467490,
+          8598555,
+          9016328,
+          9016332
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b1842d7e-9aba-4de4-8d8f-c867af7f95fb",
+    "word": "Find",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To discover something you were looking for.",
+        "search_phrase": "magnifying glass",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1424831,
+          189254,
+          1020142,
+          145942
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f6fc8e20-d238-4585-90c5-c42f388480aa",
+    "word": "Focus",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To pay close attention.",
+        "search_phrase": "concentrating student",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7755985,
+          9041765,
+          1299123,
+          8451031
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b4118d6a-dc0d-4ca3-a3bf-20c33be240bf",
+    "word": "follow",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To go after someone or something.",
+        "search_phrase": "ducklings following mother",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          220226,
+          305687,
+          9868480,
+          46061
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a2515a6e-4c5b-4036-a6e2-c63601331ff0",
+    "word": "Get",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To receive or obtain something.",
+        "search_phrase": "receiving award",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3200050,
+          3176449,
+          1614530,
+          2163345
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "3d77c58d-53b7-4a5f-bfe7-1d476d89c112",
+    "word": "Give",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To hand something to someone.",
+        "search_phrase": "giving a gift",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9930330,
+          5442902,
+          2960891,
+          8420025
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "072c9948-ab48-40df-b2b2-6929e628ff27",
+    "word": "Go",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To move from one place to another.",
+        "search_phrase": "green traffic light",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7345974,
+          149580,
+          9799233,
+          9799245
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "57ef6d05-04cd-4baf-8a60-e8abca5886cc",
+    "word": "Grow",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To get bigger.",
+        "search_phrase": "growing plant",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          154734,
+          38095,
+          5048188
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c7116cc3-83d9-4406-ada2-998a213b707e",
+    "word": "Happen",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To take place.",
+        "search_phrase": "surprise",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9775963,
+          9775962,
+          2108029,
+          151850
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d984a133-7b99-4703-86b2-ca4e79240953",
+    "word": "Have",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To own or hold something.",
+        "search_phrase": "holding gift",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8440034,
+          2960891,
+          8408530,
+          3690545
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "147f3ef0-55c1-4030-99f5-ddb4cde45a2a",
+    "word": "hear",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To notice sounds with your ears.",
+        "search_phrase": "listening",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9888488,
+          2973126,
+          9511664
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ae757ecc-92a7-48be-bfa8-6a20928dde43",
+    "word": "Help",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something easier for someone.",
+        "search_phrase": "helping hand",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8731277,
+          3754844,
+          9541421
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a69ff801-6484-4821-a3b5-3137a8ba4c9e",
+    "word": "Hold",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To keep something in your hands.",
+        "search_phrase": "hands holding mug",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9109368,
+          8591902,
+          8775651,
+          2946202
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a7579afa-1049-4c13-ab0d-df6ecbe3e91f",
+    "word": "Improve",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make or get better.",
+        "search_phrase": "rising growth chart",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9196424,
+          7778417,
+          6856507,
+          2382831
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5bbf2769-39b8-4b30-abd8-2fc0d68b84d1",
+    "word": "Include",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something part of a group.",
+        "search_phrase": "group hug",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9927701,
+          1150995,
+          9597689,
+          8973943
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0043ab39-50f0-45ce-86fd-0b3e7842c287",
+    "word": "Increase",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make or become larger.",
+        "search_phrase": "increase arrow",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9445360,
+          3078543,
+          163509,
+          2064869
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "91576091-e91e-4a83-950c-9310a2468ca2",
+    "word": "Involve",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To include someone or something as a part.",
+        "search_phrase": "teamwork",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          5193383,
+          5963678,
+          7804129
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "5113d059-b059-4c05-88ff-ca117353df46",
+    "word": "Know",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To have information in your mind.",
+        "search_phrase": "idea lightbulb",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2519654,
+          4271251,
+          3976295
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "c786615d-0ad2-4d58-80a1-c9c07edb32ae",
+    "word": "learn",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To get new knowledge or a new skill.",
+        "search_phrase": "kids learning",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3258951,
+          160167,
+          1844435,
+          4339527
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "85145d5f-18a1-4711-87c0-f3c4f3ac926a",
+    "word": "Like",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To enjoy something.",
+        "search_phrase": "heart hands",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3075088,
+          7691013,
+          7441664
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "75504fc6-1da2-491f-bc86-978c688d5930",
+    "word": "Live",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To be alive.",
+        "search_phrase": "baby chicks hatching",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8029570,
+          10169395,
+          1300136,
+          10094032
+        ]
+      },
+      {
+        "definition": "To have your home somewhere.",
+        "search_phrase": "family home",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8702291
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6534c752-6170-49ca-a400-d8bdcf7872d1",
+    "word": "Look",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To turn your eyes toward something.",
+        "search_phrase": "binoculars",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2023319,
+          3539810,
+          9703806,
+          4078405
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "579c0c87-192d-48be-8223-62e5a06d5778",
+    "word": "Lose",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To no longer have something.",
+        "search_phrase": "lost",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2747289,
+          5893791,
+          909228
+        ]
+      },
+      {
+        "definition": "To not win.",
+        "search_phrase": "second place",
+        "more_searches": [
+          "sad loser"
+        ],
+        "pixabay_image_ids": [
+          1060918,
+          2934884,
+          1622529,
+          6615195,
+          5674028,
+          6168626
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "31d328f1-99ae-4e04-b099-8aa506190269",
+    "word": "Maintain",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To keep something in good condition.",
+        "search_phrase": "car maintenance",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3671448,
+          9965533,
+          9359460,
+          5384089
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "f12c2513-425a-4745-ba31-e9b7594b759f",
+    "word": "make",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To create or build something.",
+        "search_phrase": "hands making pottery",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9586827,
+          8807130,
+          10128111,
+          10128112
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b09fc7b4-8859-46a0-8279-6ea4f231c011",
+    "word": "Manage",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To be in charge of something.",
+        "search_phrase": "manager meeting",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1453895,
+          5092768,
+          2779509,
+          5822607
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e6187116-b595-48f1-8bec-31c174d78ac7",
+    "word": "Meet",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To come together with someone.",
+        "search_phrase": "handshake",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8806451,
+          2009195,
+          2009183,
+          6698352
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fad6719a-8c30-4c37-9959-b5013b8202da",
+    "word": "Move",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To change place or position.",
+        "search_phrase": "moving boxes",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2108029,
+          3578346,
+          3671446,
+          7201305
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "aa99a2c5-af7d-4f07-a95d-539c439e9d67",
+    "word": "Need",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To require something.",
+        "search_phrase": "thirsty",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4294637,
+          4294629,
+          9569023,
+          4291379
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "71de41f7-fb25-4d16-b739-6695a74a159a",
+    "word": "Notice",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To see something or become aware of it.",
+        "search_phrase": "surprised face",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          312093,
+          39984,
+          4510149,
+          1958283
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7e7aa970-ca7c-4e8b-89d8-a4dd0b3e61e9",
+    "word": "offer",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To hold out something for someone to take.",
+        "search_phrase": "offering help",
+        "more_searches": [
+          "sharing toys"
+        ],
+        "pixabay_image_ids": [
+          1925875,
+          9379159,
+          9428212,
+          5503676,
+          145067
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "59dd3d53-2d8e-4847-8bdd-47f29170fda9",
+    "word": "Open",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something not closed.",
+        "search_phrase": "opening present",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4536515,
+          3422921,
+          3311671,
+          9563478
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4cb4faae-2ffe-4c50-a04b-327470150355",
+    "word": "Pay",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To give money for something.",
+        "search_phrase": "paying cashier",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1791106,
+          5384210,
+          576160,
+          2048569
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "734a6f8e-3b3c-4316-8a6c-aab72c54b5f9",
+    "word": "Play",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To have fun with a game or toy.",
+        "search_phrase": "children playing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9692414,
+          9212503,
+          9683327,
+          8593825
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2c0de5dd-24ba-484d-b62b-fa2f7f3bea35",
+    "word": "Prepare",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To get ready.",
+        "search_phrase": "chef preparing food",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8800957,
+          9340329,
+          4509812,
+          10088714
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a7448579-e7c9-4c94-93a7-1809e7332e0f",
+    "word": "Produce",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make or grow something.",
+        "search_phrase": "factory production line",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8727241,
+          8861241,
+          9055477,
+          8016685
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "ec99833f-f71c-4cb2-99bf-f0e70fd69674",
+    "word": "Reach",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To stretch out your arm to touch or get something.",
+        "search_phrase": "hand reaching",
+        "more_searches": [
+          "climbing hold"
+        ],
+        "pixabay_image_ids": [
+          5655424,
+          4820472,
+          10223379,
+          10159042
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "1cbe5917-89ee-43e6-b585-26e479b6ab5d",
+    "word": "Receive",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To get something that is given to you.",
+        "search_phrase": "getting mail",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3249062,
+          8052497,
+          8175076,
+          4746809
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "fbfef7e0-083d-442b-a829-7e1c547ef475",
+    "word": "Recommend",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To say that something is good.",
+        "search_phrase": "five stars",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3024488,
+          2800867,
+          153609,
+          7323668
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "19908aa1-5588-4026-83f8-b96798399a30",
+    "word": "Respond",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To answer.",
+        "search_phrase": "reply message",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          6030182,
+          6130334,
+          7325332,
+          97622
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "31f49256-4e36-49e0-bdaa-02e363b34cd4",
+    "word": "Run",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To move fast on your feet.",
+        "search_phrase": "person running",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1837405,
+          297154,
+          294372,
+          309053
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "cbf80a43-5457-42b3-bdd5-ef296b3fed09",
+    "word": "Say",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To speak words.",
+        "search_phrase": "speech bubble",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9547655,
+          10559775,
+          156056,
+          145975
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "b512bb06-1b29-4c84-81ed-269cea4fd567",
+    "word": "See",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To notice with your eyes.",
+        "search_phrase": "eye vision",
+        "more_searches": [
+          "eyeglasses"
+        ],
+        "pixabay_image_ids": [
+          24489,
+          6823356,
+          1295985,
+          2022424,
+          311831
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "642f64f6-abb3-45d9-abc8-20ceb928e579",
+    "word": "Seem",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To look or appear to be.",
+        "search_phrase": "optical illusion",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2858764,
+          1932539,
+          1295748,
+          5367319
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "40167f93-1df2-458e-915d-2d03b927f57d",
+    "word": "Send",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make something go to someone.",
+        "search_phrase": "mailing a letter",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8052497,
+          4313721,
+          312609,
+          295411
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4261c73e-9247-4d5a-be4c-502e7b1ab974",
+    "word": "serve",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To give food or help to someone.",
+        "search_phrase": "waiter serving",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9437922,
+          4510141,
+          9342785,
+          5580500
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a5b56aeb-afb4-4356-adab-15db4c8ba79b",
+    "word": "Share",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To give part of something to others.",
+        "search_phrase": "sharing food",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9920344,
+          8636524,
+          8502469,
+          10249327
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9c3c5026-5431-4e53-b4aa-0d26b4775e1f",
+    "word": "show",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To let someone see something.",
+        "search_phrase": "showing a picture",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          29730,
+          1454403
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "de3ed2ea-a9ef-40c8-b4da-3cb9fd56793f",
+    "word": "Sit",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To rest on a chair or seat.",
+        "search_phrase": "sitting chair",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9087310,
+          1299841,
+          9291126
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e8ac57de-d0c9-48d8-b27f-821de3ee5c35",
+    "word": "Stand",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To be upright on your feet.",
+        "search_phrase": "person standing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2026863,
+          10587006,
+          159455,
+          152572
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "2d14a0c0-8b3d-4cd2-82de-fb4d7e8153b5",
+    "word": "start",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To begin.",
+        "search_phrase": "race starting line",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1013719,
+          1013674,
+          1013729,
+          2835096
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "39c445ad-3521-47fd-afbc-bcb1dd57b497",
+    "word": "Stop",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To end moving or doing something.",
+        "search_phrase": "stop sign",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2717058,
+          1013732,
+          6627,
+          1207069
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "9a56c81c-f8fd-46e5-8d66-48a4693fd9bd",
+    "word": "Suggest",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To offer an idea.",
+        "search_phrase": "advice",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8608516,
+          10447074,
+          9690987
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "86355bd1-64ad-40c3-b7f6-53127f2d4310",
+    "word": "Support",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To help someone or hold something up.",
+        "search_phrase": "friendship support",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7808776,
+          7913460,
+          7755902,
+          2643652
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "61c66ae7-b31e-4223-ace1-95d37ac73933",
+    "word": "Take",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To pick something up or carry it away.",
+        "search_phrase": "picking apple",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2374435,
+          7642248,
+          9104181,
+          1317391
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "0daa2147-afa7-45cb-b8f2-78a989a481b0",
+    "word": "Talk",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To speak with someone.",
+        "search_phrase": "two people talking",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          1082897,
+          4187953,
+          9547655,
+          2645772
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "d37010d9-a093-47eb-8208-4cc564f37589",
+    "word": "Tell",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To say something to someone.",
+        "search_phrase": "grandmother telling story",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7755902,
+          7427525,
+          6832792,
+          5518002
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "bb8d8ca9-4848-431b-9c5e-6ee0e84d8104",
+    "word": "Think",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To use your mind.",
+        "search_phrase": "person thinking",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          28741,
+          1184896,
+          2026313,
+          5616867
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "4cbfc0f8-82df-473f-a500-9c0a447ce687",
+    "word": "Try",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To make an effort to do something.",
+        "search_phrase": "climbing wall",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          7690754,
+          7355131,
+          1013707
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "e1e13baf-c78f-4835-b60c-e843f30fd756",
+    "word": "turn",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To move around or change direction.",
+        "search_phrase": "steering wheel",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          160115,
+          157789,
+          159449,
+          9359659
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6ca862bd-04cb-4880-8a61-89371c2cb347",
+    "word": "Understand",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To know what something means.",
+        "search_phrase": "student nodding",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4222728,
+          5671411,
+          9644877,
+          3976295
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "a007b0fb-7337-43c7-a371-bc4c864a0f63",
+    "word": "Use",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To do something with a tool or object.",
+        "search_phrase": "using a hammer",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          33617,
+          9287109,
+          306313,
+          35369
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "05b054cc-8f52-4beb-ac1d-7e2b900b121c",
+    "word": "Wait",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To stay until something happens.",
+        "search_phrase": "bus stop",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          3273625,
+          5433468,
+          8971975,
+          9779333
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "59e97a51-cf8d-42b4-b08f-0ef1d1c63e47",
+    "word": "Want",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To wish for something.",
+        "search_phrase": "child wishing",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          8439922,
+          9028195,
+          8956294,
+          7303553
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "7a83a593-2b76-4152-b1f2-7199a50433c1",
+    "word": "Win",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To be first in a game or contest.",
+        "search_phrase": "winner with trophy",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          2163345,
+          9667459,
+          1614530,
+          153395
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "218ebee3-a3cc-4d57-8ee7-e043ccf0d64c",
+    "word": "Work",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To do a job or task.",
+        "search_phrase": "working at desk",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          4997565,
+          5491798,
+          7332172,
+          696966
+        ]
+      }
+    ]
+  },
+  {
+    "word_id": "6c3ff595-00c8-4354-9b24-ecb999e8e49e",
+    "word": "Write",
+    "part_of_speech": "verb",
+    "senses": [
+      {
+        "definition": "To put words on paper or a screen.",
+        "search_phrase": "writing pen",
+        "more_searches": [],
+        "pixabay_image_ids": [
+          9205819,
+          9089822,
+          7468550
+        ]
+      }
+    ]
+  }
+]

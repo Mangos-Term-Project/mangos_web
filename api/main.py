@@ -67,7 +67,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("mangos-api")
 
 redis_options: dict[str, Any] = {"decode_responses": True}
-redis_options["ssl_ca_certs"] = certifi.where()
+if REDIS_URL.startswith("rediss://"):  # TLS (Upstash); the local Redis is plain redis:// and rejects this option
+    redis_options["ssl_ca_certs"] = certifi.where()
 session_store = Redis.from_url(REDIS_URL, **redis_options) if REDIS_URL else None
 
 app = FastAPI(title="Mangos API")
@@ -348,6 +349,25 @@ def get_current_user(request: Request) -> dict[str, Any]:
     return user_response(row)
 
 
+# Open Pixabay results for these topics show weapons, explosions, or unrelated
+# things (a "soldier" beetle, Siamese "fighting" fish). They show the checked
+# pictures of a vocabulary word instead.
+WAR_WORDS = {"war", "wars"}
+SOLDIER_WORDS = {"soldier", "soldiers", "army", "armies", "military", "troops", "fight", "fighting", "battle", "battles"}
+
+
+def safe_topic(query: str) -> str:
+    """"war" (a vocabulary word with checked pictures) for war searches, else the query unchanged.
+
+    Any search that mentions war ("fighting for war"), or is just one war word
+    ("soldiers"), is redirected; "fighting fish" and "soldier beetle" search normally.
+    """
+    tokens = query.split()
+    if WAR_WORDS & set(tokens) or (len(tokens) == 1 and tokens[0] in SOLDIER_WORDS):
+        return "war"
+    return query
+
+
 @app.get("/api/images/search")
 def search_images(
     request: Request,
@@ -364,6 +384,7 @@ def search_images(
     # Searches containing rude, adult or frightening words are refused (content_filter.py).
     if is_blocked(query):
         raise HTTPException(status_code=400, detail="Please try a different word.")
+    query = safe_topic(query)
     # Vocabulary definitions, phrases, and curated Pixabay IDs live in PostgreSQL.
     word_rows = get_drawable_word_rows(query)
     if word_rows:
@@ -375,8 +396,8 @@ def search_images(
             query = senses[0]["search_phrase"]
             if image_type == "all" and word_row["part_of_speech"] != "noun":
                 image_type = "illustration"
-    # v4: results now pass the child-safety filter.
-    cache_key = f"mangos:images:v4:{image_type}:{hash_token(query)}"
+    # v5: a longer blocked-word list (content_filter.py).
+    cache_key = f"mangos:images:v5:{image_type}:{hash_token(query)}"
     with get_session_store("search reference pictures") as store:
         cached = store.get(cache_key)
         if cached:
@@ -401,7 +422,8 @@ def picked_pictures(
     word_row: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Fetch curated pictures stored on a drawable word row."""
-    cache_key = f"mangos:images:picked:v4:{word}:{part_of_speech or (word_row or {}).get('part_of_speech', 'any')}"
+    # Bump the version when words.json pictures change, so learners do not see old picks for 24 hours.
+    cache_key = f"mangos:images:picked:v5:{word}:{part_of_speech or (word_row or {}).get('part_of_speech', 'any')}"
     with get_session_store("load picked pictures") as store:
         cached = store.get(cache_key)
         if cached:

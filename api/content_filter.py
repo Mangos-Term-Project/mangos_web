@@ -8,6 +8,8 @@ itself) contains a blocked word. The team should review this list.
 Checked against the top 20 results of all 297 suggested searches: "skeleton"
 (anatomy diagrams for "body") and "shooting" (archery targets for "central")
 were removed because they only blocked good pictures.
+
+Matching is by whole word, so "butt" does not block "butterfly" or "button".
 """
 import re
 
@@ -23,6 +25,14 @@ BLOCKED_WORDS = {
     "knife", "blood", "bloody", "gore", "kill", "killer", "murder", "dead body", "corpse", "skull", "skulls",
     "horror", "scary", "creepy", "zombie", "zombies", "monster", "demon", "devil", "satan",
     "evil", "ghost", "halloween", "death", "grave", "coffin", "suicide", "war crime", "terror", "terrorist",
+    # weapons and destruction that slipped through for "war", "soldier" and "fighting for war"
+    # ("riffles" is a common misspelling in Pixabay tags; "tank" is left out because of "fish tank")
+    "rifles", "riffle", "riffles", "firearm", "firearms", "ammunition", "bullet", "bullets", "grenade",
+    "missile", "bomb", "bombs", "bombing", "explosion", "explosions", "apocalypse", "apocalyptic",
+    "armageddon", "destruction", "warfare", "combat", "sword", "swords", "spear", "mercenary",
+    # toilet words: harmless, but not what a classroom wants on screen ("toilet" itself stays allowed)
+    "poop", "poops", "pooping", "poo", "pee", "pees", "peeing", "fart", "farts", "farting", "butt", "butts",
+    "potty", "diaper", "diapers", "booger", "boogers", "toilet humor",
     # alcohol, drugs, gambling
     "beer", "wine", "alcohol", "drunk", "cocktail", "whiskey", "vodka", "cigarette", "smoking", "drugs",
     "cannabis", "marijuana", "casino", "gambling",
