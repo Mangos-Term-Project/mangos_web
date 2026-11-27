@@ -38,7 +38,7 @@ its suggested searches, or its pictures:
 1. Edit `api/db/words.json` in a branch. Check every new picture by eye: tags
    alone miss weapons (a guard's rifle) and misspellings ("riffles").
 2. Run `python api/db/setup_local.py` and check the word on the local Draw page.
-3. Open a pull request. Bump the `picked:v5` cache version in `main.py` when
+3. Open a pull request. Bump the `picked:v6` cache version in `main.py` when
    pictures change, so learners do not see the old ones for 24 hours.
 4. After the pull request is merged, someone with the Supabase `DATABASE_URL`
    updates the live database from the file:
@@ -46,6 +46,9 @@ its suggested searches, or its pictures:
    python api/db/sync_words.py                    # shows what will change
    python api/db/sync_words.py --apply --shared   # makes the change
    ```
+   Run it as soon as the merge is deployed. A search made in between saves the
+   old pictures in the new cache for 24 hours; if that happens, bump the cache
+   version again.
 
 Do not edit words directly in Supabase: the next sync would undo the edit, and
 edits made outside a pull request are how reviewed pictures got lost before.
