@@ -83,6 +83,33 @@
 	gap: 10px;
 }
 
+.coin-balance {
+	min-height: 42px;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 0 14px;
+	border: 1px solid rgb(121 99 76 / 16%);
+	border-radius: 999px;
+	background: white;
+	color: var(--cocoa-900);
+	font-size: 0.9rem;
+	font-weight: 800;
+	box-shadow: 0 5px 16px rgb(61 43 25 / 5%);
+}
+
+.coin-balance-icon {
+	color: var(--mango-500);
+	font-size: 1.1rem;
+	text-shadow: 0 1px 1px rgb(61 43 25 / 25%);
+}
+
+.coin-balance-label {
+	color: var(--cocoa-600);
+	font-size: 0.78rem;
+	font-weight: 650;
+}
+
 .account-actions button {
 	min-height: 46px;
 	border: 0;
@@ -137,6 +164,17 @@
 		gap: 2px;
 	}
 
+	.coin-balance {
+		min-height: 38px;
+		gap: 4px;
+		padding-inline: 8px;
+		font-size: 0.82rem;
+	}
+
+	.coin-balance-label {
+		font-size: 0.68rem;
+	}
+
 	.account-actions button {
 		min-height: 44px;
 		padding-inline: clamp(7px, 2.5vw, 12px);
@@ -161,6 +199,11 @@
 	}
 
 	.account-actions button {
+		padding-inline: 6px;
+	}
+
+	.coin-balance {
+		gap: 3px;
 		padding-inline: 6px;
 	}
 }

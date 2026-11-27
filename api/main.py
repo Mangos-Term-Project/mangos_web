@@ -25,53 +25,13 @@ from redis import Redis
 try:
     from .content_filter import is_blocked
     from .image_search import ImageSearchError, fetch_image_by_id, fetch_images
-    from .word_pictures import WORD_PICTURES as PICKED_BY_PART
-    from .word_phrases import WORD_PHRASES
 except ImportError:
     from content_filter import is_blocked
     from image_search import ImageSearchError, fetch_image_by_id, fetch_images
-    from word_pictures import WORD_PICTURES as PICKED_BY_PART
-    from word_phrases import WORD_PHRASES
 
 API_DIR = Path(__file__).resolve().parent
 load_dotenv(API_DIR.parent / ".env")
 
-
-PARTS_OF_SPEECH = ("noun", "verb", "adjective")
-
-
-def load_word_pictures() -> dict[str, list[tuple[str, int, list[int]]]]:
-    """Hand-picked Pixabay picture IDs per vocabulary word (api/word_pictures.py).
-
-    Every listed picture was checked by a person for meaning and suitability
-    for children. A word in two parts of speech (work, open...) keeps separate
-    pictures for each, in noun, verb, adjective order.
-    """
-    pictures: dict[str, list[tuple[str, int, list[int]]]] = {}
-    for part in PARTS_OF_SPEECH:
-        for word, ids in PICKED_BY_PART.get(part, {}).items():
-            # A list of lists means one list per meaning (sense), in the hint's order.
-            senses = ids if ids and isinstance(ids[0], list) else [ids]
-            for index, sense_ids in enumerate(senses):
-                if sense_ids:
-                    pictures.setdefault(word.lower(), []).append((part, index, [int(i) for i in sense_ids]))
-    return pictures
-
-
-def word_forms(word: str) -> set[str]:
-    """Simple forms a learner might type: go/goes/going, live/lives/living/lived."""
-    forms = {word, f"{word}s", f"{word}es", f"{word}ed", f"{word}ing"}
-    if word.endswith("e"):
-        forms |= {f"{word}d", f"{word[:-1]}ing"}
-    if word.endswith("y"):
-        forms |= {f"{word[:-1]}ies", f"{word[:-1]}ied"}
-    return forms
-
-
-WORD_PICTURES = load_word_pictures()
-PICKED_FOR_TYPED = {form: word for word in WORD_PICTURES for form in word_forms(word)}
-# Any other vocabulary word (or form) typed in search uses its checked phrase instead.
-PHRASE_FOR_TYPED = {form: word for word in WORD_PHRASES for form in word_forms(word)}
 
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 REDIS_URL = os.getenv("REDIS_URL", "")
@@ -86,6 +46,18 @@ NAME_MAX_LENGTH = 256
 PASSWORD_MIN_LENGTH = 8
 PASSWORD_MAX_BYTES = 72  # bcrypt only accepts up to 72 bytes
 LOGIN_FAILED = "Incorrect username or password."
+QUIZ_COIN_REWARD = 1
+STORE_CATALOG = {
+    1: ("Item 1", 25),
+    2: ("Item 2", 40),
+    3: ("Item 3", 55),
+    4: ("Item 4", 70),
+    5: ("Item 5", 85),
+    6: ("Item 6", 100),
+    7: ("Item 7", 125),
+    8: ("Item 8", 150),
+    9: ("Item 9", 175),
+}
 
 # Checked against when a username doesn't exist, so a login for an unknown
 # user does the same bcrypt work as one for a real user.
@@ -121,6 +93,17 @@ class LoginRequest(BaseModel):
 class FlashCardRequest(BaseModel):
     word_id: UUID
     drawing: str = Field(max_length=2_000_000)
+    set_id: UUID | None = None
+
+
+class QuizAnswerRequest(BaseModel):
+    set_id: UUID
+    flashcard_id: UUID
+    selected_flashcard_id: UUID
+
+
+class StorePurchaseRequest(BaseModel):
+    item_id: int
 
 
 @app.middleware("http")
@@ -163,6 +146,22 @@ def get_session_store(action: str) -> Iterator[Redis]:
     except Exception:
         logger.exception("Failed to %s", action)
         raise HTTPException(status_code=500, detail="Server Error") from None
+
+
+def get_drawable_word_rows(word: str, part_of_speech: str | None = None) -> list[dict[str, Any]]:
+    query = (
+        "SELECT word_id, word, part_of_speech, senses "
+        "FROM public.word WHERE part_of_speech IS NOT NULL "
+        "AND senses <> '[]'::jsonb AND LOWER(word) = %s"
+    )
+    params: tuple[str, ...] = (word,)
+    if part_of_speech:
+        query += " AND part_of_speech = %s"
+        params += (part_of_speech,)
+    query += " ORDER BY CASE part_of_speech WHEN 'noun' THEN 0 WHEN 'verb' THEN 1 ELSE 2 END"
+    with get_connection("fetch drawable word") as connection, connection.cursor() as cursor:
+        cursor.execute(query, params)
+        return cursor.fetchall()
 
 
 def hash_token(token: str) -> str:
@@ -214,11 +213,12 @@ def password_matches(password: str, password_hash: str) -> bool:
         return False
 
 
-def user_response(row: dict[str, Any]) -> dict[str, str]:
+def user_response(row: dict[str, Any]) -> dict[str, Any]:
     return {
         "user_id": str(row["user_id"]),
         "username": row["username"],
         "name": row["name"] or row["username"],
+        "coins": int(row.get("total_coins") or 0),
     }
 
 
@@ -234,6 +234,31 @@ def authenticated_user_id(request: Request) -> str:
     return user_id
 
 
+def get_or_create_in_progress_set(cursor: Any, user_id: str) -> dict[str, Any]:
+    cursor.execute(
+        "SELECT set_id, name, status FROM user_flashcard_sets "
+        "WHERE user_id = %s AND status = 'in_progress' "
+        "ORDER BY set_id LIMIT 1",
+        (user_id,),
+    )
+    set_row = cursor.fetchone()
+    if set_row is None:
+        cursor.execute(
+            "SELECT COUNT(*) AS completed_count FROM user_flashcard_sets "
+            "WHERE user_id = %s AND status = 'in_review'",
+            (user_id,),
+        )
+        completed_count = cursor.fetchone()["completed_count"]
+        cursor.execute(
+            "INSERT INTO user_flashcard_sets (user_id, name, is_active, status) "
+            "VALUES (%s, %s, TRUE, 'in_progress') "
+            "RETURNING set_id, name, status",
+            (user_id, f"Set {completed_count + 1}"),
+        )
+        set_row = cursor.fetchone()
+    return set_row
+
+
 @app.get("/api/users")
 def get_users() -> list[dict[str, Any]]:
     with get_connection("fetch users") as connection, connection.cursor() as cursor:
@@ -243,7 +268,7 @@ def get_users() -> list[dict[str, Any]]:
 
 
 @app.post("/api/auth/register", status_code=201)
-def register(body: RegisterRequest, request: Request, response: Response) -> dict[str, str]:
+def register(body: RegisterRequest, request: Request, response: Response) -> dict[str, Any]:
     name = body.name.strip()
     username = body.username.strip().lower()
     password = body.password
@@ -274,22 +299,22 @@ def register(body: RegisterRequest, request: Request, response: Response) -> dic
             raise HTTPException(status_code=409, detail="That username is taken.") from None
         user_id = cursor.fetchone()["user_id"]
         cursor.execute(
-            "INSERT INTO profiles (user_id, display_name) VALUES (%s, %s)",
+            "INSERT INTO profiles (user_id, display_name, total_coins) VALUES (%s, %s, 0)",
             (user_id, name),
         )
         token = create_session(user_id)
 
     set_session_cookie(response, request, token)
-    return user_response({"user_id": user_id, "username": username, "name": name})
+    return user_response({"user_id": user_id, "username": username, "name": name, "total_coins": 0})
 
 
 @app.post("/api/auth/login")
-def login(body: LoginRequest, request: Request, response: Response) -> dict[str, str]:
+def login(body: LoginRequest, request: Request, response: Response) -> dict[str, Any]:
     username = body.username.strip().lower()
 
     with get_connection("log in") as connection, connection.cursor() as cursor:
         cursor.execute(
-            "SELECT u.user_id, u.username, u.password_hash, p.display_name AS name "
+            "SELECT u.user_id, u.username, u.password_hash, p.display_name AS name, p.total_coins "
             "FROM users u LEFT JOIN profiles p ON p.user_id = u.user_id "
             "WHERE u.username = %s",
             (username,),
@@ -305,12 +330,12 @@ def login(body: LoginRequest, request: Request, response: Response) -> dict[str,
 
 
 @app.get("/api/auth/me")
-def get_current_user(request: Request) -> dict[str, str]:
+def get_current_user(request: Request) -> dict[str, Any]:
     user_id = authenticated_user_id(request)
 
     with get_connection("fetch current user") as connection, connection.cursor() as cursor:
         cursor.execute(
-            "SELECT u.user_id, u.username, p.display_name AS name "
+            "SELECT u.user_id, u.username, p.display_name AS name, p.total_coins "
             "FROM users u "
             "LEFT JOIN profiles p ON p.user_id = u.user_id "
             "WHERE u.user_id = %s",
@@ -339,16 +364,17 @@ def search_images(
     # Searches containing rude, adult or frightening words are refused (content_filter.py).
     if is_blocked(query):
         raise HTTPException(status_code=400, detail="Please try a different word.")
-    # A vocabulary word (or a simple form of it, like "happens") shows its hand-picked pictures.
-    picked_word = PICKED_FOR_TYPED.get(query)
-    if picked_word:
-        return picked_pictures(picked_word, key)
-    vocabulary_word = PHRASE_FOR_TYPED.get(query)
-    if vocabulary_word:
-        phrase, part = WORD_PHRASES[vocabulary_word]
-        query = phrase
-        if image_type == "all" and part != "noun":
-            image_type = "illustration"  # same as the app's suggested search
+    # Vocabulary definitions, phrases, and curated Pixabay IDs live in PostgreSQL.
+    word_rows = get_drawable_word_rows(query)
+    if word_rows:
+        word_row = word_rows[0]
+        senses = word_row["senses"] or []
+        if any(sense.get("pixabay_image_ids") for sense in senses):
+            return picked_pictures(query, key, word_row=word_row)
+        if senses:
+            query = senses[0]["search_phrase"]
+            if image_type == "all" and word_row["part_of_speech"] != "noun":
+                image_type = "illustration"
     # v4: results now pass the child-safety filter.
     cache_key = f"mangos:images:v4:{image_type}:{hash_token(query)}"
     with get_session_store("search reference pictures") as store:
@@ -368,17 +394,27 @@ def search_images(
         return result
 
 
-def picked_pictures(word: str, key: str) -> dict[str, Any]:
-    """The hand-picked pictures for a word, fetched by ID and cached for 24 hours."""
-    cache_key = f"mangos:images:picked:v3:{word}"
+def picked_pictures(
+    word: str,
+    key: str,
+    part_of_speech: str | None = None,
+    word_row: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Fetch curated pictures stored on a drawable word row."""
+    cache_key = f"mangos:images:picked:v4:{word}:{part_of_speech or (word_row or {}).get('part_of_speech', 'any')}"
     with get_session_store("load picked pictures") as store:
         cached = store.get(cache_key)
         if cached:
             return json.loads(cached)
+        if word_row is None:
+            rows = get_drawable_word_rows(word, part_of_speech)
+            if not rows:
+                return {"images": [], "groups": [], "picked": False}
+            word_row = rows[0]
         groups = []
-        for part, sense, ids in WORD_PICTURES.get(word, []):
+        for sense_index, sense_data in enumerate(word_row["senses"] or []):
             images = []
-            for image_id in ids:
+            for image_id in sense_data.get("pixabay_image_ids", []):
                 try:
                     image = fetch_image_by_id(image_id, key)
                 except ImageSearchError as error:
@@ -386,7 +422,7 @@ def picked_pictures(word: str, key: str) -> dict[str, Any]:
                 if image:
                     images.append(image)
             if images:
-                groups.append({"part": part, "sense": sense, "images": images})
+                groups.append({"part": word_row["part_of_speech"], "sense": sense_index, "images": images})
         # "images" lists every picture; "groups" splits them by part of speech.
         result = {"images": [image for group in groups for image in group["images"]], "groups": groups, "picked": True}
         store.set(cache_key, json.dumps(result), ex=86400)
@@ -394,34 +430,39 @@ def picked_pictures(word: str, key: str) -> dict[str, Any]:
 
 
 @app.get("/api/images/word")
-def word_pictures(request: Request, word: str = Query(min_length=1, max_length=40)):
+def word_pictures(
+    request: Request,
+    word: str = Query(min_length=1, max_length=40),
+    part_of_speech: str | None = Query(default=None, pattern="^(noun|verb|adjective)$"),
+):
     """Hand-picked pictures for a vocabulary word; empty when none are picked yet."""
     authenticated_user_id(request)
     normalized = word.strip().casefold()
-    if normalized not in WORD_PICTURES:
-        return {"images": [], "groups": [], "picked": False}
     key = os.getenv("PIXABAY_API_KEY", "").strip()
     if not key:
         raise HTTPException(status_code=503, detail="Picture search is not configured yet.")
-    return picked_pictures(normalized, key)
+    return picked_pictures(normalized, key, part_of_speech)
 
 
 @app.get("/api/words/next")
 def get_next_word(
     request: Request,
     exclude_words: list[str] = Query(default=[]),
-) -> dict[str, str] | None:
+) -> dict[str, Any] | None:
     user_id = authenticated_user_id(request)
     excluded_words = [word.strip().lower() for word in exclude_words if word.strip()]
 
     with get_connection("fetch next word") as connection, connection.cursor() as cursor:
         cursor.execute(
-            "SELECT w.word_id, w.word "
+            "SELECT w.word_id, w.word, w.part_of_speech, w.senses "
             "FROM word w "
-            "WHERE LOWER(w.word) <> ALL(%s) "
+            "WHERE w.part_of_speech IS NOT NULL "
+            "AND w.senses <> '[]'::jsonb "
+            "AND LOWER(w.word) <> ALL(%s) "
             "AND NOT EXISTS ("
             "  SELECT 1 FROM flashcard f "
-            "  WHERE f.user_id = %s AND f.word_id = w.word_id"
+            "  JOIN word saved_word ON saved_word.word_id = f.word_id "
+            "  WHERE f.user_id = %s AND LOWER(saved_word.word) = LOWER(w.word)"
             ") "
             "ORDER BY RANDOM() "
             "LIMIT 1",
@@ -430,7 +471,69 @@ def get_next_word(
         row = cursor.fetchone()
     if row is None:
         return None
-    return {"word_id": str(row["word_id"]), "word": row["word"]}
+
+    with get_connection("fetch active flash card set") as connection, connection.cursor() as cursor:
+        cursor.execute("SELECT user_id FROM users WHERE user_id = %s FOR UPDATE", (user_id,))
+        set_row = get_or_create_in_progress_set(cursor, user_id)
+        cursor.execute(
+            "SELECT COUNT(*) AS card_count FROM flashcard WHERE user_id = %s AND set_id = %s",
+            (user_id, set_row["set_id"]),
+        )
+        card_count = cursor.fetchone()["card_count"]
+
+    senses = row["senses"] or []
+    return {
+        "word_id": str(row["word_id"]),
+        "word": row["word"],
+        "part_of_speech": row["part_of_speech"],
+        "set_id": str(set_row["set_id"]),
+        "set_name": set_row["name"],
+        "set_card_number": card_count + 1,
+        "set_card_limit": 50,
+        "hints": [{
+            "partOfSpeech": row["part_of_speech"],
+            "senses": [{
+                "definition": sense["definition"],
+                "searchPhrase": sense["search_phrase"],
+                "moreSearches": sense.get("more_searches", []),
+            } for sense in senses],
+        }],
+    }
+
+
+@app.get("/api/flashcard-sets")
+def get_flashcard_sets(request: Request) -> list[dict[str, Any]]:
+    user_id = authenticated_user_id(request)
+    with get_connection("fetch flash card sets") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT s.set_id, s.name AS set_name, s.status, f.flashcard_id, w.word, p.drawing_url "
+            "FROM user_flashcard_sets s "
+            "LEFT JOIN flashcard f ON f.set_id = s.set_id AND f.user_id = s.user_id "
+            "LEFT JOIN word w ON w.word_id = f.word_id "
+            "LEFT JOIN user_flashcard_progress p "
+            "  ON p.user_id = f.user_id AND p.flashcard_id = f.flashcard_id "
+            "WHERE s.user_id = %s "
+            "ORDER BY s.set_id, w.word",
+            (user_id,),
+        )
+        rows = cursor.fetchall()
+
+    sets_by_id: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        set_id = str(row["set_id"])
+        flashcard_set = sets_by_id.setdefault(set_id, {
+            "id": set_id,
+            "name": row["set_name"],
+            "status": row["status"],
+            "flashCards": [],
+        })
+        if row["flashcard_id"] is not None:
+            flashcard_set["flashCards"].append({
+                "id": str(row["flashcard_id"]),
+                "name": row["word"],
+                "drawing": row["drawing_url"],
+            })
+    return list(sets_by_id.values())
 
 
 @app.get("/api/flashcards")
@@ -459,13 +562,14 @@ def get_flashcards(request: Request) -> list[dict[str, str | None]]:
 
 
 @app.post("/api/flashcards", status_code=201)
-def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, str]:
+def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, Any]:
     user_id = authenticated_user_id(request)
     word_id = str(body.word_id)
     if not body.drawing.startswith("data:image/png;base64,"):
         raise HTTPException(status_code=400, detail="The drawing must be a PNG image.")
 
     with get_connection("create flash card") as connection, connection.cursor() as cursor:
+        cursor.execute("SELECT user_id FROM users WHERE user_id = %s FOR UPDATE", (user_id,))
         cursor.execute(
             "SELECT word, word_id FROM word WHERE word_id = %s FOR UPDATE",
             (word_id,),
@@ -481,20 +585,9 @@ def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, str]
         if cursor.fetchone() is not None:
             raise HTTPException(status_code=409, detail="You have already saved a flash card for this word.")
 
-        cursor.execute(
-            "SELECT set_id FROM user_flashcard_sets "
-            "WHERE user_id = %s AND is_active IS TRUE "
-            "ORDER BY set_id LIMIT 1",
-            (user_id,),
-        )
-        set_row = cursor.fetchone()
-        if set_row is None:
-            cursor.execute(
-                "INSERT INTO user_flashcard_sets (user_id, name, is_active) "
-                "VALUES (%s, %s, TRUE) RETURNING set_id",
-                (user_id, "My Flash Cards"),
-            )
-            set_row = cursor.fetchone()
+        set_row = get_or_create_in_progress_set(cursor, user_id)
+        if body.set_id is not None and str(body.set_id) != str(set_row["set_id"]):
+            raise HTTPException(status_code=409, detail="Your active set changed. Please try this word again.")
 
         cursor.execute(
             "INSERT INTO flashcard (user_id, set_id, word_id) "
@@ -507,11 +600,139 @@ def create_flashcard(body: FlashCardRequest, request: Request) -> dict[str, str]
             "VALUES (%s, %s, %s)",
             (user_id, flashcard_id, body.drawing),
         )
+        cursor.execute(
+            "SELECT COUNT(*) AS card_count FROM flashcard WHERE set_id = %s AND user_id = %s",
+            (set_row["set_id"], user_id),
+        )
+        card_count = cursor.fetchone()["card_count"]
+        if card_count >= 50 and set_row["status"] == "in_progress":
+            cursor.execute(
+                "UPDATE user_flashcard_sets SET status = 'in_review', is_active = FALSE "
+                "WHERE set_id = %s AND user_id = %s",
+                (set_row["set_id"], user_id),
+            )
+            set_row["status"] = "in_review"
 
     return {
         "id": str(flashcard_id),
         "name": word_row["word"],
         "drawing": body.drawing,
+        "setId": str(set_row["set_id"]),
+        "setName": set_row["name"],
+        "setStatus": set_row["status"],
+        "setCardNumber": card_count,
+        "setCompleted": set_row["status"] == "in_review",
+    }
+
+
+@app.post("/api/quiz/answer")
+def record_quiz_answer(body: QuizAnswerRequest, request: Request) -> dict[str, Any]:
+    user_id = authenticated_user_id(request)
+    if body.selected_flashcard_id != body.flashcard_id:
+        raise HTTPException(status_code=400, detail="The selected answer is not correct.")
+
+    reward_reason = f"quiz_correct:{body.set_id}:{body.flashcard_id}"
+    with get_connection("record correct quiz answer") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT total_coins FROM profiles WHERE user_id = %s FOR UPDATE",
+            (user_id,),
+        )
+        profile = cursor.fetchone()
+        if profile is None:
+            raise HTTPException(status_code=404, detail="Profile not found.")
+
+        cursor.execute(
+            "SELECT 1 FROM flashcard f "
+            "JOIN user_flashcard_sets s ON s.user_id = f.user_id AND s.set_id = f.set_id "
+            "WHERE f.user_id = %s AND f.set_id = %s AND f.flashcard_id = %s "
+            "AND s.status = 'in_review'",
+            (user_id, str(body.set_id), str(body.flashcard_id)),
+        )
+        if cursor.fetchone() is None:
+            raise HTTPException(status_code=404, detail="That quiz card was not found in a review set.")
+
+        cursor.execute(
+            "SELECT transaction_id FROM coin_transactions "
+            "WHERE user_id = %s AND reason = %s",
+            (user_id, reward_reason),
+        )
+        was_awarded = cursor.fetchone() is None
+        if was_awarded:
+            cursor.execute(
+                "INSERT INTO coin_transactions (user_id, amount, reason) "
+                "VALUES (%s, %s, %s)",
+                (user_id, QUIZ_COIN_REWARD, reward_reason),
+            )
+            cursor.execute(
+                "UPDATE profiles SET total_coins = total_coins + %s "
+                "WHERE user_id = %s RETURNING total_coins",
+                (QUIZ_COIN_REWARD, user_id),
+            )
+            total_coins = cursor.fetchone()["total_coins"]
+        else:
+            total_coins = profile["total_coins"]
+
+    return {"coins": total_coins, "coins_awarded": was_awarded, "amount": QUIZ_COIN_REWARD if was_awarded else 0}
+
+
+@app.get("/api/store/purchases")
+def get_store_purchases(request: Request) -> list[dict[str, Any]]:
+    user_id = authenticated_user_id(request)
+    with get_connection("fetch store purchases") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT item_id AS id, item_name AS name, coin_cost AS price "
+            "FROM user_store_purchases WHERE user_id = %s ORDER BY purchased_at",
+            (user_id,),
+        )
+        rows = cursor.fetchall()
+    return [dict(row) for row in rows]
+
+
+@app.post("/api/store/purchases", status_code=201)
+def purchase_store_item(body: StorePurchaseRequest, request: Request) -> dict[str, Any]:
+    user_id = authenticated_user_id(request)
+    item = STORE_CATALOG.get(body.item_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="That store item is not available.")
+    item_name, coin_cost = item
+
+    with get_connection("purchase store item") as connection, connection.cursor() as cursor:
+        cursor.execute(
+            "SELECT total_coins FROM profiles WHERE user_id = %s FOR UPDATE",
+            (user_id,),
+        )
+        profile = cursor.fetchone()
+        if profile is None:
+            raise HTTPException(status_code=404, detail="Profile not found.")
+
+        cursor.execute(
+            "SELECT 1 FROM user_store_purchases WHERE user_id = %s AND item_id = %s",
+            (user_id, body.item_id),
+        )
+        if cursor.fetchone() is not None:
+            raise HTTPException(status_code=409, detail="You already own this item.")
+        if profile["total_coins"] < coin_cost:
+            raise HTTPException(status_code=400, detail="You do not have enough coins for this item.")
+
+        cursor.execute(
+            "INSERT INTO user_store_purchases (user_id, item_id, item_name, coin_cost) "
+            "VALUES (%s, %s, %s, %s)",
+            (user_id, body.item_id, item_name, coin_cost),
+        )
+        cursor.execute(
+            "INSERT INTO coin_transactions (user_id, amount, reason) VALUES (%s, %s, %s)",
+            (user_id, -coin_cost, f"store_purchase:{body.item_id}"),
+        )
+        cursor.execute(
+            "UPDATE profiles SET total_coins = total_coins - %s "
+            "WHERE user_id = %s RETURNING total_coins",
+            (coin_cost, user_id),
+        )
+        total_coins = cursor.fetchone()["total_coins"]
+
+    return {
+        "coins": total_coins,
+        "item": {"id": body.item_id, "name": item_name, "price": coin_cost},
     }
 
 

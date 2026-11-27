@@ -31,6 +31,16 @@
 	border-right: 1px solid rgb(121 99 76 / 12%);
 }
 
+.drawing-column-heading {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 6px;
+	margin-bottom: 12px;
+	text-align: center;
+}
+
 .draw-word-label,
 .draw-eyebrow {
 	color: var(--leaf-500);
@@ -55,6 +65,14 @@
 	color: var(--cocoa-900);
 	font-size: clamp(1.5rem, 3vw, 2rem);
 	font-weight: 750;
+}
+
+.draw-set-progress {
+	margin: 10px 0 0;
+	color: var(--cocoa-600);
+	font-size: 0.88rem;
+	font-weight: 700;
+	text-align: center;
 }
 
 .word-hint {
@@ -118,6 +136,7 @@
 .drawing-actions {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 	gap: 8px;
 }
 
@@ -163,6 +182,86 @@
 	background: var(--mango-100);
 }
 
+.clear-drawing-button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.drawing-controls {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
+	align-items: end;
+	gap: 14px 20px;
+	margin: 0 0 12px;
+	padding: 14px;
+	border: 1px solid rgb(121 99 76 / 14%);
+	border-radius: 16px;
+	background: #fffaf0;
+}
+
+.drawing-control-group {
+	display: grid;
+	gap: 8px;
+}
+
+.drawing-control-label {
+	color: var(--cocoa-600);
+	font-size: 0.78rem;
+	font-weight: 750;
+}
+
+.drawing-tool-options,
+.drawing-color-options {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 7px;
+}
+
+.drawing-tool-button {
+	min-height: 34px;
+	padding: 6px 12px;
+	border: 1px solid rgb(121 99 76 / 20%);
+	border-radius: 999px;
+	background: white;
+	color: var(--cocoa-900);
+	cursor: pointer;
+	font: inherit;
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+
+.drawing-tool-button.is-active {
+	border-color: var(--leaf-500);
+	background: #edf4e8;
+	box-shadow: 0 0 0 2px rgb(85 122 70 / 12%);
+}
+
+.drawing-tool-button:focus-visible,
+.drawing-color-button:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 2px;
+}
+
+.drawing-color-button {
+	width: 27px;
+	height: 27px;
+	border: 2px solid white;
+	border-radius: 50%;
+	background: var(--swatch-color);
+	box-shadow: 0 0 0 1px rgb(61 43 25 / 24%);
+	cursor: pointer;
+}
+
+.drawing-color-button.is-active {
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--swatch-color);
+}
+
+.drawing-size-control input {
+	width: min(100%, 220px);
+	accent-color: var(--leaf-500);
+}
+
 .drawing-canvas-wrap {
 	position: relative;
 	min-height: 360px;
@@ -183,6 +282,55 @@
 	height: 100%;
 	cursor: crosshair;
 	touch-action: none;
+}
+
+.set-completed-dialog {
+	width: min(100% - 32px, 460px);
+	max-width: 460px;
+	padding: 0;
+	border: 0;
+	border-radius: 26px;
+	background: #fffaf0;
+	color: var(--cocoa-900);
+	box-shadow: 0 28px 90px rgb(34 24 15 / 30%);
+}
+
+.set-completed-dialog::backdrop {
+	background: rgb(36 28 20 / 62%);
+	backdrop-filter: blur(4px);
+}
+
+.set-completed-content {
+	display: grid;
+	justify-items: center;
+	padding: clamp(26px, 6vw, 42px);
+	text-align: center;
+}
+
+.set-completed-icon {
+	margin-bottom: 12px;
+	font-size: 3.5rem;
+}
+
+.set-completed-content .draw-eyebrow {
+	margin: 0 0 8px;
+}
+
+.set-completed-content h2 {
+	margin: 0;
+	font-size: clamp(1.8rem, 5vw, 2.4rem);
+	letter-spacing: -0.05em;
+}
+
+.set-completed-content > p:not(.draw-eyebrow) {
+	margin: 14px 0 24px;
+	color: var(--cocoa-600);
+	line-height: 1.5;
+}
+
+.set-completed-content button:focus-visible {
+	outline: 3px solid var(--leaf-500);
+	outline-offset: 3px;
 }
 
 .canvas-hint {
@@ -308,6 +456,15 @@
 	.drawing-toolbar {
 		align-items: flex-start;
 		margin-top: 16px;
+	}
+
+	.drawing-controls {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	.drawing-size-control input {
+		width: 100%;
 	}
 
 	.drawing-actions {

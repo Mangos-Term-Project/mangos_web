@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import '../styles/StorePage.css'
 
 const storeItems = [
@@ -12,17 +13,41 @@ const storeItems = [
 	{ id: 9, name: 'Item 9', price: 175 },
 ]
 
-function StorePage({ onPurchase, purchasedItems }) {
+function StorePage({ coins, onPurchase, purchasedItems }) {
+	const [pendingItemId, setPendingItemId] = useState(null)
+	const [purchaseMessage, setPurchaseMessage] = useState('')
+	const [purchaseError, setPurchaseError] = useState(false)
+
+	async function buyItem(item) {
+		setPendingItemId(item.id)
+		setPurchaseMessage('')
+		setPurchaseError(false)
+		try {
+			await onPurchase(item)
+			setPurchaseMessage(`${item.name} was added to your house.`)
+		} catch (error) {
+			setPurchaseMessage(error.message || 'Could not complete the purchase.')
+			setPurchaseError(true)
+		} finally {
+			setPendingItemId(null)
+		}
+	}
+
 	return (
 		<main className="store-page">
 			<section aria-labelledby="store-title" className="store-window">
 				<header className="store-heading">
-						<h1 id="store-title">The Store</h1>
+					<h1 id="store-title">The Store</h1>
+					<p className="store-balance">You have <strong>{coins}</strong> coins</p>
 				</header>
+				<p aria-live="polite" className="store-purchase-message" role={purchaseError ? 'alert' : 'status'}>
+					{purchaseMessage}
+				</p>
 
 				<div aria-label="Store items" className="store-grid">
 					{storeItems.map((item) => {
 						const isPurchased = purchasedItems.some((purchasedItem) => purchasedItem.id === item.id)
+						const cannotAfford = coins < item.price
 						return (
 						<article aria-label={`${item.name}, ${item.price} coins`} className="store-item" key={item.id}>
 							<div aria-label={`${item.name} image placeholder`} className="store-item-image" role="img">
@@ -37,12 +62,12 @@ function StorePage({ onPurchase, purchasedItems }) {
 								</p>
 							</div>
 							<button
-								className="store-purchase-button"
-								disabled={isPurchased}
-								onClick={() => onPurchase(item)}
+								className={`store-purchase-button${isPurchased ? ' is-purchased' : ''}`}
+								disabled={isPurchased || cannotAfford || pendingItemId !== null}
+								onClick={() => buyItem(item)}
 								type="button"
 							>
-								{isPurchased ? 'In your house' : 'Buy'}
+								{isPurchased ? 'In your house' : pendingItemId === item.id ? 'Buying…' : cannotAfford ? 'Need more coins' : 'Buy'}
 							</button>
 						</article>
 						)

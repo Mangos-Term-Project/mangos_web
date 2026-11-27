@@ -7,6 +7,14 @@
 3. Set `DATABASE_URL` and `REDIS_URL` in the repository-root `.env` file. PostgreSQL stores account/profile data, words, and flash cards; Redis stores login sessions. This single environment file is used by both the frontend and local API.
 4. Start the API with `python main.py`.
 
+## Drawable vocabulary
+The Draw page reads its prompt, part of speech, definitions, suggested search
+phrases, and hand-picked Pixabay image IDs from the PostgreSQL `word` table.
+Those fields are stored in the `senses` JSONB column. Records with a part of
+speech and non-empty `senses` are selectable. The seed currently contains 153
+drawable word/part-of-speech records. PostgreSQL is the source of truth for
+vocabulary metadata; there are no checked-in word, phrase, or image-ID mirrors.
+
 ## Reference picture search
 The Draw page submits searches to GET /api/images/search?q=clock. It preserves the
 existing next-word and save-flashcard workflow; reference images are not saved
@@ -24,9 +32,8 @@ pictures. Search also submits with Enter. Then draw and save a flashcard to
 verify the current saving workflow.
 
 Provider failures remain failures, rather than falling back to fake images.
-Vercel logs report only status and one of invalid-key, html-block, provider-error,
-without logging the key, query, URL, or raw provider response. If Pixabay returns
-403, obtain its explanation or contact Pixabay before claiming the integration
-works. A User-Agent identifies Mangos; it does not bypass provider restrictions.
+Pixabay HTTP status and a bounded response body are returned to the caller and
+logged, with the API key redacted and the request URL/query omitted. A
+User-Agent identifies Mangos; it does not bypass provider restrictions.
 
 Run provider unit tests: python -m unittest discover -s tests -v

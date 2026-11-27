@@ -10,30 +10,17 @@ import QuizPage from './pages/QuizPage.jsx'
 import StorePage from './pages/StorePage.jsx'
 import NavBar from './components/NavBar.jsx'
 import { getCurrentUser, login, logout, register } from './api/auth.js'
-import { getFlashCards } from './api/flashcards.js'
+import { getStorePurchases, purchaseStoreItem, recordCorrectQuizAnswer } from './api/economy.js'
+import { getFlashCards, getFlashCardSets } from './api/flashcards.js'
 import './App.css'
-
-const PURCHASES_STORAGE_KEY = 'mangos-demo-purchases'
-const FLASHCARDS_STORAGE_KEY = 'mangos-demo-flashcards'
-
-function readStoredValue(key, fallback) {
-  try {
-    const value = window.localStorage.getItem(key)
-    return value ? JSON.parse(value) : fallback
-  } catch {
-    return fallback
-  }
-}
 
 function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [authChecked, setAuthChecked] = useState(false)
-  const [purchasedItems, setPurchasedItems] = useState(() => readStoredValue(PURCHASES_STORAGE_KEY, []))
-  const [flashCards, setFlashCards] = useState(() => {
-    const savedFlashCards = readStoredValue(FLASHCARDS_STORAGE_KEY, [])
-    return Array.isArray(savedFlashCards) ? savedFlashCards : []
-  })
+  const [purchasedItems, setPurchasedItems] = useState([])
+  const [flashCards, setFlashCards] = useState([])
+  const [flashCardSets, setFlashCardSets] = useState([])
   const [flashCardError, setFlashCardError] = useState('')
   const isLoggedIn = user !== null
 
@@ -45,15 +32,15 @@ function App() {
         if (cancelled) return
         setUser(currentUser)
         try {
-          const savedFlashCards = await getFlashCards()
+          const [savedFlashCards, savedFlashCardSets] = await Promise.all([
+            getFlashCards(),
+            getFlashCardSets(),
+          ])
           if (cancelled) return
-          setFlashCards((currentCards) => {
-            const savedNames = new Set(savedFlashCards.map((card) => card.name.toLowerCase()))
-            return [
-              ...currentCards.filter((card) => !savedNames.has(card.name.toLowerCase())),
-              ...savedFlashCards,
-            ]
-          })
+          setFlashCardSets(savedFlashCardSets)
+          // The API is scoped to the authenticated user. Never merge browser-wide
+          // cached cards here: they make another account look already completed.
+          setFlashCards(savedFlashCards)
         } catch (error) {
           if (!cancelled) setFlashCardError(error.message)
         }
@@ -70,34 +57,90 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!user?.user_id) return undefined
+    let cancelled = false
+    getStorePurchases()
+      .then((items) => {
+        if (!cancelled) setPurchasedItems(items)
+      })
+      .catch((error) => {
+        if (!cancelled) console.error('Could not load store purchases:', error)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [user?.user_id])
+
   async function handleLogin(credentials) {
-    setUser(await login(credentials))
+    const loggedInUser = await login(credentials)
+    setUser(loggedInUser)
+    await loadAccountFlashcards()
     navigate('/home')
   }
 
   async function handleCreateAccount(details) {
-    setUser(await register(details))
+    const createdUser = await register(details)
+    setUser(createdUser)
+    await loadAccountFlashcards()
     navigate('/home')
   }
 
-  function handlePurchase(item) {
-    setPurchasedItems((currentItems) => {
-      if (currentItems.some((purchasedItem) => purchasedItem.id === item.id)) return currentItems
-      const nextItems = [...currentItems, item]
-      window.localStorage.setItem(PURCHASES_STORAGE_KEY, JSON.stringify(nextItems))
-      return nextItems
-    })
+  async function loadAccountFlashcards() {
+    setFlashCardError('')
+    try {
+      const [savedFlashCards, savedFlashCardSets] = await Promise.all([
+        getFlashCards(),
+        getFlashCardSets(),
+      ])
+      setFlashCards(savedFlashCards)
+      setFlashCardSets(savedFlashCardSets)
+    } catch (error) {
+      setFlashCards([])
+      setFlashCardSets([])
+      setFlashCardError(error.message)
+    }
+  }
+
+  async function handlePurchase(item) {
+    const result = await purchaseStoreItem(item.id)
+    setUser((currentUser) => currentUser ? { ...currentUser, coins: result.coins } : currentUser)
+    setPurchasedItems((currentItems) => currentItems.some((purchasedItem) => purchasedItem.id === result.item.id)
+      ? currentItems
+      : [...currentItems, result.item])
+    return result.item
+  }
+
+  async function handleCorrectQuizAnswer(answer) {
+    const result = await recordCorrectQuizAnswer(answer)
+    setUser((currentUser) => currentUser ? { ...currentUser, coins: result.coins } : currentUser)
+    return result
   }
 
   function handleSaveFlashCard(flashCard) {
     const nextFlashCards = [...flashCards, flashCard]
     setFlashCards(nextFlashCards)
-    setFlashCardError('')
-    try {
-      window.localStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(nextFlashCards))
-    } catch (error) {
-      console.error('Could not cache saved flash cards:', error)
+    if (flashCard.setId) {
+      setFlashCardSets((currentSets) => {
+        const existingSet = currentSets.find((set) => set.id === flashCard.setId)
+        if (!existingSet) {
+          return [...currentSets, {
+            id: flashCard.setId,
+            name: flashCard.setName || 'My Flash Cards',
+            status: flashCard.setStatus || 'in_progress',
+            flashCards: [flashCard],
+          }]
+        }
+        return currentSets.map((set) => set.id === flashCard.setId
+          ? {
+              ...set,
+              status: flashCard.setStatus || set.status,
+              flashCards: [...set.flashCards, flashCard],
+            }
+          : set)
+      })
     }
+    setFlashCardError('')
   }
 
   async function handleSignOut() {
@@ -107,6 +150,9 @@ function App() {
       console.error('Sign out failed:', error)
     }
     setUser(null)
+    setPurchasedItems([])
+    setFlashCards([])
+    setFlashCardSets([])
     navigate('/')
   }
 
@@ -133,6 +179,7 @@ function App() {
         onLogin={() => navigate('/login')}
         onCreateAccount={() => navigate('/create-account')}
         isLoggedIn={isLoggedIn}
+        coinBalance={user?.coins ?? 0}
       />
 
       <Routes>
@@ -140,14 +187,20 @@ function App() {
         <Route path="/login" element={guestOnly(<LoginPage onSubmit={handleLogin} />)} />
         <Route path="/create-account" element={guestOnly(<CreateAccountPage onSubmit={handleCreateAccount} />)} />
         <Route path="/home" element={requireLogin(
-          <MemberPage flashCards={flashCards} flashCardError={flashCardError} />,
+          <MemberPage flashCardSets={flashCardSets} flashCardError={flashCardError} />,
         )} />
         <Route path="/house" element={requireLogin(<HousePage accountName={user?.name} items={purchasedItems} />)} />
         <Route path="/draw" element={requireLogin(
-          <DrawPage flashCards={flashCards} onSaveFlashCard={handleSaveFlashCard} />,
+          <DrawPage onSaveFlashCard={handleSaveFlashCard} />,
         )} />
-        <Route path="/quiz" element={requireLogin(<QuizPage />)} />
-        <Route path="/store" element={requireLogin(<StorePage onPurchase={handlePurchase} purchasedItems={purchasedItems} />)} />
+        <Route path="/quiz/:setId?" element={requireLogin(
+          flashCardSets.some((set) => set.status === 'in_review')
+            ? <QuizPage flashCardSets={flashCardSets} onCorrectAnswer={handleCorrectQuizAnswer} />
+            : <Navigate to="/home" replace />,
+        )} />
+        <Route path="/store" element={requireLogin(
+          <StorePage coins={user?.coins ?? 0} onPurchase={handlePurchase} purchasedItems={purchasedItems} />,
+        )} />
         <Route path="*" element={<Navigate to={isLoggedIn ? '/home' : '/'} replace />} />
       </Routes>
     </main>
