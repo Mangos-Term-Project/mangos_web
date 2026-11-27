@@ -3,7 +3,16 @@ import { FaSearch } from "react-icons/fa";
 import { getNextWord, saveFlashCard as saveFlashCardRequest } from '../api/flashcards.js'
 import '../styles/DrawPage.css'
 
-function DrawPage({ flashCards, onSaveFlashCard }) {
+function getDrawingCursor(tool, brushSize) {
+	if (tool === 'eraser') {
+		const diameter = Math.max(2, brushSize)
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${diameter}px" height="${diameter}px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="none" stroke="#2f241b" stroke-width="8"/></svg>`
+		return `url("data:image/svg+xml,${encodeURIComponent(svg)}") ${diameter / 2} ${diameter / 2}, crosshair`
+	}
+	return 'crosshair'
+}
+
+function DrawPage({ onSaveFlashCard }) {
 	const [search, setSearch] = useState('')
 	const [images, setImages] = useState(null)
 	const [searchMessage, setSearchMessage] = useState('')
@@ -15,6 +24,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [searchGroups, setSearchGroups] = useState(null)
 	const searchRequest = useRef(null)
 	const enlargeDialogRef = useRef(null)
+	const setCompletedDialogRef = useRef(null)
 
 	useEffect(() => () => searchRequest.current?.abort(), [])
 
@@ -93,8 +103,27 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	const [isLoadingWord, setIsLoadingWord] = useState(true)
 	const [isSaving, setIsSaving] = useState(false)
 	const [wordRefresh, setWordRefresh] = useState(0)
+	const [completedSetName, setCompletedSetName] = useState('')
+	const [activeTool, setActiveTool] = useState('pencil')
+	const [brushColor, setBrushColor] = useState('#2f241b')
+	const [brushSize, setBrushSize] = useState(6)
+	const [canUndo, setCanUndo] = useState(false)
 	const canvasRef = useRef(null)
 	const drawingRef = useRef(false)
+	const undoStackRef = useRef([])
+	const brushOptions = [
+		{ id: 'pencil', label: 'Pencil', sizeMultiplier: 1, alpha: 1 },
+		{ id: 'marker', label: 'Marker', sizeMultiplier: 2.5, alpha: 0.48 },
+	]
+	const drawingColors = [
+		{ value: '#2f241b', label: 'Cocoa' },
+		{ value: '#db7900', label: 'Mango' },
+		{ value: '#d94f3d', label: 'Tomato' },
+		{ value: '#3978b8', label: 'Blueberry' },
+		{ value: '#578447', label: 'Leaf' },
+		{ value: '#8a5bb5', label: 'Grape' },
+		{ value: '#ef8ba8', label: 'Pink' },
+	]
 
 	// Shown under "Pictures picked for this word" as soon as the word appears.
 	async function loadPicked(word, partOfSpeech) {
@@ -110,7 +139,7 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 	useEffect(() => {
 		let cancelled = false
 
-		getNextWord(flashCards.map((flashCard) => flashCard.name))
+		getNextWord()
 			.then((word) => {
 				if (cancelled) return
 				setCurrentWord(word)
@@ -129,7 +158,18 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 		return () => {
 			cancelled = true
 		}
-	}, [flashCards, wordRefresh])
+	}, [wordRefresh])
+
+	useEffect(() => {
+		const dialog = setCompletedDialogRef.current
+		if (!dialog) return
+		if (completedSetName && !dialog.open) dialog.showModal()
+		if (!completedSetName && dialog.open) dialog.close()
+	}, [completedSetName])
+
+	function closeSetCompletedDialog() {
+		setCompletedSetName('')
+	}
 
 	function getCanvasPoint(event) {
 		const canvas = canvasRef.current
@@ -141,19 +181,33 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 		}
 	}
 
+	function saveUndoState() {
+		const canvas = canvasRef.current
+		if (!canvas) return
+		const context = canvas.getContext('2d')
+		undoStackRef.current = [...undoStackRef.current, context.getImageData(0, 0, canvas.width, canvas.height)].slice(-10)
+		setCanUndo(true)
+	}
+
 	function startDrawing(event) {
 		const canvas = canvasRef.current
 		const context = canvas.getContext('2d')
 		const point = getCanvasPoint(event)
+		const selectedBrush = brushOptions.find((brush) => brush.id === activeTool)
 
+		saveUndoState()
 		drawingRef.current = true
 		canvas.setPointerCapture(event.pointerId)
 		context.beginPath()
 		context.moveTo(point.x, point.y)
-		context.strokeStyle = '#db7900'
-		context.lineWidth = 5
+		context.strokeStyle = brushColor
+		context.lineWidth = brushSize * (selectedBrush?.sizeMultiplier ?? 1)
+		context.globalAlpha = selectedBrush?.alpha ?? 1
+		context.globalCompositeOperation = activeTool === 'eraser' ? 'destination-out' : 'source-over'
 		context.lineCap = 'round'
 		context.lineJoin = 'round'
+		context.lineTo(point.x + 0.01, point.y + 0.01)
+		context.stroke()
 	}
 
 	function continueDrawing(event) {
@@ -167,11 +221,34 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 
 	function stopDrawing() {
 		drawingRef.current = false
+		const context = canvasRef.current?.getContext('2d')
+		if (context) {
+			context.globalAlpha = 1
+			context.globalCompositeOperation = 'source-over'
+		}
 	}
 
 	function clearDrawing() {
 		const canvas = canvasRef.current
+		if (!canvas) return
+		saveUndoState()
 		canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+	}
+
+	function undoDrawing() {
+		const canvas = canvasRef.current
+		const previousState = undoStackRef.current.pop()
+		if (!canvas || !previousState) return
+		canvas.getContext('2d').putImageData(previousState, 0, 0)
+		setCanUndo(undoStackRef.current.length > 0)
+	}
+
+	function resetDrawing() {
+		const canvas = canvasRef.current
+		if (!canvas) return
+		canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+		undoStackRef.current = []
+		setCanUndo(false)
 	}
 
 	async function saveFlashCard() {
@@ -184,12 +261,15 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 			const flashCard = await saveFlashCardRequest({
 				wordId: currentWord.word_id,
 				drawing: canvasRef.current.toDataURL(),
+				setId: currentWord.set_id,
 			})
 			setIsLoadingWord(true)
 			setWordError('')
-			clearDrawing()
+			resetDrawing()
 			onSaveFlashCard(flashCard)
 			setSaveMessage(`"${flashCard.name}" was saved to your flash cards.`)
+			if (flashCard.setCompleted) setCompletedSetName(flashCard.setName)
+			setWordRefresh((currentRefresh) => currentRefresh + 1)
 		} catch (error) {
 			setSaveMessage(error.message)
 			if (error.status === 409) {
@@ -223,7 +303,15 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 		<main className="draw-page">
 			<section aria-label="Draw and explore images" className="draw-workspace">
 				<div className="drawing-column">
-					<label className="draw-word-label">Draw this word</label>
+					<div className="drawing-column-heading">
+						<label className="draw-word-label">Draw this word</label>
+						{currentWord?.set_name && (
+							<p className="draw-set-progress">
+								{currentWord.set_name} · Card {currentWord.set_card_number} of {currentWord.set_card_limit}
+							</p>
+						)}
+					</div>
+					
 					<label className="draw-word">
 						{isLoadingWord
 							? 'Loading a word...'
@@ -264,6 +352,9 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 					<div className="drawing-toolbar">
 						<p>Use your mouse or finger to draw</p>
 						<div className="drawing-actions">
+							<button className="clear-drawing-button" disabled={!canUndo} onClick={undoDrawing} type="button">
+								Undo
+							</button>
 							<button className="clear-drawing-button" onClick={clearDrawing} type="button">
 								Clear
 							</button>
@@ -275,6 +366,62 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 							>
 								{isSaving ? 'Saving...' : 'Save flash card'}
 							</button>
+						</div>
+					</div>
+					<div aria-label="Drawing tools" className="drawing-controls">
+						<div className="drawing-control-group">
+							<span className="drawing-control-label" id="drawing-tool-label">Tool</span>
+							<div aria-labelledby="drawing-tool-label" className="drawing-tool-options" role="group">
+								{brushOptions.map((brush) => (
+									<button
+										aria-pressed={activeTool === brush.id}
+										className={`drawing-tool-button${activeTool === brush.id ? ' is-active' : ''}`}
+										key={brush.id}
+										onClick={() => setActiveTool(brush.id)}
+										type="button"
+									>
+										{brush.label}
+									</button>
+								))}
+								<button
+									aria-pressed={activeTool === 'eraser'}
+									className={`drawing-tool-button${activeTool === 'eraser' ? ' is-active' : ''}`}
+									onClick={() => setActiveTool('eraser')}
+									type="button"
+								>
+									Eraser
+								</button>
+							</div>
+						</div>
+						<div className="drawing-control-group">
+							<span className="drawing-control-label" id="drawing-color-label">Color</span>
+							<div aria-labelledby="drawing-color-label" className="drawing-color-options" role="group">
+								{drawingColors.map((color) => (
+									<button
+										aria-label={`${color.label} color`}
+										aria-pressed={brushColor === color.value}
+										className={`drawing-color-button${brushColor === color.value ? ' is-active' : ''}`}
+										key={color.value}
+										onClick={() => {
+											setBrushColor(color.value)
+											if (activeTool === 'eraser') setActiveTool('pencil')
+										}}
+										style={{ '--swatch-color': color.value }}
+										type="button"
+									/>
+								))}
+							</div>
+						</div>
+						<div className="drawing-control-group drawing-size-control">
+							<label className="drawing-control-label" htmlFor="drawing-size">Brush size: {brushSize}</label>
+							<input
+								id="drawing-size"
+								max="20"
+								min="2"
+								onChange={(event) => setBrushSize(Number(event.target.value))}
+								type="range"
+								value={brushSize}
+							/>
 						</div>
 					</div>
 					<p className="flashcard-save-message" aria-live="polite" role="status">
@@ -289,10 +436,25 @@ function DrawPage({ flashCards, onSaveFlashCard }) {
 							onPointerMove={continueDrawing}
 							onPointerUp={stopDrawing}
 							ref={canvasRef}
+							style={{ cursor: getDrawingCursor(activeTool, brushSize) }}
 							width="800"
 						/>
-						<span aria-hidden="true" className="canvas-hint">Your drawing goes here</span>
+						<span aria-hidden="true" className="canvas-hint"></span>
 					</div>
+					<dialog
+						aria-labelledby="set-completed-title"
+						className="set-completed-dialog"
+						onClose={closeSetCompletedDialog}
+						ref={setCompletedDialogRef}
+					>
+						<div className="set-completed-content">
+							<span aria-hidden="true" className="set-completed-icon">🎉</span>
+							<p className="draw-eyebrow">Achievement unlocked</p>
+							<h2 id="set-completed-title">Set complete!</h2>
+							<p>You finished all 50 cards in <strong>{completedSetName}</strong>. Great work!</p>
+							<button className="save-flashcard-button" onClick={closeSetCompletedDialog} type="button">Keep going</button>
+						</div>
+					</dialog>
 				</div>
 
 				<aside aria-labelledby="reference-title" className="reference-column">

@@ -2,7 +2,7 @@ import { FaHome, FaStore } from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom'
 import '../styles/NavBar.css'
 
-function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn }) {
+function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn, coinBalance = 0 }) {
 
   return (
     <header className="header">
@@ -28,9 +28,16 @@ function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn }) {
 
       <nav aria-label="Account" className="account-actions">
         {isLoggedIn ?
-          <button className="signout-button" onClick={onSignOut} type="button">
-            Sign out
-          </button>
+          <>
+            <span aria-label={`${coinBalance} coins`} className="coin-balance" role="status">
+              <span aria-hidden="true" className="coin-balance-icon">●</span>
+              <span>{coinBalance}</span>
+              <span className="coin-balance-label">coins</span>
+            </span>
+            <button className="signout-button" onClick={onSignOut} type="button">
+              Sign out
+            </button>
+          </>
         :
           <>        
             <button className="login-button" onClick={onLogin} type="button">
