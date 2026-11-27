@@ -1,0 +1,35 @@
+# LOCAL DEVELOPMENT ONLY. Starts a throwaway PostgreSQL and Redis on this
+# computer, so you can run Mangos without touching the live Supabase data.
+#
+#   docker compose -f docker-compose.local.yml up -d     # start
+#   python api/db/setup_local.py                        # tables + words
+#   docker compose -f docker-compose.local.yml down -v   # stop and delete local data
+#
+# Ports listen on 127.0.0.1 only. The password is a fixed local-only value,
+# not a credential for any real service.
+name: mangos-dev
+
+services:
+  postgres:
+    image: postgres:17-alpine   # same major version as Supabase
+    environment:
+      POSTGRES_USER: mangos
+      POSTGRES_PASSWORD: mangos_local_only
+      POSTGRES_DB: mangos
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - mangos-dev-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mangos -d mangos"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:56379:6379"
+
+volumes:
+  mangos-dev-postgres:
