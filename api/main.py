@@ -423,7 +423,7 @@ def picked_pictures(
 ) -> dict[str, Any]:
     """Fetch curated pictures stored on a drawable word row."""
     # Bump the version when words.json pictures change, so learners do not see old picks for 24 hours.
-    cache_key = f"mangos:images:picked:v5:{word}:{part_of_speech or (word_row or {}).get('part_of_speech', 'any')}"
+    cache_key = f"mangos:images:picked:v6:{word}:{part_of_speech or (word_row or {}).get('part_of_speech', 'any')}"
     with get_session_store("load picked pictures") as store:
         cached = store.get(cache_key)
         if cached:
