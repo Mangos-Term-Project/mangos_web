@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/CreateAccountPage.css'
+import { useLanguage } from '../i18n.jsx'
 
 // Same rules as the API (api/main.py), so problems show before submitting.
 const USERNAME_PATTERN = /^[A-Za-z0-9_]{3,30}$/
@@ -19,6 +20,7 @@ function validateAccount({ name, username, password }, confirmation) {
 }
 
 function CreateAccountPage({ onSubmit }) {
+	const { t } = useLanguage()
 	const [password, setPassword] = useState('')
 	const [confirmation, setConfirmation] = useState('')
 	const [error, setError] = useState('')
@@ -33,7 +35,7 @@ function CreateAccountPage({ onSubmit }) {
 			password,
 		}
 
-		const validationError = validateAccount(details, confirmation)
+		const validationError = t(validateAccount(details, confirmation))
 		if (validationError) {
 			setError(validationError)
 			return
@@ -44,7 +46,7 @@ function CreateAccountPage({ onSubmit }) {
 		try {
 			await onSubmit(details)
 		} catch (submitError) {
-			setError(submitError.message)
+			setError(t(submitError.message))
 			setIsSubmitting(false)
 		}
 	}
@@ -56,30 +58,30 @@ function CreateAccountPage({ onSubmit }) {
 	return (
 		<main className="create-account-page">
 			<section aria-labelledby="create-account-title" className="create-account-panel">
-				<p className="create-account-eyebrow">Start your learning journey</p>
-				<h1 id="create-account-title">Create an account</h1>
-				<p className="create-account-description">Set up your Mangos learner profile.</p>
+				<p className="create-account-eyebrow">{t('Start your learning journey')}</p>
+				<h1 id="create-account-title">{t('Create an account')}</h1>
+				<p className="create-account-description">{t('Set up your Mangos learner profile.')}</p>
 
 				<form className="create-account-form" onSubmit={handleSubmit}>
-					<label htmlFor="name">Your name</label>
+					<label htmlFor="name">{t('Your name')}</label>
 					<input
 						autoComplete="name"
 						id="name"
 						name="name"
-						placeholder="Your name"
+						placeholder={t('Your name')}
 						required
 					/>
 
-					<label htmlFor="new-username">Create a username</label>
+					<label htmlFor="new-username">{t('Create a username')}</label>
 					<input
 						autoComplete="username"
 						id="new-username"
 						name="username"
-						placeholder="Choose a username"
+						placeholder={t('Choose a username')}
 						required
 					/>
 
-					<label htmlFor="new-password">Create a password</label>
+					<label htmlFor="new-password">{t('Create a password')}</label>
 					<input
 						autoComplete="new-password"
 						id="new-password"
@@ -88,13 +90,13 @@ function CreateAccountPage({ onSubmit }) {
 							setPassword(event.target.value)
 							clearError()
 						}}
-						placeholder="Choose a password"
+						placeholder={t('Choose a password')}
 						required
 						type="password"
 						value={password}
 					/>
 
-					<label htmlFor="confirm-password">Confirm your password</label>
+					<label htmlFor="confirm-password">{t('Confirm your password')}</label>
 					<input
 						aria-describedby={error ? 'create-account-error' : undefined}
 						autoComplete="new-password"
@@ -104,7 +106,7 @@ function CreateAccountPage({ onSubmit }) {
 							setConfirmation(event.target.value)
 							clearError()
 						}}
-						placeholder="Enter your password again"
+						placeholder={t('Enter your password again')}
 						required
 						type="password"
 						value={confirmation}
@@ -112,11 +114,11 @@ function CreateAccountPage({ onSubmit }) {
 					{error && <p className="password-error" id="create-account-error" role="alert">{error}</p>}
 
 					<button className="create-account-submit" disabled={isSubmitting} type="submit">
-						{isSubmitting ? 'Creating account...' : 'Create account'}
+						{isSubmitting ? t('Creating account...') : t('Create an account')}
 					</button>
 				</form>
 
-				<p className="create-account-login">Already have an account? <Link to="/login">Log in</Link></p>
+				<p className="create-account-login">{t('Already have an account?')} <Link to="/login">{t('Log in')}</Link></p>
 			</section>
 		</main>
 	)

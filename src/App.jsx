@@ -9,12 +9,14 @@ import DrawPage from './pages/DrawPage.jsx'
 import QuizPage from './pages/QuizPage.jsx'
 import StorePage from './pages/StorePage.jsx'
 import NavBar from './components/NavBar.jsx'
+import LanguageSelector from './components/LanguageSelector.jsx'
+import { LanguageProvider } from './i18n.jsx'
 import { getCurrentUser, login, logout, register } from './api/auth.js'
 import { getStorePurchases, purchaseStoreItem, recordCorrectQuizAnswer } from './api/economy.js'
 import { getFlashCards, getFlashCardSets } from './api/flashcards.js'
 import './App.css'
 
-function App() {
+function AppContent() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [authChecked, setAuthChecked] = useState(false)
@@ -37,10 +39,10 @@ function App() {
             getFlashCardSets(),
           ])
           if (cancelled) return
-          setFlashCardSets(savedFlashCardSets)
+          setFlashCardSets(Array.isArray(savedFlashCardSets) ? savedFlashCardSets : [])
           // The API is scoped to the authenticated user. Never merge browser-wide
           // cached cards here: they make another account look already completed.
-          setFlashCards(savedFlashCards)
+          setFlashCards(Array.isArray(savedFlashCards) ? savedFlashCards : [])
         } catch (error) {
           if (!cancelled) setFlashCardError(error.message)
         }
@@ -93,8 +95,8 @@ function App() {
         getFlashCards(),
         getFlashCardSets(),
       ])
-      setFlashCards(savedFlashCards)
-      setFlashCardSets(savedFlashCardSets)
+      setFlashCards(Array.isArray(savedFlashCards) ? savedFlashCards : [])
+      setFlashCardSets(Array.isArray(savedFlashCardSets) ? savedFlashCardSets : [])
     } catch (error) {
       setFlashCards([])
       setFlashCardSets([])
@@ -168,12 +170,14 @@ function App() {
     return (
       <main className="app">
         <p className="app-loading" role="status">Loading...</p>
+        <LanguageSelector />
       </main>
     )
   }
 
   return (
     <main className="app">
+      <LanguageSelector />
       <NavBar
         onSignOut={handleSignOut}
         onLogin={() => navigate('/login')}
@@ -194,7 +198,7 @@ function App() {
           <DrawPage onSaveFlashCard={handleSaveFlashCard} />,
         )} />
         <Route path="/quiz/:setId?" element={requireLogin(
-          flashCardSets.some((set) => set.status === 'in_review')
+          (flashCardSets ?? []).some((set) => set.status === 'in_review')
             ? <QuizPage flashCardSets={flashCardSets} onCorrectAnswer={handleCorrectQuizAnswer} />
             : <Navigate to="/home" replace />,
         )} />
@@ -204,6 +208,14 @@ function App() {
         <Route path="*" element={<Navigate to={isLoggedIn ? '/home' : '/'} replace />} />
       </Routes>
     </main>
+  )
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   )
 }
 
