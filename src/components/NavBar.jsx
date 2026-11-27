@@ -1,8 +1,10 @@
 import { FaHome, FaStore } from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom'
+import { useLanguage } from '../i18n.jsx'
 import '../styles/NavBar.css'
 
 function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn, coinBalance = 0 }) {
+  const { t } = useLanguage()
 
   return (
     <header className="header">
@@ -16,11 +18,11 @@ function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn, coinBalance =
           <nav aria-label="Main navigation" className="main-nav">
             <NavLink aria-label="House" className="nav-icon-button" to="/house">
               <FaHome className="nav-icon" />
-              <span>House</span>
+              <span>{t('House')}</span>
             </NavLink>
             <NavLink aria-label="Store" className="nav-icon-button" to="/store">
               <FaStore className="nav-icon" />
-              <span>Store</span>
+              <span>{t('Store')}</span>
             </NavLink>
           </nav>
         )}
@@ -32,19 +34,19 @@ function NavBar({ onSignOut, onLogin, onCreateAccount, isLoggedIn, coinBalance =
             <span aria-label={`${coinBalance} coins`} className="coin-balance" role="status">
               <span aria-hidden="true" className="coin-balance-icon">●</span>
               <span>{coinBalance}</span>
-              <span className="coin-balance-label">coins</span>
+              <span className="coin-balance-label">{t('coins')}</span>
             </span>
             <button className="signout-button" onClick={onSignOut} type="button">
-              Sign out
+              {t('Sign out')}
             </button>
           </>
         :
           <>        
             <button className="login-button" onClick={onLogin} type="button">
-              Log in
+              {t('Log in')}
             </button>
             <button className="create-account-button" onClick={onCreateAccount} type="button">
-              Create account
+              {t('Create an account')}
             </button>
           </>
         }

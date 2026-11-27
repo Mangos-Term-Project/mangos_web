@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import '../styles/QuizPage.css'
+import { useLanguage } from '../i18n.jsx'
 
 const EMPTY_FLASH_CARDS = []
 
@@ -19,6 +20,7 @@ function makeChoices(correctCard, flashCards) {
 }
 
 function QuizPage({ flashCardSets, onCorrectAnswer }) {
+	const { t } = useLanguage()
 	const { setId } = useParams()
 	const availableSets = flashCardSets.filter((set) => set.status === 'in_review')
 	const flashCardSet = setId
@@ -48,9 +50,9 @@ function QuizPage({ flashCardSets, onCorrectAnswer }) {
 		setIsAwarding(true)
 		try {
 			const result = await onCorrectAnswer({ setId: flashCardSet.id, flashCardId: currentCard.id })
-			setCoinMessage(result.coins_awarded ? `+${result.amount} coin earned!` : 'You already earned a coin for this card.')
+			setCoinMessage(result.coins_awarded ? `+${result.amount} ${t('coin earned!')}` : t('You already earned a coin for this card.'))
 		} catch (error) {
-			setCoinMessage(error.message || 'Could not award your quiz coin.')
+			setCoinMessage(t(error.message || 'Could not award your quiz coin.'))
 		} finally {
 			setIsAwarding(false)
 		}
@@ -72,17 +74,17 @@ function QuizPage({ flashCardSets, onCorrectAnswer }) {
 			<section className="quiz-window">
 				{isComplete ? (
 					<div className="quiz-complete">
-						<p className="quiz-eyebrow">Set complete</p>
-						<h1 className="quiz-word">Nice work!</h1>
-						<p>You got {score} out of {flashCards.length} correct in {flashCardSet.name}.</p>
-						<Link className="quiz-submit-button quiz-home-link" to="/home">Back to your sets</Link>
+						<p className="quiz-eyebrow">{t('Set complete')}</p>
+						<h1 className="quiz-word">{t('Nice work!')}</h1>
+						<p>{t('You got')} {score} {t('out of')} {flashCards.length} {t('correct in')} {flashCardSet.name}.</p>
+						<Link className="quiz-submit-button quiz-home-link" to="/home">{t('Back to your sets')}</Link>
 					</div>
 				) : currentCard ? (
 					<>
 						<div className="quiz-heading">
-							<p className="quiz-eyebrow">{flashCardSet.name} · Question {currentCardIndex + 1} of {flashCards.length}</p>
+							<p className="quiz-eyebrow">{flashCardSet.name} · {t('Question')} {currentCardIndex + 1} {t('of')} {flashCards.length}</p>
 							<h1 className="quiz-word">{currentCard.name}</h1>
-							<p className="quiz-prompt">Which drawing matches this word?</p>
+							<p className="quiz-prompt">{t('Which drawing matches this word?')}</p>
 						</div>
 
 						<div aria-label="Drawing choices" className="quiz-choice-grid">
@@ -103,7 +105,7 @@ function QuizPage({ flashCardSets, onCorrectAnswer }) {
 									>
 										{choice.drawing
 											? <img alt="" className="quiz-choice-image" src={choice.drawing} />
-											: <span className="quiz-choice-no-image">No drawing saved</span>}
+											: <span className="quiz-choice-no-image">{t('No drawing saved')}</span>}
 									</button>
 								)
 							})}
@@ -112,25 +114,25 @@ function QuizPage({ flashCardSets, onCorrectAnswer }) {
 						<div className="quiz-footer">
 							<p aria-live="polite" className={`quiz-feedback${isChecked ? (selectedAnswer?.id === currentCard.id ? ' feedback-correct' : ' feedback-incorrect') : ''}`}>
 								{isChecked
-									? selectedAnswer?.id === currentCard.id ? 'That’s right!' : `Not quite—the answer is “${currentCard.name}.”`
-									: 'Choose the drawing that matches the word.'}
+									? selectedAnswer?.id === currentCard.id ? t('That’s right!') : `${t('Not quite—the answer is')} “${currentCard.name}.”`
+										: t('Choose the drawing that matches the word.')}
 								{coinMessage && <span className="quiz-coin-message"> {coinMessage}</span>}
 							</p>
 							{isChecked ? (
 								<button className="quiz-submit-button" disabled={isAwarding} onClick={advance} type="button">
-									{currentCardIndex === flashCards.length - 1 ? 'Finish quiz' : 'Next question'}
+									{currentCardIndex === flashCards.length - 1 ? t('Finish quiz') : t('Next question')}
 								</button>
 							) : (
 								<button className="quiz-submit-button" disabled={!selectedChoice} onClick={checkAnswer} type="button">
-									Check answer
+									{t('Check answer')}
 								</button>
 							)}
 						</div>
 					</>
 				) : (
 					<div className="quiz-complete">
-						<p>This set doesn’t have any cards to quiz yet.</p>
-						<Link className="quiz-submit-button quiz-home-link" to="/home">Back to your sets</Link>
+						<p>{t('This set doesn’t have any cards to quiz yet.')}</p>
+						<Link className="quiz-submit-button quiz-home-link" to="/home">{t('Back to your sets')}</Link>
 					</div>
 				)}
 			</section>

@@ -7,6 +7,7 @@ const projectRoot = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig(({ mode }) => {
   const { VITE_API_BASE_URL } = loadEnv(mode, projectRoot, 'VITE_API_BASE_URL')
+  const apiBaseUrl = VITE_API_BASE_URL || 'http://127.0.0.1:5001'
 
   return {
     plugins: [
@@ -42,15 +43,13 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     server: {
-      proxy: VITE_API_BASE_URL
-        ? {
-            '/api': {
-              target: VITE_API_BASE_URL,
-              changeOrigin: true,
-              secure: false,
-            },
-          }
-        : {},
+      proxy: {
+        '/api': {
+          target: apiBaseUrl,
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
   }
 })

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import '../styles/StorePage.css'
+import { useLanguage } from '../i18n.jsx'
 
 const storeItems = [
 	{ id: 1, name: 'Item 1', price: 25 },
@@ -14,6 +15,7 @@ const storeItems = [
 ]
 
 function StorePage({ coins, onPurchase, purchasedItems }) {
+	const { t } = useLanguage()
 	const [pendingItemId, setPendingItemId] = useState(null)
 	const [purchaseMessage, setPurchaseMessage] = useState('')
 	const [purchaseError, setPurchaseError] = useState(false)
@@ -24,9 +26,9 @@ function StorePage({ coins, onPurchase, purchasedItems }) {
 		setPurchaseError(false)
 		try {
 			await onPurchase(item)
-			setPurchaseMessage(`${item.name} was added to your house.`)
+			setPurchaseMessage(`${item.name} ${t('was added to your house.')}`)
 		} catch (error) {
-			setPurchaseMessage(error.message || 'Could not complete the purchase.')
+			setPurchaseMessage(t(error.message || 'Could not complete the purchase.'))
 			setPurchaseError(true)
 		} finally {
 			setPendingItemId(null)
@@ -37,8 +39,8 @@ function StorePage({ coins, onPurchase, purchasedItems }) {
 		<main className="store-page">
 			<section aria-labelledby="store-title" className="store-window">
 				<header className="store-heading">
-					<h1 id="store-title">The Store</h1>
-					<p className="store-balance">You have <strong>{coins}</strong> coins</p>
+					<h1 id="store-title">{t('The Store')}</h1>
+					<p className="store-balance">{t('You have')} <strong>{coins}</strong> {t('coins')}</p>
 				</header>
 				<p aria-live="polite" className="store-purchase-message" role={purchaseError ? 'alert' : 'status'}>
 					{purchaseMessage}
@@ -51,14 +53,14 @@ function StorePage({ coins, onPurchase, purchasedItems }) {
 						return (
 						<article aria-label={`${item.name}, ${item.price} coins`} className="store-item" key={item.id}>
 							<div aria-label={`${item.name} image placeholder`} className="store-item-image" role="img">
-								<span className="store-image-placeholder-text">Image coming soon</span>
+								<span className="store-image-placeholder-text">{t('Image coming soon')}</span>
 							</div>
 							<div className="store-item-details">
 								<h2>{item.name}</h2>
 								<p className="store-item-price">
 									<span aria-hidden="true" className="store-coin">●</span>
 									<span>{item.price}</span>
-									<span>coins</span>
+									<span>{t('coins')}</span>
 								</p>
 							</div>
 							<button
@@ -67,7 +69,7 @@ function StorePage({ coins, onPurchase, purchasedItems }) {
 								onClick={() => buyItem(item)}
 								type="button"
 							>
-								{isPurchased ? 'In your house' : pendingItemId === item.id ? 'Buying…' : cannotAfford ? 'Need more coins' : 'Buy'}
+								{isPurchased ? t('In your house') : pendingItemId === item.id ? t('Buying…') : cannotAfford ? t('Need more coins') : t('Buy')}
 							</button>
 						</article>
 						)

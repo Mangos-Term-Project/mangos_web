@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { FaSearch } from "react-icons/fa";
 import { getNextWord, saveFlashCard as saveFlashCardRequest } from '../api/flashcards.js'
+import { translateDefinition, useLanguage } from '../i18n.jsx'
 import '../styles/DrawPage.css'
 
 function getDrawingCursor(tool, brushSize) {
@@ -13,6 +14,7 @@ function getDrawingCursor(tool, brushSize) {
 }
 
 function DrawPage({ onSaveFlashCard }) {
+	const { language, t } = useLanguage()
 	const [search, setSearch] = useState('')
 	const [images, setImages] = useState(null)
 	const [searchMessage, setSearchMessage] = useState('')
@@ -267,7 +269,7 @@ function DrawPage({ onSaveFlashCard }) {
 			setWordError('')
 			resetDrawing()
 			onSaveFlashCard(flashCard)
-			setSaveMessage(`"${flashCard.name}" was saved to your flash cards.`)
+			setSaveMessage(`saved:${flashCard.name}`)
 			if (flashCard.setCompleted) setCompletedSetName(flashCard.setName)
 			setWordRefresh((currentRefresh) => currentRefresh + 1)
 		} catch (error) {
@@ -281,13 +283,30 @@ function DrawPage({ onSaveFlashCard }) {
 			setIsSaving(false)
 		}
 	}
-	const hints = !isLoadingWord && !wordError ? currentWord?.hints ?? [] : []
+	const hints = useMemo(
+		() => !isLoadingWord && !wordError ? currentWord?.hints ?? [] : [],
+		[isLoadingWord, wordError, currentWord],
+	)
 	const showPartOfSpeech = hints.length > 1
+	const [translatedDefinitions, setTranslatedDefinitions] = useState({})
+
+	useEffect(() => {
+		let cancelled = false
+		const definitions = [...new Set(hints.flatMap((hint) => hint.senses.map((sense) => sense.definition)))]
+		Promise.all(definitions.map(async (definition) => [definition, await translateDefinition(definition, language)]))
+			.then((entries) => {
+				if (!cancelled) setTranslatedDefinitions(Object.fromEntries(entries))
+			})
+		return () => { cancelled = true }
+	}, [currentWord, hints, language])
 
 	const pickedGroups = picked && picked.word === currentWord?.word ? picked.groups : null
 	// Search results show as one group; hand-picked pictures show one group per part of speech.
 	// Nothing shows until the learner searches; picked pictures are what a search returns.
 	const galleryGroups = searchGroups ?? (images ? [{ part: '', images }] : [])
+	const saveStatusMessage = saveMessage.startsWith('saved:')
+		? `“${saveMessage.slice('saved:'.length)}” ${t('was saved to your flash cards.')}`
+		: t(wordError || saveMessage)
 	// Label hand-picked groups by part of speech and meaning when a word has more than one.
 	// Labels for a typed word's groups: part of speech, plus the meaning number when
 	// the same part has more than one (for example "As an adjective, meaning 2").
@@ -295,8 +314,10 @@ function DrawPage({ onSaveFlashCard }) {
 		if (!group.part) return ''
 		const sameParts = galleryGroups.filter((item) => item.part === group.part).length
 		const parts = new Set(galleryGroups.map((item) => item.part)).size
-		const label = parts > 1 || sameParts > 1 ? `As ${group.part === 'adjective' ? 'an' : 'a'} ${group.part}` : ''
-		return sameParts > 1 ? `${label}, meaning ${(group.sense ?? 0) + 1}` : label
+		const label = parts > 1 || sameParts > 1
+			? t(`As ${group.part === 'adjective' ? 'an' : 'a'} ${group.part}`)
+			: ''
+		return sameParts > 1 ? `${label}, ${t('meaning')} ${(group.sense ?? 0) + 1}` : label
 	}
 
 	return (
@@ -304,35 +325,35 @@ function DrawPage({ onSaveFlashCard }) {
 			<section aria-label="Draw and explore images" className="draw-workspace">
 				<div className="drawing-column">
 					<div className="drawing-column-heading">
-						<label className="draw-word-label">Draw this word</label>
+						<label className="draw-word-label">{t('Draw this word')}</label>
 						{currentWord?.set_name && (
 							<p className="draw-set-progress">
-								{currentWord.set_name} · Card {currentWord.set_card_number} of {currentWord.set_card_limit}
+								{currentWord.set_name} · {t('Card')} {currentWord.set_card_number} {t('of')} {currentWord.set_card_limit}
 							</p>
 						)}
 					</div>
 					
 					<label className="draw-word">
 						{isLoadingWord
-							? 'Loading a word...'
+							? t('Loading a word...')
 							: wordError
-								? 'Word unavailable'
-								: currentWord?.word ?? 'All words completed'}
+								? t('Word unavailable')
+								: currentWord?.word ?? t('All words completed')}
 					</label>
 					{hints.length > 0 && (
 						<div className="word-hint">
 							{hints.map((hint) => (
 								<div className="word-hint-entry" key={hint.partOfSpeech}>
 									{showPartOfSpeech && (
-										<p className="word-hint-part">As {hint.partOfSpeech === 'adjective' ? 'an' : 'a'} {hint.partOfSpeech}:</p>
+										<p className="word-hint-part">{t(`As ${hint.partOfSpeech === 'adjective' ? 'an' : 'a'} ${hint.partOfSpeech}:`)}</p>
 									)}
 									{hint.senses.map((sense, index) => (
 										<div className="word-hint-sense" key={sense.searchPhrase}>
 											<p>
-												<strong>{hint.senses.length > 1 ? `Meaning ${index + 1}:` : 'Meaning:'}</strong> {sense.definition}
+												<strong>{hint.senses.length > 1 ? `${t('Meaning')} ${index + 1}:` : `${t('Meaning')}:`}</strong> {translatedDefinitions[sense.definition] ?? sense.definition}
 											</p>
 											<p>
-												{sense.moreSearches?.length ? 'Suggested picture searches:' : 'Suggested picture search:'}{' '}
+												{t(sense.moreSearches?.length ? 'Suggested picture searches:' : 'Suggested picture search:')}{' '}
 												<strong>{[sense.searchPhrase, ...(sense.moreSearches ?? [])].join(' · ')}</strong>
 											</p>
 											<button
@@ -341,7 +362,7 @@ function DrawPage({ onSaveFlashCard }) {
 												onClick={() => searchSuggestion({ partOfSpeech: hint.partOfSpeech, sense: index, searchPhrase: sense.searchPhrase })}
 												disabled={isSearching}
 											>
-												Search for this
+												{t('Search for this')}
 											</button>
 										</div>
 									))}
@@ -350,13 +371,13 @@ function DrawPage({ onSaveFlashCard }) {
 						</div>
 					)}
 					<div className="drawing-toolbar">
-						<p>Use your mouse or finger to draw</p>
+						<p>{t('Use your mouse or finger to draw')}</p>
 						<div className="drawing-actions">
 							<button className="clear-drawing-button" disabled={!canUndo} onClick={undoDrawing} type="button">
-								Undo
+								{t('Undo')}
 							</button>
 							<button className="clear-drawing-button" onClick={clearDrawing} type="button">
-								Clear
+								{t('Clear')}
 							</button>
 							<button
 								className="save-flashcard-button"
@@ -364,13 +385,13 @@ function DrawPage({ onSaveFlashCard }) {
 								onClick={saveFlashCard}
 								type="button"
 							>
-								{isSaving ? 'Saving...' : 'Save flash card'}
+								{isSaving ? t('Saving...') : t('Save flash card')}
 							</button>
 						</div>
 					</div>
 					<div aria-label="Drawing tools" className="drawing-controls">
 						<div className="drawing-control-group">
-							<span className="drawing-control-label" id="drawing-tool-label">Tool</span>
+							<span className="drawing-control-label" id="drawing-tool-label">{t('Tool')}</span>
 							<div aria-labelledby="drawing-tool-label" className="drawing-tool-options" role="group">
 								{brushOptions.map((brush) => (
 									<button
@@ -380,7 +401,7 @@ function DrawPage({ onSaveFlashCard }) {
 										onClick={() => setActiveTool(brush.id)}
 										type="button"
 									>
-										{brush.label}
+										{t(brush.label)}
 									</button>
 								))}
 								<button
@@ -389,16 +410,16 @@ function DrawPage({ onSaveFlashCard }) {
 									onClick={() => setActiveTool('eraser')}
 									type="button"
 								>
-									Eraser
+									{t('Eraser')}
 								</button>
 							</div>
 						</div>
 						<div className="drawing-control-group">
-							<span className="drawing-control-label" id="drawing-color-label">Color</span>
+							<span className="drawing-control-label" id="drawing-color-label">{t('Color')}</span>
 							<div aria-labelledby="drawing-color-label" className="drawing-color-options" role="group">
 								{drawingColors.map((color) => (
 									<button
-										aria-label={`${color.label} color`}
+										aria-label={`${t(color.label)} ${t('color')}`}
 										aria-pressed={brushColor === color.value}
 										className={`drawing-color-button${brushColor === color.value ? ' is-active' : ''}`}
 										key={color.value}
@@ -413,7 +434,7 @@ function DrawPage({ onSaveFlashCard }) {
 							</div>
 						</div>
 						<div className="drawing-control-group drawing-size-control">
-							<label className="drawing-control-label" htmlFor="drawing-size">Brush size: {brushSize}</label>
+							<label className="drawing-control-label" htmlFor="drawing-size">{t('Brush size')}: {brushSize}</label>
 							<input
 								id="drawing-size"
 								max="20"
@@ -425,7 +446,7 @@ function DrawPage({ onSaveFlashCard }) {
 						</div>
 					</div>
 					<p className="flashcard-save-message" aria-live="polite" role="status">
-						{wordError || saveMessage}
+						{saveStatusMessage}
 					</p>
 					<div className="drawing-canvas-wrap">
 						<canvas
@@ -449,40 +470,40 @@ function DrawPage({ onSaveFlashCard }) {
 					>
 						<div className="set-completed-content">
 							<span aria-hidden="true" className="set-completed-icon">🎉</span>
-							<p className="draw-eyebrow">Achievement unlocked</p>
-							<h2 id="set-completed-title">Set complete!</h2>
-							<p>You finished all 50 cards in <strong>{completedSetName}</strong>. Great work!</p>
-							<button className="save-flashcard-button" onClick={closeSetCompletedDialog} type="button">Keep going</button>
+							<p className="draw-eyebrow">{t('Achievement unlocked')}</p>
+							<h2 id="set-completed-title">{t('Set complete!')}</h2>
+							<p>{t('You finished all 50 cards in')} <strong>{completedSetName}</strong>. {t('Great work!')}</p>
+							<button className="save-flashcard-button" onClick={closeSetCompletedDialog} type="button">{t('Keep going')}</button>
 						</div>
 					</dialog>
 				</div>
 
 				<aside aria-labelledby="reference-title" className="reference-column">
 					<div className="reference-heading">
-						<p className="draw-eyebrow">Get inspired</p>
-						<h1 id="reference-title">Picture search</h1>
+						<p className="draw-eyebrow">{t('Get inspired')}</p>
+						<h1 id="reference-title">{t('Picture search')}</h1>
 					</div>
 					<form className="image-search" onSubmit={searchPictures}>
 						<FaSearch className="image-search-icon" aria-hidden="true" />
 						<input
 							id="image-search-input"
-							aria-label="Search reference pictures"
+							aria-label={t('Search reference pictures')}
 							maxLength={80}
 							onChange={(event) => setSearch(event.target.value)}
-							placeholder="Search pictures..."
+							placeholder={t('Search pictures...')}
 							type="search"
 							value={search}
 						/>
 						<button className="picture-search-button" type="submit" disabled={isSearching || !search.trim()}>
-							{isSearching ? 'Searching…' : 'Search'}
+							{isSearching ? t('Searching…') : t('Search')}
 						</button>
 					</form>
 					<p className="picture-search-status" role="status">
-						{isSearching ? 'Looking for reference pictures…' : searchMessage ||
-							(images?.length === 0 ? 'No pictures found. Try a related word, such as clock for time.' : '')}
+						{isSearching ? t('Looking for reference pictures…') : t(searchMessage) ||
+							(images?.length === 0 ? t('No pictures found. Try a related word, such as clock for time.') : '')}
 					</p>
 					{resultsArePicked && images && (
-						<p className="picked-title">Pictures picked for this word</p>
+						<p className="picked-title">{t('Pictures picked for this word')}</p>
 					)}
 					{galleryGroups.map((group) => (
 						<div key={`${group.part}-${group.sense ?? 0}`}>
@@ -503,7 +524,7 @@ function DrawPage({ onSaveFlashCard }) {
 							</div>
 						</div>
 					))}
-					<p className="picture-search-credit">Pictures from Pixabay. Tap a picture to see it larger.</p>
+					<p className="picture-search-credit">{t('Pictures from Pixabay. Tap a picture to see it larger.')}</p>
 					<dialog
 						aria-labelledby="enlarged-picture-title"
 						className="enlarged-picture-dialog"
@@ -515,14 +536,14 @@ function DrawPage({ onSaveFlashCard }) {
 						{enlargedImage && (
 							<div className="enlarged-picture-content">
 								<div className="enlarged-picture-header">
-									<h2 id="enlarged-picture-title">Reference picture</h2>
+									<h2 id="enlarged-picture-title">{t('Reference picture')}</h2>
 									<button className="enlarged-picture-close" type="button" onClick={closeEnlargedImage} autoFocus>
-										Close
+										{t('Close')}
 									</button>
 								</div>
 								<img src={enlargedImage.thumbnail} alt={enlargedImage.description} />
 								<p className="enlarged-picture-description">{enlargedImage.description}</p>
-								<p className="enlarged-picture-credit">Pictures from Pixabay.</p>
+								<p className="enlarged-picture-credit">{t('Pictures from Pixabay.')}</p>
 							</div>
 						)}
 					</dialog>
